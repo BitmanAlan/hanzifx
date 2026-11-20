@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hanzifx 中文字效库</title>
+<meta name="description" content="给 AI agent 用的中文短视频字效和互动元素：每张卡都是真代码在跑，点字就能改。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='8' fill='%23c8161d'/%3E%3Ctext x='32' y='45' font-size='36' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='700'%3E%E5%AD%97%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="./gallery.css">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-text">
+    <div class="topline">
+      <!-- 项目 logo（朱红方印「字」）的位置：拿到 SVG 后换掉这个占位 -->
+      <span class="logo" id="logo" aria-hidden="true">字</span>
+      <span class="brand">hanzifx</span>
+      <a class="repo" href="https://github.com/BitmanAlan/hanzifx" rel="noopener"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>GitHub</span></a>
+      <button class="lang" id="langBtn" type="button">EN</button>
+    </div>
+    <h1 id="title">中文字效库</h1>
+    <p class="tagline" id="tagline"></p>
+    <p class="counts" id="counts"></p>
+    <a class="reel" id="reelLink" href="https://github.com/BitmanAlan/hanzifx/releases/download/v0.1.0/hanzifx-showreel-0.1.0.mp4" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span id="reelText"></span></a>
+  </div>
+  <!-- 宣传片的 10 秒循环动图：首屏的卡挂好、浏览器空下来以后才开始下载（不算首屏）；窄屏不显示，把首屏让给卡片 -->
+  <div class="promo" id="promo"><img id="promoImg" data-src="docs/media/hero.webp" width="1280" height="720" alt="" decoding="async"><span id="promoText"></span></div>
+</header>
+
+<nav class="filters" aria-label="筛选">
+  <div class="chips" id="kindChips" role="group"></div>
+  <div class="chips tags" id="tagChips" role="group"></div>
+  <input class="search" id="search" type="search" autocomplete="off">
+</nav>
+
+<main>
+  <section class="section" id="secStyle">
+    <div class="sec-head"><h2 id="secStyleTitle"></h2><p id="secStyleNote"></p></div>
+    <div class="grid" id="gridStyle"></div>
+  </section>
+  <section class="section" id="secInter">
+    <div class="sec-head"><h2 id="secInterTitle"></h2><p id="secInterNote"></p></div>
+    <div class="grid inter" id="gridInter"></div>
+  </section>
+  <p class="empty" id="empty" hidden></p>
+</main>
+
+<footer class="foot">
+  <span id="footText"></span> <a class="foot-repo" href="https://github.com/BitmanAlan/hanzifx" rel="noopener">github.com/BitmanAlan/hanzifx</a>
+</footer>
+
+<script type="module" src="./gallery.js"></script>
+</body>
+</html>

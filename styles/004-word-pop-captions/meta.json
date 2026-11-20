@@ -1,0 +1,464 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "004",
+  "id": "word-pop-captions",
+  "name": "一词一屏字幕",
+  "nameEn": "Word Pop Captions",
+  "aliases": [
+    "大字字幕",
+    "逐词弹出字幕",
+    "一词一屏"
+  ],
+  "kind": "style",
+  "tags": [
+    "口播字幕",
+    "知识口播",
+    "带货口播"
+  ],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "口播字幕一次只出一两个词，大字放在画面中间，跟着说话一屏一屏地换；中文先分词再切屏，不把「误区」切成两屏",
+  "summaryEn": "Talking-head captions that show one or two words at a time, big and centered, changing screen by screen with the speech. Chinese is segmented into words first, so a word like 误区 never gets split across two screens.",
+  "invoke": "用 004 给这段口播配一词一屏字幕，关键词用 *…* 标；有逐字时间就附上（--words-file，整体偏了用 --words-offset 毫秒微调），没有就按每字 0.23 秒估",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": [
+    "知识口播",
+    "商业和财经口播",
+    "带货口播",
+    "AI 数字人口播"
+  ],
+  "notFor": [
+    {
+      "case": "一屏一整句的普通底部字幕",
+      "use": "普通字幕（还没做）"
+    },
+    {
+      "case": "跟着音乐节拍走的字",
+      "use": "007"
+    }
+  ],
+  "sizes": [
+    "1080x1920",
+    "1920x1080",
+    "1080x1080"
+  ],
+  "fps": 30,
+  "durationHint": "跟着文字长度走：没有逐字时间时按每字 0.23 秒估，逗号停 0.18 秒、句号停 0.4 秒；实际时长以导出的 timeline.json 为准",
+  "timelineSegments": [
+    {
+      "name": "intro",
+      "label": "第一屏出现"
+    },
+    {
+      "name": "hold",
+      "label": "逐屏跟着说话换"
+    },
+    {
+      "name": "outro",
+      "label": "结束"
+    }
+  ],
+  "posterTime": 4.3,
+  "safeArea": {
+    "bottom": 0.2,
+    "right": 0.15,
+    "measured": false,
+    "note": "经验值，未实测；默认放在画面高度 0.62，在人脸下方、底部遮挡区上方"
+  },
+  "requires": {
+    "wordTimes": true,
+    "beats": false,
+    "tracking": false
+  },
+  "fonts": [
+    "notosc-black",
+    "kuaile",
+    "huangyou"
+  ],
+  "fontFallback": {
+    "kuaile": [
+      "notosc-black"
+    ],
+    "huangyou": [
+      "notosc-black"
+    ]
+  },
+  "extraGlyphs": "",
+  "typography": {
+    "writingMode": "horizontal",
+    "lineBreak": "word",
+    "maxLines": 1,
+    "maxCharsPerLine": 6,
+    "noOrphan": true,
+    "punctCompress": true,
+    "shrinkParticles": 1,
+    "latinFont": null,
+    "latinGap": 0.1
+  },
+  "params": [
+    {
+      "key": "text",
+      "type": "text",
+      "label": "口播原文",
+      "default": "普通人用AI最大的误区，是把它当*搜索引擎*。真正好用的办法，是把你的*工作流程*交给它。",
+      "maxLength": 2000,
+      "hint": "整段口播原文。*关键词* 会换色放大；用 | 指定切分点；回车分段"
+    },
+    {
+      "key": "look",
+      "type": "select",
+      "label": "造型预设",
+      "default": "V1",
+      "options": [
+        {
+          "value": "V1",
+          "label": "V1 日常"
+        },
+        {
+          "value": "V3",
+          "label": "V3 招牌"
+        }
+      ],
+      "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌（别名「综艺」「showcase」）"
+    },
+    {
+      "key": "palette",
+      "type": "select",
+      "label": "配色",
+      "default": "C1",
+      "options": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ]
+    },
+    {
+      "key": "rhythm",
+      "type": "select",
+      "label": "入场节奏",
+      "default": "R1",
+      "options": [
+        {
+          "value": "R1",
+          "label": "R1 标准"
+        },
+        {
+          "value": "R2",
+          "label": "R2 冲（关键词带 2 帧震动）"
+        },
+        {
+          "value": "R3",
+          "label": "R3 柔（淡入加上移）"
+        }
+      ]
+    },
+    {
+      "key": "font",
+      "type": "select",
+      "label": "字体",
+      "default": "notosc-black",
+      "options": [
+        {
+          "value": "notosc-black",
+          "label": "思源黑体 Black"
+        },
+        {
+          "value": "kuaile",
+          "label": "站酷快乐体（缺「喆堃垚」这类人名用字）"
+        },
+        {
+          "value": "huangyou",
+          "label": "站酷庆科黄油体"
+        }
+      ]
+    },
+    {
+      "key": "size",
+      "type": "range",
+      "label": "字号（占画面短边）",
+      "default": 0.11,
+      "min": 0.06,
+      "max": 0.18,
+      "step": 0.005
+    },
+    {
+      "key": "maxChars",
+      "type": "range",
+      "label": "一屏最多几个字",
+      "default": 6,
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "hint": "8 个以上就变回普通字幕了"
+    },
+    {
+      "key": "emphScale",
+      "type": "range",
+      "label": "关键词放大",
+      "default": 1.12,
+      "min": 1,
+      "max": 1.4,
+      "step": 0.01
+    },
+    {
+      "key": "box",
+      "type": "select",
+      "label": "字的处理",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "跟着配色走"
+        },
+        {
+          "value": "outline",
+          "label": "描边加投影"
+        },
+        {
+          "value": "block",
+          "label": "底块"
+        },
+        {
+          "value": "neon",
+          "label": "霓虹外发光"
+        },
+        {
+          "value": "shadow",
+          "label": "只有投影"
+        }
+      ]
+    },
+    {
+      "key": "outline",
+      "type": "range",
+      "label": "描边粗细倍数",
+      "default": 1,
+      "min": 0.5,
+      "max": 2,
+      "step": 0.05
+    },
+    {
+      "key": "flair",
+      "type": "range",
+      "label": "招牌强度",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "x",
+      "type": "range",
+      "label": "水平位置（空着＝居中）",
+      "default": null,
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.01
+    },
+    {
+      "key": "y",
+      "type": "range",
+      "label": "垂直位置（空着＝自动：竖屏 0.62，其他 0.78）",
+      "default": null,
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.01
+    },
+    {
+      "key": "seed",
+      "type": "int",
+      "label": "种子",
+      "default": 7
+    }
+  ],
+  "looks": [
+    {
+      "id": "V1",
+      "name": "日常",
+      "aliases": [
+        "日常",
+        "daily"
+      ],
+      "params": {
+        "flair": 0
+      },
+      "role": "default",
+      "nameEn": "Everyday"
+    },
+    {
+      "id": "V3",
+      "name": "招牌",
+      "aliases": [
+        "综艺",
+        "showcase",
+        "招牌"
+      ],
+      "params": {
+        "flair": 1
+      },
+      "role": "showcase",
+      "nameEn": "Signature"
+    }
+  ],
+  "palettes": [
+    {
+      "id": "C1",
+      "name": "白字黑边黄重点",
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#FFD60A",
+        "inner": "#FFFFFF",
+        "outer": "#000000",
+        "shadow": "#000000",
+        "accent": "#FFD60A",
+        "bg": "#000000",
+        "sub": "#FFFFFF"
+      }
+    },
+    {
+      "id": "C2",
+      "name": "黄字黑边红重点",
+      "colors": {
+        "fill": "#FFE135",
+        "fill2": "#FF3B30",
+        "inner": "#FFFFFF",
+        "outer": "#111111",
+        "shadow": "#000000",
+        "accent": "#FF3B30",
+        "bg": "#111111",
+        "sub": "#FFFFFF"
+      }
+    },
+    {
+      "id": "C3",
+      "name": "白底黑字",
+      "colors": {
+        "fill": "#111111",
+        "fill2": "#FFD60A",
+        "inner": "#FFFFFF",
+        "outer": "#111111",
+        "shadow": "#000000",
+        "accent": "#E0A800",
+        "bg": "#FFFFFF",
+        "sub": "#111111"
+      }
+    },
+    {
+      "id": "C4",
+      "name": "霓虹",
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#FF2E88",
+        "inner": "#00E5FF",
+        "outer": "#0A0A14",
+        "shadow": "#000000",
+        "accent": "#FF2E88",
+        "bg": "#000000",
+        "sub": "#FFFFFF"
+      }
+    },
+    {
+      "id": "C5",
+      "name": "纯白投影",
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#7CFFB2",
+        "inner": "#FFFFFF",
+        "outer": "#000000",
+        "shadow": "#000000",
+        "accent": "#7CFFB2",
+        "bg": "#000000",
+        "sub": "#FFFFFF"
+      }
+    }
+  ],
+  "rhythms": [
+    {
+      "id": "R1",
+      "name": "标准"
+    },
+    {
+      "id": "R2",
+      "name": "冲"
+    },
+    {
+      "id": "R3",
+      "name": "柔"
+    }
+  ],
+  "exports": [
+    "mp4",
+    "mov-alpha",
+    "webm-alpha",
+    "png-seq"
+  ],
+  "checks": [
+    "mid-word",
+    "line-start-punct",
+    "missing-glyph",
+    "stroke-clip",
+    "safe-area",
+    "min-screen-time",
+    "single-char-screen"
+  ],
+  "demo": {
+    "default": {
+      "look": "V1",
+      "video": "demo/004_V1_日常_竖屏.mp4",
+      "poster": "demo/poster-v1.jpg",
+      "gif": "demo/preview.gif"
+    },
+    "showcase": {
+      "look": "V3",
+      "video": "demo/004_V3_招牌_竖屏.mp4", "gifMaxMB": 1.5,
+      "poster": "demo/poster-v3.jpg",
+      "gif": "demo/showcase.gif"
+    }
+  },
+  "credits": [
+    {
+      "what": "字体",
+      "name": "思源黑体 Noto Sans SC（固定 wght 900）",
+      "license": "OFL-1.1",
+      "url": "https://github.com/notofonts/noto-cjk"
+    },
+    {
+      "what": "字体",
+      "name": "站酷快乐体 ZCOOL KuaiLe",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/zcool-kuaile"
+    },
+    {
+      "what": "字体",
+      "name": "站酷庆科黄油体 ZCOOL QingKe HuangYou",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/zcool-qingke-huangyou"
+    },
+    {
+      "what": "参考效果",
+      "name": "知识口播常见的大字逐词字幕（只参考公开做法，量过抖音上的真实视频）",
+      "license": "—",
+      "url": ""
+    }
+  ],
+  "license": {
+    "code": "MIT",
+    "doc": "CC-BY-NC-4.0",
+    "demo": "CC-BY-4.0"
+  },
+  "platforms": [
+    {
+      "name": "抖音口播",
+      "basis": "inferred",
+      "note": "口播字幕两轮都量到了，关键词变黄放大的也量到过，但一词一屏本身两轮都没见到"
+    },
+    {
+      "name": "视频号口播",
+      "basis": "inferred",
+      "note": "没测"
+    }
+  ]
+}

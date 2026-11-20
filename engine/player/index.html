@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中文字效试玩台</title>
+<link rel="stylesheet" href="./player.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><span class="logo">字</span><span>中文字效试玩台</span><span class="tag">hanzifx · 第 0 阶段原型</span></div>
+  <label class="style-pick">风格
+    <select id="stylePick" aria-label="选择风格"></select>
+  </label>
+</header>
+
+<main class="layout">
+  <section class="preview">
+    <div class="preview-tools">
+      <div class="seg" id="aspectSeg" role="group" aria-label="画面比例">
+        <button data-v="1080x1920" class="on">竖屏 9:16</button>
+        <button data-v="1920x1080">横屏 16:9</button>
+        <button data-v="1080x1080">方形 1:1</button>
+      </div>
+      <div class="seg" id="bgSeg" role="group" aria-label="背景">
+        <button data-v="checker" class="on" title="棋盘格表示透明">透明</button>
+        <button data-v="studio">演播室</button>
+        <button data-v="#000000">黑</button>
+        <button data-v="#00B140">绿幕</button>
+      </div>
+    </div>
+    <div class="viewport" id="viewport">
+      <div class="frame" id="frame"><div id="stage"></div></div>
+      <div class="status" id="status" hidden></div>
+    </div>
+
+    <div class="transport">
+      <button class="play" id="playBtn" aria-label="播放/暂停（空格）">▶</button>
+      <div class="scrub" id="scrub" role="slider" aria-label="时间轴" tabindex="0" aria-valuemin="0">
+        <div class="bands" id="bands"></div>
+        <div class="beats" id="beats"></div>
+        <div class="head" id="head"></div>
+      </div>
+      <div class="clock" id="clock">0.00 s</div>
+    </div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <aside class="panel">
+    <div class="combo">
+      <div class="combo-code" id="comboCode">—</div>
+      <div class="combo-name" id="comboName"></div>
+    </div>
+    <div id="controls"></div>
+    <div class="checks" id="checks"></div>
+    <div class="actions">
+      <button id="copyCmd">复制导出命令</button>
+      <button id="copyParams">复制参数</button>
+      <button id="copySource">复制源码</button>
+      <button id="exportBtn" disabled title="第 1 阶段做：在页面里直接导出">直接导出（待做）</button>
+      <label class="filebtn">导入字级时间<input type="file" id="wordsFile" accept=".json,application/json" hidden></label>
+      <button id="clearWords" hidden>清掉字级时间</button>
+    </div>
+    <pre class="cmd" id="cmdPreview"></pre>
+    <div class="toast" id="toast" hidden></div>
+  </aside>
+</main>
+<script type="module" src="./player.js"></script>
+</body>
+</html>

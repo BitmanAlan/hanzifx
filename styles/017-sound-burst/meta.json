@@ -1,0 +1,580 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "017",
+  "id": "sound-burst",
+  "name": "拟声词爆炸字",
+  "nameEn": "Sound Burst",
+  "aliases": [
+    "拟声词",
+    "漫画音效字",
+    "爆炸字",
+    "哐咚啪",
+    "漫画拟声词",
+    "音效字"
+  ],
+  "kind": "style",
+  "tags": [
+    "搞笑",
+    "综艺",
+    "音效",
+    "漫画"
+  ],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "「哐！咚！啪！」砸进画面：漫画风立体粗字压在锯齿爆炸底框上，带网点，落地一震；一串拟声词能依次砸。",
+  "summaryEn": "Comic-book sound effects that slam into the frame: chunky extruded lettering on a jagged burst with halftone dots, a hard shake on impact, and several words can land one after another.",
+  "invoke": "用 017 把「哐！」做成拟声词爆炸字，透明底",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": [
+    "搞笑、萌宠视频里摔了、撞了、拍桌子的那一下",
+    "综艺里的「咚！」「啪！」音效字",
+    "口播里的转折、重击、打脸"
+  ],
+  "notFor": [
+    {
+      "case": "一整句标题花字",
+      "use": "001"
+    },
+    {
+      "case": "跟着音乐一屏一个词的快闪",
+      "use": "007"
+    }
+  ],
+  "platforms": [
+    {
+      "name": "抖音、快手搞笑和萌宠",
+      "basis": "inferred",
+      "note": "没量过；拟声词爆炸字是搞笑、萌宠剪辑里的常见做法"
+    },
+    {
+      "name": "B 站综艺、鬼畜二创",
+      "basis": "inferred",
+      "note": "没量过"
+    }
+  ],
+  "sizes": [
+    "1080x1920",
+    "1920x1080",
+    "1080x1080"
+  ],
+  "fps": 30,
+  "durationHint": "第一爆 0.18 秒落地，之后每隔 0.42 秒砸一个（R2 快 0.28 秒，R3 慢 0.65 秒；砸在同一个位置的两爆至少隔 0.5 秒）；最后一个落地后停 1.1 秒，0.26 秒收走。单个「哐！」约 1.7 秒，三连约 2.6 秒。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    {
+      "name": "intro",
+      "label": "砸入"
+    },
+    {
+      "name": "hold",
+      "label": "停住"
+    },
+    {
+      "name": "outro",
+      "label": "收走"
+    }
+  ],
+  "posterTime": "after-intro",
+  "safeArea": {
+    "bottom": 0.2,
+    "right": 0.15,
+    "measured": false,
+    "note": "底部 20%、右侧 15% 是经验值，未实测。竖屏单个拟声词默认放在画面高度 0.42，一串时排在 0.25–0.59；放射线和碎片不进底部 20%。竖屏单个的底框宽约画面宽 80%，会进右侧区约 110 像素"
+  },
+  "requires": {
+    "wordTimes": false,
+    "beats": false,
+    "tracking": false
+  },
+  "exportDefaults": {
+    "bg": "transparent"
+  },
+  "fonts": [
+    "notosc-black",
+    "huangyou",
+    "kuaile"
+  ],
+  "fontFallback": {
+    "huangyou": [
+      "notosc-black"
+    ],
+    "notosc-black": [],
+    "kuaile": [
+      "notosc-black"
+    ]
+  },
+  "typography": {
+    "writingMode": "horizontal",
+    "lineBreak": "word",
+    "maxLines": 3,
+    "maxCharsPerLine": 5,
+    "noOrphan": false,
+    "punctCompress": true,
+    "shrinkParticles": 1,
+    "latinFont": null
+  },
+  "params": [
+    {
+      "key": "text",
+      "type": "text",
+      "label": "拟声词（用 | 分成几爆依次砸）",
+      "default": "哐！",
+      "maxLength": 40,
+      "hint": "一爆 1–4 个字最好，比如「哐！」「咚！」「啪叽」；几个拟声词用 | 分开（「哐！|咚！|啪！」），不写 | 时感叹号、问号后面还有字就自动拆开；*字* 换强调色"
+    },
+    {
+      "key": "look",
+      "type": "select",
+      "label": "造型预设",
+      "default": "V1",
+      "options": [
+        {
+          "value": "V1",
+          "label": "V1 日常（默认）"
+        },
+        {
+          "value": "V3",
+          "label": "V3 招牌"
+        }
+      ],
+      "hint": "V1＝日常（别名「日常」「daily」）：底框、立体字、短放射线、落地一震；V3＝招牌（别名「招牌」「showcase」）：再加外圈尖刺框、满画面的放射线、碎片、更狠的震屏"
+    },
+    {
+      "key": "palette",
+      "type": "select",
+      "label": "配色",
+      "default": "C1",
+      "options": [
+        {
+          "value": "C1",
+          "label": "C1 经典黄红"
+        },
+        {
+          "value": "C2",
+          "label": "C2 黑白漫画"
+        },
+        {
+          "value": "C3",
+          "label": "C3 粉蓝"
+        },
+        {
+          "value": "C4",
+          "label": "C4 绿紫"
+        }
+      ]
+    },
+    {
+      "key": "rhythm",
+      "type": "select",
+      "label": "节奏（几爆之间隔多久）",
+      "default": "R1",
+      "options": [
+        {
+          "value": "R1",
+          "label": "R1 标准"
+        },
+        {
+          "value": "R2",
+          "label": "R2 快（连击）"
+        },
+        {
+          "value": "R3",
+          "label": "R3 慢"
+        }
+      ]
+    },
+    {
+      "key": "font",
+      "type": "select",
+      "label": "字体",
+      "default": "notosc-black",
+      "options": [
+        {
+          "value": "notosc-black",
+          "label": "思源黑体 Black（方正、粗，默认）"
+        },
+        {
+          "value": "huangyou",
+          "label": "站酷庆科黄油体（窄高、漫画感）"
+        },
+        {
+          "value": "kuaile",
+          "label": "站酷快乐体（可爱）"
+        }
+      ]
+    },
+    {
+      "key": "mode",
+      "type": "select",
+      "label": "一串拟声词怎么排",
+      "default": "pile",
+      "options": [
+        {
+          "value": "pile",
+          "label": "叠放：排在不同位置，最多同时留 3 个"
+        },
+        {
+          "value": "swap",
+          "label": "顶替：砸在同一个位置，新的撞走旧的"
+        }
+      ]
+    },
+    {
+      "key": "split",
+      "type": "select",
+      "label": "不写 | 时自动拆",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "感叹号、问号、空格后面拆开"
+        },
+        {
+          "value": "none",
+          "label": "不拆，一段一爆"
+        }
+      ]
+    },
+    {
+      "key": "frame",
+      "type": "select",
+      "label": "底框",
+      "default": "burst",
+      "options": [
+        {
+          "value": "burst",
+          "label": "锯齿爆炸框"
+        },
+        {
+          "value": "spiky",
+          "label": "密尖刺爆炸框"
+        },
+        {
+          "value": "none",
+          "label": "不要底框（只有字）"
+        }
+      ]
+    },
+    {
+      "key": "ring",
+      "type": "bool",
+      "label": "外圈尖刺框（强调色）",
+      "default": false
+    },
+    {
+      "key": "halftone",
+      "type": "bool",
+      "label": "底框网点",
+      "default": true
+    },
+    {
+      "key": "size",
+      "type": "range",
+      "label": "字号上限（占画面短边）",
+      "default": 0.36,
+      "min": 0.12,
+      "max": 0.5,
+      "step": 0.01,
+      "hint": "实际字号还要让整块（底框尖角、投影、回弹、震动）放得进画面，一串时还要让位置"
+    },
+    {
+      "key": "tilt",
+      "type": "range",
+      "label": "倾斜（度）",
+      "default": 8,
+      "min": 0,
+      "max": 25,
+      "step": 1,
+      "hint": "一串时一左一右交替歪，单个往左歪（右边抬起来）；0＝不歪"
+    },
+    {
+      "key": "persp",
+      "type": "range",
+      "label": "透视感（字一个比一个大、厚度往消失点收）",
+      "default": 0.6,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "depth",
+      "type": "range",
+      "label": "字的厚度",
+      "default": 0.55,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "shake",
+      "type": "range",
+      "label": "落地震动",
+      "default": 0.6,
+      "min": 0,
+      "max": 1.5,
+      "step": 0.05,
+      "hint": "1＝最大位移约字号的 7.5%，0.34 秒震完"
+    },
+    {
+      "key": "rays",
+      "type": "range",
+      "label": "放射线",
+      "default": 0.35,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "hint": "V1 是贴着底框的一圈短线，V3 冲到画面边上"
+    },
+    {
+      "key": "debris",
+      "type": "int",
+      "label": "碎片数（每一爆）",
+      "default": 0,
+      "min": 0,
+      "max": 40
+    },
+    {
+      "key": "boil",
+      "type": "range",
+      "label": "停住时底框边抖（手绘感）",
+      "default": 0.5,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "flair",
+      "type": "range",
+      "label": "招牌强度",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "hint": "放射线冲多远、字从多大砸下来、别的爆跟着震，V3 自动设成 1"
+    },
+    {
+      "key": "gap",
+      "type": "number",
+      "label": "几爆之间隔几秒（空着＝按节奏）",
+      "default": null,
+      "min": 0.15,
+      "max": 3,
+      "hint": "同一个位置的两爆（顶替模式的每一爆、叠放模式隔三爆）至少隔 0.5 秒，写得再短也会推后，免得变成来回闪"
+    },
+    {
+      "key": "hold",
+      "type": "number",
+      "label": "最后一爆落地后停几秒（空着＝按节奏）",
+      "default": null,
+      "min": 0.3,
+      "max": 8
+    },
+    {
+      "key": "x",
+      "type": "range",
+      "label": "水平位置（空着＝自动）",
+      "default": null,
+      "min": 0.15,
+      "max": 0.85,
+      "step": 0.01
+    },
+    {
+      "key": "y",
+      "type": "range",
+      "label": "垂直位置（空着＝自动）",
+      "default": null,
+      "min": 0.15,
+      "max": 0.85,
+      "step": 0.01
+    },
+    {
+      "key": "seed",
+      "type": "int",
+      "label": "种子",
+      "default": 7
+    }
+  ],
+  "palettes": [
+    {
+      "id": "C1",
+      "name": "经典黄红",
+      "colors": {
+        "fill": "#FFE93B",
+        "fill2": "#FFB31F",
+        "inner": "#FFFFFF",
+        "outer": "#16120F",
+        "shadow": "#D92323",
+        "accent": "#EE2D24",
+        "bg": "#FFF7DA",
+        "sub": "#FFC83D"
+      }
+    },
+    {
+      "id": "C2",
+      "name": "黑白漫画",
+      "colors": {
+        "fill": "#2A2A2A",
+        "fill2": "#111111",
+        "inner": "#FFFFFF",
+        "outer": "#111111",
+        "shadow": "#9A9A9A",
+        "accent": "#111111",
+        "bg": "#FFFFFF",
+        "sub": "#C4C4C4"
+      }
+    },
+    {
+      "id": "C3",
+      "name": "粉蓝",
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#FFD9EC",
+        "inner": "#FF4F9A",
+        "outer": "#1C1B4F",
+        "shadow": "#2F6BFF",
+        "accent": "#38C6FF",
+        "bg": "#FF8DC4",
+        "sub": "#FFB8DA"
+      }
+    },
+    {
+      "id": "C4",
+      "name": "绿紫",
+      "colors": {
+        "fill": "#E8FF45",
+        "fill2": "#8CF53A",
+        "inner": "#FFFFFF",
+        "outer": "#160A2A",
+        "shadow": "#7A2CFF",
+        "accent": "#A852FF",
+        "bg": "#2C1052",
+        "sub": "#4A1E86"
+      }
+    }
+  ],
+  "rhythms": [
+    {
+      "id": "R1",
+      "name": "标准",
+      "gap": 0.42,
+      "hold": 1.1
+    },
+    {
+      "id": "R2",
+      "name": "快（连击）",
+      "gap": 0.28,
+      "hold": 0.8
+    },
+    {
+      "id": "R3",
+      "name": "慢",
+      "gap": 0.65,
+      "hold": 1.5
+    }
+  ],
+  "looks": [
+    {
+      "id": "V1",
+      "name": "日常",
+      "nameEn": "Everyday",
+      "role": "default",
+      "aliases": [
+        "日常",
+        "daily"
+      ],
+      "params": {
+        "flair": 0,
+        "ring": false,
+        "rays": 0.35,
+        "debris": 0,
+        "shake": 0.6,
+        "depth": 0.55,
+        "persp": 0.6
+      }
+    },
+    {
+      "id": "V3",
+      "name": "招牌",
+      "nameEn": "Signature",
+      "role": "showcase",
+      "aliases": [
+        "招牌",
+        "showcase"
+      ],
+      "params": {
+        "flair": 1,
+        "ring": true,
+        "rays": 1,
+        "debris": 14,
+        "shake": 1.1,
+        "depth": 0.9,
+        "persp": 0.9,
+        "tilt": 11
+      }
+    }
+  ],
+  "exports": [
+    "mov-alpha",
+    "webm-alpha",
+    "png-seq",
+    "mp4"
+  ],
+  "checks": [
+    "mid-word",
+    "line-start-punct",
+    "stroke-clip",
+    "missing-glyph",
+    "safe-area",
+    "flash-rate",
+    "brand-lookalike"
+  ],
+  "demo": {
+    "default": {
+      "look": "V1",
+      "text": "哐！",
+      "video": "demo/017_V1_日常_竖屏.mp4",
+      "gif": "demo/preview.gif",
+      "poster": "demo/poster-v1.jpg",
+      "posterTime": "intro.end-0.16"
+    },
+    "showcase": {
+      "look": "V3",
+      "text": "哐！|咚！|啪！",
+      "video": "demo/017_V3_招牌_竖屏.mp4",
+      "gif": "demo/showcase.gif",
+      "poster": "demo/poster.jpg",
+      "posterTime": "intro.end-0.2"
+    }
+  },
+  "credits": [
+    {
+      "what": "字体",
+      "name": "站酷庆科黄油体 ZCOOL QingKe HuangYou",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/zcool-qingke-huangyou"
+    },
+    {
+      "what": "字体",
+      "name": "思源黑体 Noto Sans SC（取 wght 900）",
+      "license": "OFL-1.1",
+      "url": "https://github.com/notofonts/noto-cjk"
+    },
+    {
+      "what": "字体",
+      "name": "站酷快乐体 ZCOOL KuaiLe",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/zcool-kuaile"
+    },
+    {
+      "what": "图形",
+      "name": "爆炸底框、网点、放射线、碎片全部是本项目用代码画的",
+      "license": "MIT",
+      "url": ""
+    }
+  ],
+  "license": {
+    "code": "MIT",
+    "doc": "CC-BY-NC-4.0",
+    "demo": "CC-BY-4.0"
+  }
+}

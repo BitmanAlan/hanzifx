@@ -1,0 +1,7 @@
+{
+  "name": "hanzifx",
+  "owner": { "name": "hanzifx contributors" },
+  "plugins": [
+    { "name": "hanzifx", "source": "./", "description": "中文短视频字效和互动动效库（给 agent 用）" }
+  ]
+}

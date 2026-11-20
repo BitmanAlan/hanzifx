@@ -1,0 +1,187 @@
+{
+  "kuaile": {
+    "family": "hanzifx-kuaile",
+    "internalFamily": "ZCOOL KuaiLe",
+    "name": "站酷快乐体（ZCOOL KuaiLe）",
+    "file": "src/ZCOOLKuaiLe-Regular.ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/6d49995f5d8f1c7d476760a580ffb89ce1e52c5d/ofl/zcoolkuaile/ZCOOLKuaiLe-Regular.ttf",
+    "sha256": "812a6fc1fe54b6d73a419245c32dfeba8aa33104d5be90d1cf6af082007cb71d",
+    "bytes": 1514968,
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/ZCOOLKuaiLe-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/6d49995f5d8f1c7d476760a580ffb89ce1e52c5d/ofl/zcoolkuaile/OFL.txt",
+    "copyright": "Copyright 2018 The ZCOOL KuaiLe Project Authors (https://github.com/googlefonts/zcool-kuaile)",
+    "upstream": "https://github.com/googlefonts/zcool-kuaile",
+    "role": "primary"
+  },
+  "huangyou": {
+    "family": "hanzifx-huangyou",
+    "internalFamily": "ZCOOL QingKe HuangYou",
+    "name": "站酷庆科黄油体（ZCOOL QingKe HuangYou）",
+    "file": "src/ZCOOLQingKeHuangYou-Regular.ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/7f1b83ecdae8ccb7507fa6e06396e57bc0a5665d/ofl/zcoolqingkehuangyou/ZCOOLQingKeHuangYou-Regular.ttf",
+    "sha256": "54f0c0df4308cd74cd0f2fd3494ae054dbc4a1fd6fa7d71f4807eb4cdd8b4136",
+    "bytes": 8328684,
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/ZCOOLQingKeHuangYou-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/7f1b83ecdae8ccb7507fa6e06396e57bc0a5665d/ofl/zcoolqingkehuangyou/OFL.txt",
+    "copyright": "Copyright 2018 The ZCOOL QingKe HuangYou Project Authors (https://www.github.com/googlefonts/zcool-qingke-huangyou)",
+    "upstream": "https://github.com/googlefonts/zcool-qingke-huangyou",
+    "role": "primary"
+  },
+  "notosc-black": {
+    "family": "hanzifx-notosc-black",
+    "internalFamily": "Noto Sans SC",
+    "role": "fallback",
+    "name": "思源黑体 Black（Noto Sans SC，可变字体取 wght 900）",
+    "file": "src/NotoSansSC[wght].ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+    "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+    "bytes": 17772300,
+    "variation": {
+      "wght": 900
+    },
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/NotoSansSC-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/OFL.txt",
+    "copyright": "Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'",
+    "reservedFontName": "Source",
+    "upstream": "https://github.com/notofonts/noto-cjk"
+  },
+  "notosc-bold": {
+    "family": "hanzifx-notosc-bold",
+    "internalFamily": "Noto Sans SC",
+    "role": "primary",
+    "name": "思源黑体 Bold（Noto Sans SC，可变字体取 wght 700）",
+    "file": "src/NotoSansSC[wght].ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+    "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+    "bytes": 17772300,
+    "variation": {
+      "wght": 700
+    },
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/NotoSansSC-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/OFL.txt",
+    "copyright": "Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'",
+    "reservedFontName": "Source",
+    "upstream": "https://github.com/notofonts/noto-cjk"
+  },
+  "notoserif-semibold": {
+    "family": "hanzifx-notoserif-semibold",
+    "name": "思源宋体 SemiBold（Noto Serif SC，可变字体取 wght 600）",
+    "internalFamily": "Noto Serif SC",
+    "role": "primary",
+    "file": "src/NotoSerifSC[wght].ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/notoserifsc/NotoSerifSC%5Bwght%5D.ttf",
+    "sha256": "050080d9255a86808f2945bffac582b31ef32bc36411ce29563b4961670c66f9",
+    "bytes": 25125512,
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/NotoSerifSC-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/notoserifsc/OFL.txt",
+    "copyright": "Copyright 2012 Google Inc. All Rights Reserved.",
+    "upstream": "https://github.com/notofonts/noto-cjk",
+    "variation": {
+      "wght": 600
+    }
+  },
+  "notoserif-black": {
+    "family": "hanzifx-notoserif-black",
+    "name": "思源宋体 Black（Noto Serif SC，可变字体取 wght 900）",
+    "internalFamily": "Noto Serif SC",
+    "role": "primary",
+    "file": "src/NotoSerifSC[wght].ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/notoserifsc/NotoSerifSC%5Bwght%5D.ttf",
+    "sha256": "050080d9255a86808f2945bffac582b31ef32bc36411ce29563b4961670c66f9",
+    "bytes": 25125512,
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/NotoSerifSC-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/notoserifsc/OFL.txt",
+    "copyright": "Copyright 2012 Google Inc. All Rights Reserved.",
+    "upstream": "https://github.com/notofonts/noto-cjk",
+    "variation": {
+      "wght": 900
+    }
+  },
+  "zhimangxing": {
+    "family": "hanzifx-zhimangxing",
+    "internalFamily": "Zhi Mang Xing",
+    "name": "钟齐志莽行书（Zhi Mang Xing）",
+    "file": "src/ZhiMangXing-Regular.ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/187e2123ad2710ad8c2fa9955332fe9073e834b1/ofl/zhimangxing/ZhiMangXing-Regular.ttf",
+    "sha256": "644e0cae9b40f0b10ab729a01bd32032e3973bac22be3dccae01bf6ae7fde969",
+    "bytes": 4063532,
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/ZhiMangXing-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/187e2123ad2710ad8c2fa9955332fe9073e834b1/ofl/zhimangxing/OFL.txt",
+    "copyright": "Copyright 2018 The Zhi Mang Xing Project Authors (https://github.com/googlefonts/zhimangxing)",
+    "upstream": "https://github.com/googlefonts/zhimangxing",
+    "role": "primary"
+  },
+  "mashanzheng": {
+    "family": "hanzifx-mashanzheng",
+    "internalFamily": "Ma Shan Zheng",
+    "name": "马善政楷书（Ma Shan Zheng）",
+    "file": "src/MaShanZheng-Regular.ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/406197b91ff39a93061c2c2eeaee67ddf2ae1f0d/ofl/mashanzheng/MaShanZheng-Regular.ttf",
+    "sha256": "6d2546bb189c732a8ca29af9e22457b152387d158aa459e4ac2ce1e51788b7fb",
+    "bytes": 5857936,
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/MaShanZheng-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/406197b91ff39a93061c2c2eeaee67ddf2ae1f0d/ofl/mashanzheng/OFL.txt",
+    "copyright": "Copyright 2018 The Ma Shan Zheng Project Authors (https://github.com/googlefonts/mashanzheng)",
+    "upstream": "https://github.com/googlefonts/mashanzheng",
+    "role": "primary"
+  },
+  "liujianmaocao": {
+    "family": "hanzifx-liujianmaocao",
+    "internalFamily": "Liu Jian Mao Cao",
+    "name": "刘建毛草（Liu Jian Mao Cao）",
+    "file": "src/LiuJianMaoCao-Regular.ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/1658caeec10ae203e8c3a46e7b4abbe6f129828a/ofl/liujianmaocao/LiuJianMaoCao-Regular.ttf",
+    "sha256": "cab396b91a5b7c0b4005a35891180d06e6751f5ac261fe680aec65c1ae209033",
+    "bytes": 4951804,
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/LiuJianMaoCao-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/1658caeec10ae203e8c3a46e7b4abbe6f129828a/ofl/liujianmaocao/OFL.txt",
+    "copyright": "Copyright 2018 The Liu Jian Mao Cao Project Authors (https://www.github.com/googlefonts/liujianmaocao)",
+    "upstream": "https://github.com/googlefonts/liujianmaocao",
+    "role": "primary"
+  },
+  "jbmono-medium": {
+    "family": "hanzifx-jbmono-medium",
+    "internalFamily": "JetBrains Mono",
+    "role": "latin",
+    "name": "JetBrains Mono Medium（等宽拉丁字体，可变字体取 wght 500，没有中文）",
+    "file": "src/JetBrainsMono[wght].ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/6e4b84c976cadb3c49a40fd9a1c203e4f7fcf2da/ofl/jetbrainsmono/JetBrainsMono%5Bwght%5D.ttf",
+    "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
+    "bytes": 187208,
+    "variation": {
+      "wght": 500
+    },
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/JetBrainsMono-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/6e4b84c976cadb3c49a40fd9a1c203e4f7fcf2da/ofl/jetbrainsmono/OFL.txt",
+    "copyright": "Copyright 2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono)",
+    "upstream": "https://github.com/JetBrains/JetBrainsMono"
+  },
+  "jbmono-bold": {
+    "family": "hanzifx-jbmono-bold",
+    "internalFamily": "JetBrains Mono",
+    "role": "latin",
+    "name": "JetBrains Mono Bold（等宽拉丁字体，可变字体取 wght 700，没有中文）",
+    "file": "src/JetBrainsMono[wght].ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/6e4b84c976cadb3c49a40fd9a1c203e4f7fcf2da/ofl/jetbrainsmono/JetBrainsMono%5Bwght%5D.ttf",
+    "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
+    "bytes": 187208,
+    "variation": {
+      "wght": 700
+    },
+    "license": "OFL-1.1",
+    "licenseFile": "LICENSES/JetBrainsMono-OFL.txt",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/6e4b84c976cadb3c49a40fd9a1c203e4f7fcf2da/ofl/jetbrainsmono/OFL.txt",
+    "copyright": "Copyright 2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono)",
+    "upstream": "https://github.com/JetBrains/JetBrainsMono"
+  }
+}

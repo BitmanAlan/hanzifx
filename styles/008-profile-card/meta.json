@@ -1,0 +1,93 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "008",
+  "id": "profile-card",
+  "name": "账号名片卡",
+  "nameEn": "Profile Card",
+  "aliases": ["名片卡", "关注按钮", "求关注", "片尾名片", "关注引导"],
+  "kind": "interaction",
+  "tags": ["互动", "关注", "片尾"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "片尾的账号名片：圆头像、账号名、一句简介和一个「关注」按钮，从下面滑进来，手指一点，按钮翻一下变成「已关注」并打勾。也能只要头像加关注按钮。图形自己画、不仿任何平台，透明底叠上就能用。",
+  "summaryEn": "An end card for your account: round avatar, name, one-line bio and a Follow button slide up; a finger taps it and the button flips to Following with a check mark. Drawn from scratch, transparent background.",
+  "invoke": "用 008 做一张账号名片，名字「字效研究所」，简介「每天一个中文字效小技巧」，透明底",
+  "invokeTemplate": "用 {code} 做一张账号名片，名字「{text}」，造型 {look}，配色 {palette}",
+  "fitFor": ["视频片尾求关注", "口播开头的自我介绍", "系列内容每集的结尾", "直播切片的结尾"],
+  "notFor": [
+    { "case": "点赞、投币、收藏一起来", "use": "006 三连引导" },
+    { "case": "只求点赞或收藏", "use": "015 点赞收藏引导" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号、B 站的片尾", "basis": "inferred", "note": "两轮抖音测量没有专门量过名片卡" },
+    { "name": "小红书视频的结尾", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "卡片滑进来约 0.4 秒，第 1 秒左右点关注、变成已关注，再停 1.6 秒，出场 0.35 秒，全程约 3.1 秒（R2 约 2.8 秒，R3 挂着多停 3 秒）。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "滑进来" },
+    { "name": "follow", "label": "点关注" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": 0.96,
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏默认放在画面高度 0.66、水平居中" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-bold", "notosc-black", "kuaile"],
+  "fontFallback": { "notosc-bold": ["notosc-black"], "notosc-black": [], "kuaile": ["notosc-black"] },
+  "extraGlyphs": "关注已",
+  "typography": { "writingMode": "horizontal", "lineBreak": "none", "maxLines": 1, "maxCharsPerLine": 12, "noOrphan": false, "punctCompress": true, "shrinkParticles": 1, "latinFont": null },
+  "params": [
+    { "key": "text", "type": "text", "label": "账号名", "default": "字效研究所", "maxLength": 12, "hint": "一行，10 个字以内最好；放不下会自动缩小" },
+    { "key": "bio", "type": "text", "label": "一句简介（留空不写；简洁版不显示）", "default": "每天一个中文字效小技巧", "maxLength": 20, "allowEmpty": true },
+    { "key": "avatar", "type": "text", "label": "头像（第一版留空：用账号名的第一个字做圆形头像；以后支持换成图片）", "default": "", "maxLength": 2 },
+    { "key": "layout", "type": "select", "label": "版式", "default": "card", "options": [{ "value": "card", "label": "完整名片（头像、名字、简介、关注按钮）" }, { "value": "compact", "label": "简洁版（只有头像和关注按钮）" }] },
+    { "key": "followText", "type": "text", "label": "按钮上的字", "default": "关注", "maxLength": 4 },
+    { "key": "followedText", "type": "text", "label": "点了以后按钮上的字", "default": "已关注", "maxLength": 4 },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「招牌」「showcase」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-bold", "options": [{ "value": "notosc-bold", "label": "思源黑体 Bold" }, { "value": "kuaile", "label": "站酷快乐体（可爱）" }] },
+    { "key": "hand", "type": "bool", "label": "手指去点关注", "default": true },
+    { "key": "card", "type": "bool", "label": "卡片底（关掉就只剩头像、字和按钮，字加描边；C3 配色默认没有卡片）", "default": true },
+    { "key": "size", "type": "range", "label": "卡片宽度（占画面短边；放不下会自动缩小）", "default": 0.84, "min": 0.5, "max": 0.92, "step": 0.01 },
+    { "key": "flair", "type": "range", "label": "招牌强度（头像外圈转动的虚线光环、点关注时的彩纸、卡片弹进来时歪一下）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "particles", "type": "int", "label": "点关注时迸出的粒子数", "default": 8, "min": 0, "max": 30 },
+    { "key": "material", "type": "select", "label": "质感", "default": "candy", "options": [{ "value": "candy", "label": "亮面糖果（默认）" }, { "value": "flat", "label": "平面" }],
+      "hint": "亮面糖果：卡片、头像、关注按钮都有厚度、白亮边和镜面高光，按下去会陷；平面：扁平画法" },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝竖屏 0.66，其他 0.7）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "白卡橙按钮", "colors": { "fill": "#1E1E1E", "fill2": "#8A8A8A", "inner": "#FFFFFF", "outer": "#1E1E1E", "shadow": "#000000", "accent": "#FF8A3D", "bg": "#FFFFFF", "sub": "#6B6B6B" } },
+    { "id": "C2", "name": "黑卡紫按钮", "colors": { "fill": "#FFFFFF", "fill2": "#5C5C5C", "inner": "#FFFFFF", "outer": "#000000", "shadow": "#000000", "accent": "#7C5CFF", "bg": "#161618", "sub": "#A8A8AE" } },
+    { "id": "C3", "name": "黄按钮（无卡，叠在画面上）", "colors": { "fill": "#FFFFFF", "fill2": "#9A9A9A", "inner": "#1E1E1E", "outer": "#111111", "shadow": "#000000", "accent": "#FFB300", "bg": "#000000", "sub": "#E6E6E6" } },
+    { "id": "C4", "name": "浅灰卡青绿按钮", "colors": { "fill": "#1E2A28", "fill2": "#9AA6A3", "inner": "#FFFFFF", "outer": "#1E2A28", "shadow": "#000000", "accent": "#2BB5A0", "bg": "#EEF2F1", "sub": "#5E6B68" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "speed": 1, "holdExtra": 0 },
+    { "id": "R2", "name": "快", "speed": 0.7, "holdExtra": 0 },
+    { "id": "R3", "name": "挂着（停留段多 3 秒）", "speed": 1, "holdExtra": 3 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0, "particles": 8 } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1, "particles": 18 } }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["mid-word", "stroke-clip", "missing-glyph", "safe-area", "flash-rate", "brand-lookalike"],
+  "demo": {
+    "default": { "look": "V1", "text": "字效研究所", "video": "demo/008_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "字效研究所", "video": "demo/008_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" },
+    "compact": { "look": "V1", "text": "字效研究所", "layout": "compact", "palette": "C4", "video": "demo/008_V1_简洁版_竖屏.mp4", "gif": "demo/compact.gif", "poster": "demo/poster-compact.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 700 和 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" },
+    { "what": "图形", "name": "卡片、头像、按钮、加号、勾、手全部是本项目自己画的（手跟 006、015 同一套画法）", "license": "MIT", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "011",
+  "id": "countdown",
+  "name": "倒计时",
+  "nameEn": "Countdown",
+  "aliases": ["3 2 1 倒计时", "倒数", "开场倒计时", "321"],
+  "kind": "interaction",
+  "tags": ["互动", "开场", "揭晓"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "开场、揭晓、挑战前的 3、2、1：大数字一秒一个弹出来，外面一圈圆环从 12 点方向顺时针走完一圈，数到头砸出一句「开始！」；透明底叠上就能用。",
+  "summaryEn": "A 3-2-1 for openings, reveals and challenges: big numbers pop in once a second while a ring sweeps clockwise from twelve o'clock, then a closing line lands. Transparent background.",
+  "invoke": "用 011 做一个 3、2、1 倒计时，最后出「开始！」，透明底",
+  "invokeTemplate": "用 {code} 做一个从 {from} 开始的倒计时，最后出「{text}」，造型 {look}，配色 {palette}",
+  "fitFor": ["挑战、实验类视频的开场", "揭晓答案、开奖之前", "口播里「三秒后告诉你」", "直播切片的开始"],
+  "notFor": [
+    { "case": "带货的「距结束 00:59:59」限时倒计时", "use": "以后做成 011 的一种模式（还没做）" },
+    { "case": "片尾求点赞关注", "use": "006" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号开场和揭晓", "basis": "inferred", "note": "两轮抖音测量没有专门量过倒计时；爆款特效库（pixelfx）的「UI」类里也把倒计时当标配" },
+    { "name": "B 站挑战和实验类视频", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "每个数字停 1 秒（R2 快是 0.7 秒，R3 悬念是 1.3 秒），数完出结束语，停 0.9 秒后出场 0.35 秒。3、2、1 加「开始！」在 R1 下约 4.4 秒。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "入场" },
+    { "name": "count", "label": "倒数" },
+    { "name": "hold", "label": "结束语停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": 3.5,
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏默认放在画面高度 0.42、水平居中" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-black", "kuaile"],
+  "fontFallback": { "notosc-black": [], "kuaile": ["notosc-black"] },
+  "extraGlyphs": "0123456789",
+  "typography": { "writingMode": "horizontal", "lineBreak": "none", "maxLines": 1, "maxCharsPerLine": 6, "noOrphan": false, "punctCompress": false, "shrinkParticles": 1, "latinFont": null, "numbers": "tabular" },
+  "params": [
+    { "key": "text", "type": "text", "label": "结束语（数到头砸出来的那句）", "default": "开始！", "maxLength": 8, "hint": "最多 6 个字左右；不想要结束语就把 showEnd 关掉" },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「招牌」「showcase」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-black", "options": [{ "value": "notosc-black", "label": "思源黑体 Black" }, { "value": "kuaile", "label": "站酷快乐体（可爱）" }] },
+    { "key": "from", "type": "int", "label": "从几开始数", "default": 3, "min": 1, "max": 10 },
+    { "key": "tick", "type": "number", "label": "每个数字停几秒（空着就按节奏预设）", "default": null, "min": 0.4, "max": 3 },
+    { "key": "showEnd", "type": "bool", "label": "数到头出结束语", "default": true },
+    { "key": "ring", "type": "bool", "label": "外面的圆环", "default": true },
+    { "key": "disc", "type": "bool", "label": "数字后面的半透明圆底（叠在花哨画面上更清楚）", "default": true },
+    { "key": "size", "type": "range", "label": "圆环直径（占画面短边）", "default": 0.36, "min": 0.18, "max": 0.6, "step": 0.01 },
+    { "key": "flair", "type": "range", "label": "招牌强度（冲击波、火花、轻震）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "particles", "type": "int", "label": "结束语火花数", "default": 0, "min": 0, "max": 30 },
+    { "key": "material", "type": "select", "label": "质感", "default": "candy", "options": [{ "value": "candy", "label": "亮面糖果（默认）" }, { "value": "flat", "label": "平面" }],
+      "hint": "亮面糖果：数字后面的圆底是一颗有厚度、白亮边和镜面高光的圆按钮，每换一个数字往下顿一下；平面：半透明圆底" },
+    { "key": "hold", "type": "number", "label": "结束语停几秒", "default": 0.9, "min": 0.3, "max": 6 },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝竖屏 0.42，其他居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "白金", "colors": { "fill": "#FFFFFF", "fill2": "#FFB300", "inner": "#FFFFFF", "outer": "#1A1A1A", "shadow": "#000000", "accent": "#FF5A4E", "bg": "#000000", "sub": "#FFFFFF" } },
+    { "id": "C2", "name": "夜光绿", "colors": { "fill": "#F4FFF8", "fill2": "#8CFFB5", "inner": "#8CFFB5", "outer": "#0B2A1A", "shadow": "#000000", "accent": "#FFE066", "bg": "#062014", "sub": "#8CFFB5" } },
+    { "id": "C3", "name": "红黄（挑战、带货）", "colors": { "fill": "#FFFFFF", "fill2": "#FFE066", "inner": "#FFE066", "outer": "#4A0A06", "shadow": "#000000", "accent": "#FF6B35", "bg": "#3A0804", "sub": "#FFE066" } },
+    { "id": "C4", "name": "深色版（叠在浅色画面上）", "colors": { "fill": "#1E1E1E", "fill2": "#E0482B", "inner": "#1E1E1E", "outer": "#FFFFFF", "shadow": "#FFFFFF", "accent": "#E0482B", "bg": "#FFFFFF", "sub": "#1E1E1E" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "tick": 1.0 },
+    { "id": "R2", "name": "快", "tick": 0.7 },
+    { "id": "R3", "name": "悬念（每个数停久一点）", "tick": 1.3 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0, "particles": 0 } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1, "particles": 16 } }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["mid-word", "stroke-clip", "missing-glyph", "safe-area", "flash-rate", "brand-lookalike"],
+  "demo": {
+    "default": { "look": "V1", "text": "开始！", "video": "demo/011_V1_日常_竖屏.mp4", "posterTime": 1.35, "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "开始！", "video": "demo/011_V3_招牌_竖屏.mp4", "gifMaxMB": 1.5, "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" },
+    { "what": "图形", "name": "数字、圆环、火花全部是本项目自己画的", "license": "MIT", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

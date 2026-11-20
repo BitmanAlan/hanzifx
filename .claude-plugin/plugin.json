@@ -1,0 +1,8 @@
+{
+  "name": "hanzifx",
+  "version": "0.1.0",
+  "description": "中文短视频字效和互动动效库：综艺花字、大字报、书法标题、一词一屏字幕、竖排诗句、片尾三连、文字快闪；导出成片或透明底，中文排版按规矩来。Chinese short-video text effects for AI agents.",
+  "author": { "name": "hanzifx contributors" },
+  "license": "MIT",
+  "keywords": ["chinese", "typography", "video", "captions", "motion-graphics", "agent-skills"]
+}

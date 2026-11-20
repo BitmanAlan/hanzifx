@@ -1,0 +1,91 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "012",
+  "id": "right-wrong",
+  "name": "对错判断",
+  "nameEn": "Right or Wrong",
+  "aliases": ["大勾大叉", "打叉", "打勾", "辟谣", "对还是错"],
+  "kind": "interaction",
+  "tags": ["互动", "辟谣", "避坑", "问答"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "一句说法放在卡片上，一个大叉砸下来把它划掉，或者一个大勾一笔画出来；辟谣、避坑、「这样做对不对」都能用，透明底叠上就行。",
+  "summaryEn": "A statement on a card, struck out by a big X or approved with a check drawn in one stroke. For myth-busting and do's and don'ts. Transparent background.",
+  "invoke": "用 012 给「早起才能成功」打个大叉，透明底",
+  "invokeTemplate": "用 {code} 给「{text}」判对错，造型 {look}，配色 {palette}",
+  "fitFor": ["辟谣、纠正常见误区", "避坑清单里「这样做是错的」", "测评里「这个说法对不对」", "知识口播里的对比"],
+  "notFor": [
+    { "case": "四个选项的选择题", "use": "以后的选择题卡（还没做）" },
+    { "case": "两个选项比谁票多", "use": "016 投票条" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号的辟谣和避坑口播", "basis": "inferred", "note": "两轮抖音测量没有专门量过对错判断" },
+    { "name": "小红书避坑笔记的视频", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "说法先出来（约 0.45 秒），0.7 秒时打叉或打勾（R2 快 0.45 秒，R3 悬念 1.2 秒），停 1.4 秒后出场 0.3 秒，全程约 2.9 秒。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "说法出来" },
+    { "name": "mark", "label": "打叉或打勾" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": "hold+0.2",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏默认放在画面高度 0.42" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-black", "kuaile"],
+  "fontFallback": { "notosc-black": [], "kuaile": ["notosc-black"] },
+  "extraGlyphs": "谣言真相错误正确",
+  "typography": { "writingMode": "horizontal", "lineBreak": "word", "maxLines": 2, "maxCharsPerLine": 9, "noOrphan": true, "punctCompress": true, "shrinkParticles": 1, "latinFont": null },
+  "params": [
+    { "key": "text", "type": "text", "label": "说法（要判对错的那句话）", "default": "早起才能成功", "maxLength": 24, "hint": "最多两行，每行 9 个字左右；超过 9 个字自动按词分成两行。留空就只出记号" },
+    { "key": "verdict", "type": "select", "label": "判对还是判错", "default": "wrong", "options": [{ "value": "wrong", "label": "错（大叉）" }, { "value": "right", "label": "对（大勾）" }] },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「招牌」「showcase」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-black", "options": [{ "value": "notosc-black", "label": "思源黑体 Black" }, { "value": "kuaile", "label": "站酷快乐体（可爱）" }] },
+    { "key": "tag", "type": "text", "label": "标签章上的字（空着＝错用「谣言」、对用「真相」；只在招牌强度大于 0 时出现）", "default": "", "maxLength": 4 },
+    { "key": "card", "type": "bool", "label": "说法后面的卡片（关掉就是字直接叠在画面上，加描边）", "default": true },
+    { "key": "size", "type": "range", "label": "说法的字号（占画面短边）", "default": 0.085, "min": 0.05, "max": 0.14, "step": 0.005 },
+    { "key": "flair", "type": "range", "label": "招牌强度（冲击波、标签章、碎片、轻震）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "particles", "type": "int", "label": "碎片或亮点的数量", "default": 0, "min": 0, "max": 30 },
+    { "key": "hold", "type": "number", "label": "打完以后停几秒", "default": 1.4, "min": 0.4, "max": 6 },
+    { "key": "material", "type": "select", "label": "质感", "default": "candy", "options": [{ "value": "candy", "label": "亮面糖果（默认）" }, { "value": "flat", "label": "平面" }],
+      "hint": "亮面糖果：卡片有厚度、白亮边和上沿高光，标签章是糖果徽章，勾叉每一笔多一道细高光；平面：原来的扁平卡片、描边章和勾叉" },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝竖屏 0.42，其他居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "白卡红叉绿勾", "colors": { "fill": "#1E1E1E", "fill2": "#7BD95A", "inner": "#FFFFFF", "outer": "#1E1E1E", "shadow": "#000000", "accent": "#E8473C", "bg": "#FFFFFF", "sub": "#9A9A9A" } },
+    { "id": "C2", "name": "黑卡", "colors": { "fill": "#FFFFFF", "fill2": "#7BD95A", "inner": "#FFFFFF", "outer": "#000000", "shadow": "#000000", "accent": "#FF5A4E", "bg": "#151515", "sub": "#6E6E6E" } },
+    { "id": "C3", "name": "黄卡（警示）", "colors": { "fill": "#1E1E1E", "fill2": "#36C2A0", "inner": "#FFFFFF", "outer": "#1E1E1E", "shadow": "#000000", "accent": "#E8473C", "bg": "#FFE066", "sub": "#8C7A2E" } },
+    { "id": "C4", "name": "无卡白字（叠在画面上）", "colors": { "fill": "#FFFFFF", "fill2": "#7BD95A", "inner": "#FFFFFF", "outer": "#111111", "shadow": "#000000", "accent": "#FF5A4E", "bg": "#000000", "sub": "#BDBDBD" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "markAt": 0.7 },
+    { "id": "R2", "name": "快", "markAt": 0.45 },
+    { "id": "R3", "name": "悬念（说法先停一会儿）", "markAt": 1.2 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0, "particles": 0 } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1, "particles": 14 } }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["mid-word", "line-start-punct", "line-end-punct", "stroke-clip", "missing-glyph", "safe-area", "flash-rate", "brand-lookalike"],
+  "demo": {
+    "default": { "look": "V1", "text": "早起才能成功", "video": "demo/012_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "早起才能成功", "video": "demo/012_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" },
+    "right": { "look": "V3", "text": "每天读书半小时，一年能读二十本", "verdict": "right", "video": "demo/012_V3_判对_竖屏.mp4",
+    "gif": "demo/right.gif", "poster": "demo/poster-right.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" },
+    { "what": "图形", "name": "勾、叉、标签章、碎片全部是本项目自己画的", "license": "MIT", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

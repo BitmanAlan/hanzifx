@@ -1,0 +1,44 @@
+name: 中文排版不对 / Chinese typesetting problem
+description: 词被拆开了、标点放错了、竖排不对 / A word split across lines, misplaced punctuation, wrong vertical layout
+title: "[排版] "
+labels: ["typesetting"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        中文排版是这个库最在意的事，这类问题我们优先看。最有用的是原文和 check 打印的「分词」那一行。
+        Chinese typesetting is what we care about most, so these get looked at first.
+  - type: input
+    id: style
+    attributes:
+      label: 风格编号 / Style code
+      placeholder: "004"
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: 原文 / Input text
+      description: 原样贴进来，包括 | 和 *…* 标记 / Paste exactly, including | and *…* marks
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: check
+    attributes:
+      label: check 的输出 / Output of check
+      description: "在 engine/ 下跑 npm run check -- --style styles/<编号> --text \"…\"，把输出贴进来，尤其是「分词」那一行"
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 应该怎么断、怎么排 / What it should be
+      placeholder: 比如：「搜索引擎」不该拆成两行 / e.g. 「搜索引擎」should not be split
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 截图（可选）/ Screenshot (optional)

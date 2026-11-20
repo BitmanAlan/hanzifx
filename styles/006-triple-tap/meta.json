@@ -1,0 +1,477 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "006",
+  "id": "triple-tap",
+  "name": "三连引导",
+  "nameEn": "Triple Tap",
+  "aliases": [
+    "一键三连",
+    "点赞投币收藏",
+    "点赞收藏转发",
+    "三连动画",
+    "片尾三连"
+  ],
+  "kind": "interaction",
+  "tags": [
+    "互动",
+    "片尾",
+    "求点赞"
+  ],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "片尾或求互动那一刻的三连动画：手按住点赞，圆环蓄力，三个按钮一起点亮绽放；图标全部自己画，透明底叠在视频上用",
+  "summaryEn": "The like-coin-favorite \"triple tap\" for outros and calls to action: a hand presses and holds the like button, rings charge up, and all three buttons light up and burst together. All icons are drawn from scratch; transparent background, made to overlay your video.",
+  "invoke": "用 006 做一个三连引导，横排，透明底（日常用默认 V1；要招牌效果说「综艺」或 look=showcase）",
+  "invokeTemplate": "用 {code} 做一个{name}，版式 {layout}，造型 {look}，配色 {palette}",
+  "fitFor": [
+    "视频片尾求三连",
+    "口播中间求点赞收藏的那一刻",
+    "直播切片的结尾"
+  ],
+  "notFor": [
+    {
+      "case": "只要一个点赞按钮",
+      "use": "单个点赞动画（还没做）"
+    },
+    {
+      "case": "头像加关注按钮的名片",
+      "use": "账号名片卡（还没做）"
+    }
+  ],
+  "sizes": [
+    "1080x1920",
+    "1920x1080",
+    "1080x1080"
+  ],
+  "fps": 30,
+  "durationHint": "横排 R1 约 3.0 秒，竖排 R1 约 2.8 秒，R2 快约 2 秒，R3 挂着约 6 秒；实际时长以导出的 timeline.json 为准",
+  "timelineSegments": [
+    {
+      "name": "intro",
+      "label": "入场"
+    },
+    {
+      "name": "press",
+      "label": "按住（竖排是依次点）"
+    },
+    {
+      "name": "charge",
+      "label": "蓄力（只有横排）"
+    },
+    {
+      "name": "burst",
+      "label": "绽放（只有横排）"
+    },
+    {
+      "name": "hold",
+      "label": "停留"
+    },
+    {
+      "name": "outro",
+      "label": "出场"
+    }
+  ],
+  "posterTime": "hold+0.1",
+  "safeArea": {
+    "bottom": 0.2,
+    "right": 0.15,
+    "measured": false,
+    "note": "经验值，未实测；竖排默认右边缘离画面右侧 18%，给平台自己的按钮列让位"
+  },
+  "requires": {
+    "wordTimes": false,
+    "beats": false,
+    "tracking": false
+  },
+  "fonts": [
+    "notosc-bold"
+  ],
+  "fontFallback": {
+    "notosc-bold": [
+      "notosc-black"
+    ]
+  },
+  "extraGlyphs": "点赞投币收藏转发+0123456789.,万千亿kKwW",
+  "typography": {
+    "writingMode": "horizontal",
+    "lineBreak": "none",
+    "maxLines": 1,
+    "maxCharsPerLine": 4,
+    "noOrphan": false,
+    "punctCompress": false,
+    "shrinkParticles": 1,
+    "latinFont": null,
+    "numbers": "tabular"
+  },
+  "params": [
+    {
+      "key": "text",
+      "type": "text",
+      "label": "三个小字",
+      "default": "点赞 投币 收藏",
+      "maxLength": 24,
+      "hint": "用空格分开，按按钮顺序写；竖排没改过时自动换成「点赞 收藏 转发」"
+    },
+    {
+      "key": "look",
+      "type": "select",
+      "label": "造型预设",
+      "default": "V1",
+      "options": [
+        {
+          "value": "V1",
+          "label": "V1 日常"
+        },
+        {
+          "value": "V3",
+          "label": "V3 招牌"
+        }
+      ],
+      "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「综艺」「showcase」）"
+    },
+    {
+      "key": "layout",
+      "type": "select",
+      "label": "版式",
+      "default": "row",
+      "options": [
+        {
+          "value": "row",
+          "label": "横排（按住一起亮）"
+        },
+        {
+          "value": "column",
+          "label": "竖排（依次点）"
+        }
+      ]
+    },
+    {
+      "key": "set",
+      "type": "select",
+      "label": "三个动作",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "自动（横排点赞投币收藏，竖排点赞收藏转发）"
+        },
+        {
+          "value": "coin",
+          "label": "点赞、投币、收藏"
+        },
+        {
+          "value": "share",
+          "label": "点赞、收藏、转发"
+        }
+      ]
+    },
+    {
+      "key": "palette",
+      "type": "select",
+      "label": "配色",
+      "default": "C1",
+      "options": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ]
+    },
+    {
+      "key": "rhythm",
+      "type": "select",
+      "label": "节奏",
+      "default": "R1",
+      "options": [
+        "R1",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "key": "font",
+      "type": "select",
+      "label": "字体",
+      "default": "notosc-bold",
+      "options": [
+        {
+          "value": "notosc-bold",
+          "label": "思源黑体 Bold"
+        }
+      ]
+    },
+    {
+      "key": "size",
+      "type": "range",
+      "label": "按钮直径（占画面短边）",
+      "default": 0.11,
+      "min": 0.07,
+      "max": 0.16,
+      "step": 0.005,
+      "hint": "小于 0.07 手指和图标会糊在一起"
+    },
+    {
+      "key": "hand",
+      "type": "bool",
+      "label": "手指",
+      "default": true
+    },
+    {
+      "key": "plusOne",
+      "type": "bool",
+      "label": "点亮时飘「+1」",
+      "default": true,
+      "hint": "填了数字（counts）时不飘「+1」，免得信息重复"
+    },
+    {
+      "key": "counts",
+      "type": "text",
+      "label": "数字（可选）",
+      "default": "",
+      "maxLength": 30,
+      "hint": "三个数字用空格分开，比如「1.2万 3456 999」；留空就不显示，默认不编造数字"
+    },
+    {
+      "key": "particles",
+      "type": "range",
+      "label": "粒子数",
+      "default": 14,
+      "min": 0,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "key": "flair",
+      "type": "range",
+      "label": "招牌强度（放射光、冲击波、彩纸、飘爱心）",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "material",
+      "type": "select",
+      "label": "质感",
+      "default": "candy",
+      "options": [
+        { "value": "candy", "label": "亮面糖果（默认）" },
+        { "value": "flat", "label": "平面" }
+      ],
+      "hint": "亮面糖果：按钮是有厚度和高光的糖果按钮，没点亮是灰色，点亮换主色，按下去会陷；平面：原来的半透明底盘加描线图标"
+    },
+    {
+      "key": "x",
+      "type": "range",
+      "label": "水平位置（空着＝自动）",
+      "default": null,
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.01
+    },
+    {
+      "key": "y",
+      "type": "range",
+      "label": "垂直位置（空着＝自动：横排在下方三分之一，竖排居中偏下）",
+      "default": null,
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.01
+    },
+    {
+      "key": "seed",
+      "type": "int",
+      "label": "种子",
+      "default": 7
+    }
+  ],
+  "looks": [
+    {
+      "id": "V1",
+      "name": "日常",
+      "aliases": [
+        "日常",
+        "daily"
+      ],
+      "params": {
+        "flair": 0,
+        "particles": 14
+      },
+      "role": "default",
+      "nameEn": "Everyday"
+    },
+    {
+      "id": "V3",
+      "name": "招牌",
+      "aliases": [
+        "综艺",
+        "showcase",
+        "招牌"
+      ],
+      "params": {
+        "flair": 1,
+        "particles": 18
+      },
+      "role": "showcase",
+      "nameEn": "Signature"
+    }
+  ],
+  "palettes": [
+    {
+      "id": "C1",
+      "name": "暖粉",
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#FFB800",
+        "inner": "#FFFFFF",
+        "outer": "#2A1530",
+        "shadow": "#000000",
+        "accent": "#F55A6E",
+        "bg": "#1B1020",
+        "sub": "#FFFFFF"
+      }
+    },
+    {
+      "id": "C2",
+      "name": "极简白",
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#FFFFFF",
+        "inner": "#FFFFFF",
+        "outer": "#141414",
+        "shadow": "#000000",
+        "accent": "#FFFFFF",
+        "bg": "#000000",
+        "sub": "#FFFFFF"
+      }
+    },
+    {
+      "id": "C3",
+      "name": "红黄",
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#FFB300",
+        "inner": "#FFE08A",
+        "outer": "#3A0A08",
+        "shadow": "#000000",
+        "accent": "#FF3B30",
+        "bg": "#2A0806",
+        "sub": "#FFFFFF"
+      }
+    },
+    {
+      "id": "C4",
+      "name": "深色版（叠在浅色画面上）",
+      "colors": {
+        "fill": "#2A2A2A",
+        "fill2": "#F5A623",
+        "inner": "#2A2A2A",
+        "outer": "#FFFFFF",
+        "shadow": "#000000",
+        "accent": "#FF4D4F",
+        "bg": "#FFFFFF",
+        "sub": "#2A2A2A"
+      }
+    }
+  ],
+  "rhythms": [
+    {
+      "id": "R1",
+      "name": "标准",
+      "speed": 1,
+      "holdExtra": 0
+    },
+    {
+      "id": "R2",
+      "name": "快",
+      "speed": 0.667,
+      "holdExtra": 0
+    },
+    {
+      "id": "R3",
+      "name": "挂着（停留段加长，适合口播中间一直挂着）",
+      "speed": 1,
+      "holdExtra": 3
+    }
+  ],
+  "exports": [
+    "mov-alpha",
+    "webm-alpha",
+    "png-seq",
+    "mp4"
+  ],
+  "checks": [
+    "stroke-clip",
+    "missing-glyph",
+    "safe-area",
+    "min-size",
+    "brand-lookalike"
+  ],
+  "demo": {
+    "default": {
+      "look": "V1",
+      "layout": "row",
+      "video": "demo/006_V1_横排_竖屏.mp4",
+      "poster": "demo/poster-v1.jpg",
+      "gif": "demo/preview.gif"
+    },
+    "showcase": {
+      "look": "V3",
+      "layout": "row",
+      "video": "demo/006_V3_招牌_竖屏.mp4",
+      "poster": "demo/poster-v3.jpg",
+      "gif": "demo/showcase.gif"
+    }
+  },
+  "credits": [
+    {
+      "what": "字体",
+      "name": "思源黑体 Noto Sans SC（固定 wght 700）",
+      "license": "OFL-1.1",
+      "url": "https://github.com/notofonts/noto-cjk"
+    },
+    {
+      "what": "图标",
+      "name": "点赞、投币、收藏、转发、手指，都是本项目自己画的",
+      "license": "随代码 MIT",
+      "url": ""
+    },
+    {
+      "what": "参考效果",
+      "name": "国内视频平台常见的片尾「三连」引导（只参考动作节奏，不用平台的图标、品牌色和布局）",
+      "license": "—",
+      "url": ""
+    }
+  ],
+  "license": {
+    "code": "MIT",
+    "doc": "CC-BY-NC-4.0",
+    "demo": "CC-BY-4.0"
+  },
+  "exportDefaults": {
+    "bg": "transparent"
+  },
+  "platforms": [
+    {
+      "name": "B 站横屏片尾",
+      "basis": "inferred",
+      "note": "「投币」本来就是 B 站的说法；没在 B 站测"
+    },
+    {
+      "name": "抖音、小红书片尾（竖排版）",
+      "basis": "inferred",
+      "note": "第二轮看了 5 条抖音头部 vlog，结尾都没有片尾三连"
+    }
+  ],
+  "extraDemos": [
+    {
+      "look": "V1",
+      "layout": "row",
+      "video": "demo/006_V1_横排_横屏.mp4",
+      "poster": "demo/poster-landscape.jpg",
+      "note": "B 站片尾主样片（三连更像 B 站横屏片尾的东西）；出样片的命令现在只出竖屏，这条手动导出：npm run export -- --style styles/006-triple-tap --size 16:9 --format mp4",
+      "canvas": "1920x1080"
+    }
+  ]
+}

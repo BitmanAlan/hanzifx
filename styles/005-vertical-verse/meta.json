@@ -1,0 +1,522 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "005",
+  "id": "vertical-verse",
+  "name": "竖排诗句",
+  "nameEn": "Vertical Verse",
+  "aliases": [
+    "竖排文字",
+    "古诗竖排"
+  ],
+  "kind": "style",
+  "tags": [
+    "国潮",
+    "诗词",
+    "排版"
+  ],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "一首诗竖着排，从右往左一列一列、一个字一个字淡出来；标点、引号、数字都按竖排的规矩放，最后盖一方小印章。",
+  "summaryEn": "A poem set vertically, right to left: columns fade in character by character, punctuation, quotes and numbers follow vertical-text rules, and a small seal stamps the end.",
+  "invoke": "用 005 把「春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。」做成竖排诗句，署名「唐·孟浩然」",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": [
+    "古风、诗词、读书号",
+    "节气和文旅",
+    "深夜文案",
+    "小红书图文的一页"
+  ],
+  "notFor": [
+    {
+      "case": "两三个毛笔大字的片头标题",
+      "use": "003"
+    },
+    {
+      "case": "跟着口播一句句换的字幕",
+      "use": "004"
+    }
+  ],
+  "platforms": [
+    {
+      "name": "小红书图文和视频",
+      "basis": "inferred",
+      "note": "两轮抖音测量里古风诗词号 6 条成片一条竖排都没有；没在小红书测"
+    }
+  ],
+  "sizes": [
+    "1080x1920",
+    "1080x1440",
+    "1080x1080",
+    "1920x1080"
+  ],
+  "fps": 30,
+  "durationHint": "每个字淡入 0.35 秒、字与字错开 0.12 秒、列与列之间多停 0.3 秒；署名和印章在最后一个字之后 0.4 秒出来；停留按字数算，至少 3 秒、每秒 5 个字；出场 0.8 秒。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    {
+      "name": "intro",
+      "label": "入场"
+    },
+    {
+      "name": "hold",
+      "label": "停留"
+    },
+    {
+      "name": "outro",
+      "label": "出场"
+    }
+  ],
+  "posterTime": "after-intro",
+  "safeArea": {
+    "bottom": 0.2,
+    "right": 0.15,
+    "measured": false,
+    "note": "底部 20% 有旁证（一位博主的标注，加上我们量过的抖音样本统计），没有官方规范；右侧 15% 是经验值，未实测。竖屏时整块文字的右边缘不进右侧 15%"
+  },
+  "requires": {
+    "wordTimes": false,
+    "beats": false,
+    "tracking": false
+  },
+  "fonts": [
+    "notoserif-semibold",
+    "notosc-bold"
+  ],
+  "fontFallback": {
+    "notoserif-semibold": [
+      "notosc-bold"
+    ],
+    "notosc-bold": [
+      "notosc-black"
+    ]
+  },
+  "extraGlyphs": "︐︑︒︓︔︕︖︗︘︙︰︱︲︳︴︵︶︷︸︹︺︻︼︽︾︿﹀﹁﹂﹃﹄",
+  "typography": {
+    "writingMode": "vertical",
+    "lineBreak": "sentence",
+    "maxLines": 8,
+    "maxCharsPerLine": 12,
+    "noOrphan": false,
+    "punctCompress": true,
+    "shrinkParticles": 1,
+    "latinFont": null
+  },
+  "params": [
+    {
+      "key": "text",
+      "type": "text",
+      "label": "诗句",
+      "default": "春眠不觉晓，处处闻啼鸟。夜来风雨声，*花落*知多少。",
+      "maxLength": 120,
+      "hint": "默认一句一列（遇到逗号、句号就换列）；回车强制另起一列；用 *关键字* 标出要换成朱红的字；用 | 指定能断开的位置"
+    },
+    {
+      "key": "author",
+      "type": "text",
+      "label": "署名（作者、朝代，留空不写）",
+      "default": "唐·孟浩然",
+      "maxLength": 16
+    },
+    {
+      "key": "seal",
+      "type": "text",
+      "label": "印章字（1、2 或 4 个字，留空不盖）",
+      "default": "清欢",
+      "maxLength": 4
+    },
+    {
+      "key": "look",
+      "type": "select",
+      "label": "造型预设",
+      "default": "V1",
+      "options": [
+        {
+          "value": "V1",
+          "label": "V1 清读（默认）"
+        },
+        {
+          "value": "V3",
+          "label": "V3 水墨卷轴（招牌）"
+        }
+      ],
+      "hint": "V1＝日常默认（别名「清读」「daily」）；V3＝招牌重型（别名「水墨」「卷轴」「showcase」）"
+    },
+    {
+      "key": "palette",
+      "type": "select",
+      "label": "配色",
+      "default": "C1",
+      "options": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ]
+    },
+    {
+      "key": "rhythm",
+      "type": "select",
+      "label": "节奏",
+      "default": "R1",
+      "options": [
+        "R1",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "key": "font",
+      "type": "select",
+      "label": "字体",
+      "default": "notoserif-semibold",
+      "options": [
+        {
+          "value": "notoserif-semibold",
+          "label": "思源宋体 SemiBold（默认）"
+        },
+        {
+          "value": "notosc-bold",
+          "label": "思源黑体 Bold"
+        }
+      ]
+    },
+    {
+      "key": "columns",
+      "type": "select",
+      "label": "怎么分列",
+      "default": "sentence",
+      "options": [
+        {
+          "value": "sentence",
+          "label": "一句一列"
+        },
+        {
+          "value": "6",
+          "label": "每列最多 6 个字"
+        },
+        {
+          "value": "8",
+          "label": "每列最多 8 个字"
+        },
+        {
+          "value": "10",
+          "label": "每列最多 10 个字"
+        },
+        {
+          "value": "12",
+          "label": "每列最多 12 个字"
+        }
+      ]
+    },
+    {
+      "key": "punct",
+      "type": "bool",
+      "label": "显示标点（关掉是古籍风）",
+      "default": true
+    },
+    {
+      "key": "numbers",
+      "type": "select",
+      "label": "数字和英文",
+      "default": "tcy",
+      "options": [
+        {
+          "value": "tcy",
+          "label": "两位以内横着并排（纵中横），更长的转 90°"
+        },
+        {
+          "value": "rotate",
+          "label": "全部转 90°"
+        },
+        {
+          "value": "upright",
+          "label": "一个字一格立着"
+        }
+      ]
+    },
+    {
+      "key": "size",
+      "type": "number",
+      "label": "字号（占画面短边；空着＝自动）",
+      "default": null,
+      "min": 0.04,
+      "max": 0.14
+    },
+    {
+      "key": "colGap",
+      "type": "range",
+      "label": "列距（字号的几倍）",
+      "default": 1.0,
+      "min": 0.6,
+      "max": 1.4,
+      "step": 0.05
+    },
+    {
+      "key": "transparent",
+      "type": "bool",
+      "label": "透明底（不画底色，叠在视频上用；C3 配色自动透明）",
+      "default": false
+    },
+    {
+      "key": "inkBloom",
+      "type": "bool",
+      "label": "墨晕入场",
+      "default": false
+    },
+    {
+      "key": "wobble",
+      "type": "range",
+      "label": "手写的错落",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "paper",
+      "type": "bool",
+      "label": "宣纸纹理和远山墨影",
+      "default": false
+    },
+    {
+      "key": "pan",
+      "type": "range",
+      "label": "镜头从右往左平移（画面宽的几分之几）",
+      "default": 0,
+      "min": 0,
+      "max": 0.08,
+      "step": 0.005
+    },
+    {
+      "key": "sealHalo",
+      "type": "bool",
+      "label": "印章盖下时轻震、晕开一圈朱砂",
+      "default": false
+    },
+    {
+      "key": "hold",
+      "type": "number",
+      "label": "停留秒数（空着就按字数算）",
+      "default": null,
+      "min": 1,
+      "max": 20
+    },
+    {
+      "key": "x",
+      "type": "range",
+      "label": "水平位置（整块的中心；空着＝自动）",
+      "default": null,
+      "min": 0.2,
+      "max": 0.8,
+      "step": 0.01
+    },
+    {
+      "key": "y",
+      "type": "range",
+      "label": "垂直位置（整块的中心；空着＝自动）",
+      "default": null,
+      "min": 0.2,
+      "max": 0.8,
+      "step": 0.01
+    },
+    {
+      "key": "seed",
+      "type": "int",
+      "label": "种子",
+      "default": 7
+    }
+  ],
+  "palettes": [
+    {
+      "id": "C1",
+      "name": "宣纸",
+      "colors": {
+        "fill": "#2B2622",
+        "fill2": "#B8322A",
+        "inner": "#F6F1E6",
+        "outer": "#F2ECDF",
+        "shadow": "#2B2622",
+        "accent": "#B8322A",
+        "bg": "#F2ECDF",
+        "sub": "#7A6F63"
+      }
+    },
+    {
+      "id": "C2",
+      "name": "夜色",
+      "colors": {
+        "fill": "#E9E4D8",
+        "fill2": "#D9544A",
+        "inner": "#F4EEE2",
+        "outer": "#101418",
+        "shadow": "#8A94A0",
+        "accent": "#C0392B",
+        "bg": "#101418",
+        "sub": "#8B8F94"
+      }
+    },
+    {
+      "id": "C3",
+      "name": "透明叠画面",
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#FFD27A",
+        "inner": "#FFFFFF",
+        "outer": "#000000",
+        "shadow": "#000000",
+        "accent": "#D2352B",
+        "bg": "#000000",
+        "sub": "#E6E6E6"
+      }
+    },
+    {
+      "id": "C4",
+      "name": "青瓷",
+      "colors": {
+        "fill": "#24413A",
+        "fill2": "#A8332A",
+        "inner": "#EEF2EF",
+        "outer": "#DDE6E1",
+        "shadow": "#24413A",
+        "accent": "#A8332A",
+        "bg": "#DDE6E1",
+        "sub": "#5E7A72"
+      }
+    },
+    {
+      "id": "C5",
+      "name": "朱砂",
+      "colors": {
+        "fill": "#8E1E18",
+        "fill2": "#B8862B",
+        "inner": "#F8EFE4",
+        "outer": "#F4E9DC",
+        "shadow": "#8E1E18",
+        "accent": "#8E1E18",
+        "bg": "#F4E9DC",
+        "sub": "#A0624F"
+      }
+    }
+  ],
+  "rhythms": [
+    {
+      "id": "R1",
+      "name": "标准",
+      "charDur": 0.35,
+      "charStagger": 0.12,
+      "colPause": 0.3,
+      "outDur": 0.8
+    },
+    {
+      "id": "R2",
+      "name": "慢读",
+      "charDur": 0.5,
+      "charStagger": 0.2,
+      "colPause": 0.4,
+      "outDur": 1.0
+    },
+    {
+      "id": "R3",
+      "name": "整列出现",
+      "charDur": 0.5,
+      "charStagger": 0.03,
+      "colPause": 0.35,
+      "outDur": 0.8
+    }
+  ],
+  "looks": [
+    {
+      "id": "V1",
+      "name": "清读",
+      "nameEn": "Clear Read",
+      "role": "default",
+      "aliases": [
+        "清读",
+        "daily"
+      ],
+      "params": {
+        "inkBloom": false,
+        "wobble": 0,
+        "paper": false,
+        "pan": 0,
+        "sealHalo": false
+      }
+    },
+    {
+      "id": "V3",
+      "name": "水墨卷轴",
+      "nameEn": "Ink Scroll",
+      "role": "showcase",
+      "aliases": [
+        "水墨",
+        "卷轴",
+        "showcase"
+      ],
+      "params": {
+        "inkBloom": true,
+        "wobble": 1,
+        "paper": true,
+        "pan": 0.04,
+        "sealHalo": true
+      }
+    }
+  ],
+  "exports": [
+    "mp4",
+    "mov-alpha",
+    "webm-alpha",
+    "png-seq"
+  ],
+  "checks": [
+    "mid-word",
+    "line-start-punct",
+    "line-end-punct",
+    "stroke-clip",
+    "missing-glyph",
+    "safe-area",
+    "vertical-punct",
+    "vertical-quote",
+    "column-start-punct"
+  ],
+  "demo": {
+    "default": {
+      "look": "V1",
+      "text": "春眠不觉晓，处处闻啼鸟。夜来风雨声，*花落*知多少。",
+      "video": "demo/005_V1_清读_竖屏.mp4",
+      "gif": "demo/preview.gif",
+      "poster": "demo/poster-v1.jpg"
+    },
+    "showcase": {
+      "look": "V3",
+      "text": "春眠不觉晓，处处闻啼鸟。夜来风雨声，*花落*知多少。",
+      "video": "demo/005_V3_水墨卷轴_竖屏.mp4",
+      "gif": "demo/showcase.gif",
+      "poster": "demo/poster.jpg",
+      "cover3x4": "demo/cover-3x4.jpg",
+      "landscape": {
+        "video": "demo/005_V3_水墨卷轴_横屏.mp4",
+        "poster": "demo/poster-16x9.jpg"
+      }
+    }
+  },
+  "credits": [
+    {
+      "what": "字体",
+      "name": "思源宋体 Noto Serif SC（取 wght 600）；备选思源黑体 Noto Sans SC（取 wght 700）",
+      "license": "OFL-1.1",
+      "url": "https://github.com/notofonts/noto-cjk"
+    },
+    {
+      "what": "样例诗句",
+      "name": "孟浩然《春晓》（唐，公版）",
+      "license": "公有领域",
+      "url": ""
+    }
+  ],
+  "license": {
+    "code": "MIT",
+    "doc": "CC-BY-NC-4.0",
+    "demo": "CC-BY-4.0"
+  }
+}

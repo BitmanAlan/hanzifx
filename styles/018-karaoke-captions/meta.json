@@ -1,0 +1,91 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "018",
+  "id": "karaoke-captions",
+  "name": "逐字点亮字幕",
+  "nameEn": "Karaoke Captions",
+  "aliases": ["卡拉 OK 字幕", "KTV 字幕", "逐字变色字幕", "关键词变色字幕", "逐词点亮字幕"],
+  "kind": "style",
+  "tags": ["口播字幕", "知识口播", "带货口播"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "口播字幕整句先暗着显示在画面下部，跟着说话一个字一个字亮起来，关键词读到时换强调色、弹一下；按句换屏，透明底直接叠在口播视频上。",
+  "summaryEn": "Talking-head captions that show the whole sentence dimmed in the lower part of the frame and light it up character by character as it is spoken; marked keywords switch to an accent color with a small pop. One sentence per screen, transparent background, ready to lay over the video.",
+  "invoke": "用 018 给这段口播配逐字点亮字幕，关键词用 *…* 标；有逐字时间就附上（--words-file，整体偏了用 --words-offset 毫秒微调），没有就按每字 0.23 秒估；默认透明底",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": ["知识口播、观点口播整条挂字幕", "带货、测评口播", "AI 数字人口播"],
+  "notFor": [
+    { "case": "一屏只出一两个大字、放在画面中间的快节奏字幕", "use": "004" },
+    { "case": "跟着音乐节拍走的字", "use": "007" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号知识口播", "basis": "inferred", "note": "没量过逐字点亮本身；两轮抖音测量里口播字幕都在画面下部、整句显示，关键词变色放大的也量到过" },
+    { "name": "B 站、YouTube 搬运和快节奏口播", "basis": "inferred", "note": "没测；海外剪辑工具里卡拉 OK 式字幕是常见预设" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "跟着说话走：有逐字时间就用逐字时间；没有就按每字 0.23 秒估，逗号停 0.18 秒、句号停 0.4 秒、分段停 0.45 秒；最后一句说完再停 0.8 秒。实际时长以导出的 timeline.json 为准",
+  "timelineSegments": [
+    { "name": "intro", "label": "第一句出现" },
+    { "name": "hold", "label": "逐句跟着说话点亮" },
+    { "name": "outro", "label": "最后一句下去" }
+  ],
+  "posterTime": 12.35,
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20%、右侧 15% 是经验值，未实测。竖屏默认最后一行的下沿在画面高度 0.77，行宽不超过画面宽 70% 并居中，所以左右各留 15%，不进右侧按钮区" },
+  "requires": { "wordTimes": true, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-bold", "notosc-black", "kuaile", "huangyou"],
+  "fontFallback": { "notosc-bold": ["notosc-black"], "notosc-black": [], "kuaile": ["notosc-black"], "huangyou": ["notosc-black"] },
+  "extraGlyphs": "",
+  "typography": { "writingMode": "horizontal", "lineBreak": "word", "maxLines": 2, "maxCharsPerLine": 11, "noOrphan": true, "punctCompress": true, "shrinkParticles": 1, "latinFont": null, "latinGap": 0.12, "hiddenPunct": "，。、；：,.;:" },
+  "params": [
+    { "key": "text", "type": "text", "label": "口播原文", "default": "逐字点亮的字幕，眼睛会自己*跟着走*。说到*关键词*，它会变色跳一下。没读到的字先暗着，整句话一直留在*画面下方*等你读完。", "maxLength": 4000, "hint": "整段口播原文。*关键词* 读到时换强调色、弹一下；用 | 指定分词切分点；回车分段（段和段之间一定换屏）" },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」），适合整条视频一直挂着；V3＝招牌（别名「招牌」「showcase」）：空心字、光带、关键词色块" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4", "C5"] },
+    { "key": "rhythm", "type": "select", "label": "点亮节奏", "default": "R1", "options": [{ "value": "R1", "label": "R1 标准（每字 0.09 秒刷亮）" }, { "value": "R2", "label": "R2 利落（每字 0.045 秒）" }, { "value": "R3", "label": "R3 连续（按每个字的时长匀速刷，像 KTV）" }] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-bold", "options": [{ "value": "notosc-bold", "label": "思源黑体 Bold（日常默认，长时间看不累）" }, { "value": "notosc-black", "label": "思源黑体 Black（招牌默认）" }, { "value": "kuaile", "label": "站酷快乐体（可爱；缺「喆堃垚」这类人名用字）" }, { "value": "huangyou", "label": "站酷庆科黄油体（年轻、潮流）" }] },
+    { "key": "unit", "type": "select", "label": "点亮单位", "default": "char", "options": [{ "value": "char", "label": "逐字" }, { "value": "word", "label": "逐词（按分词，一个词一起亮）" }] },
+    { "key": "punct", "type": "select", "label": "标点", "default": "subtitle", "options": [{ "value": "subtitle", "label": "字幕习惯：逗号句号顿号分号冒号不显示，句中的留一点空" }, { "value": "keep", "label": "全部显示（行尾挤压）" }] },
+    { "key": "size", "type": "range", "label": "字号（占画面短边）", "default": 0.06, "min": 0.035, "max": 0.12, "step": 0.002, "hint": "0.06 在竖屏是 65 像素，一行约 11 个字" },
+    { "key": "maxLines", "type": "int", "label": "一屏最多几行", "default": 2, "min": 1, "max": 2 },
+    { "key": "width", "type": "range", "label": "行宽上限（占画面宽，空着＝竖屏 0.7、横屏 0.72、方形 0.78）", "default": null, "min": 0.3, "max": 0.94, "step": 0.01 },
+    { "key": "dim", "type": "range", "label": "没读到的字有多亮（日常）", "default": 0.4, "min": 0.1, "max": 0.8, "step": 0.01 },
+    { "key": "emphScale", "type": "range", "label": "关键词弹起时放大到", "default": 1.14, "min": 1, "max": 1.4, "step": 0.01 },
+    { "key": "plate", "type": "select", "label": "半透明底条", "default": "auto", "options": [{ "value": "auto", "label": "跟着配色走（C3 有，其余没有）" }, { "value": "on", "label": "有" }, { "value": "off", "label": "没有" }] },
+    { "key": "plateOpacity", "type": "range", "label": "底条不透明度（空着＝C3 0.92，其余 0.5）", "default": null, "min": 0.1, "max": 1, "step": 0.01 },
+    { "key": "flair", "type": "range", "label": "招牌强度（空心字、跳字、光带、关键词色块）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.2, "max": 0.8, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "最后一行下沿的位置（空着＝竖屏 0.77、横屏 0.9、方形 0.86）", "default": null, "min": 0.3, "max": 0.95, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子（招牌：关键词色块的倾斜、每个字跳多高）", "default": 7 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0, "font": "notosc-bold" } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1, "font": "notosc-black" } }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "白字黄重点", "colors": { "fill": "#FFFFFF", "fill2": "#FFFFFF", "inner": "#FFE27A", "outer": "#111114", "shadow": "#000000", "accent": "#FFD23F", "bg": "#000000", "sub": "#FFFFFF" } },
+    { "id": "C2", "name": "薄荷绿", "colors": { "fill": "#FFFFFF", "fill2": "#E3FFF5", "inner": "#9CFFDD", "outer": "#0A1F19", "shadow": "#02100B", "accent": "#36F0AE", "bg": "#04140F", "sub": "#FFFFFF" } },
+    { "id": "C3", "name": "白底条黑字（亮画面用）", "colors": { "fill": "#141414", "fill2": "#141414", "inner": "#FF6A3D", "outer": "#FFFFFF", "shadow": "#FFC4B0", "accent": "#F0441C", "bg": "#FFFFFF", "sub": "#141414" } },
+    { "id": "C4", "name": "霓虹粉", "colors": { "fill": "#FFFFFF", "fill2": "#EDE6FF", "inner": "#7CEBFF", "outer": "#1A0B2E", "shadow": "#0B0416", "accent": "#FF4FA3", "bg": "#12081F", "sub": "#FFFFFF" } },
+    { "id": "C5", "name": "暖橙", "colors": { "fill": "#FFF8EC", "fill2": "#FFF1DC", "inner": "#FFC46B", "outer": "#2A1404", "shadow": "#120800", "accent": "#FF8A1F", "bg": "#1C0E03", "sub": "#FFF8EC" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "snap": 0.09, "wordSnap": 0.16, "lead": 0.1 },
+    { "id": "R2", "name": "利落", "snap": 0.045, "wordSnap": 0.09, "lead": 0.06 },
+    { "id": "R3", "name": "连续（KTV）", "continuous": true, "lead": 0.12 }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["mid-word", "line-start-punct", "line-end-punct", "missing-glyph", "stroke-clip", "safe-area", "flash-rate", "reading-speed", "screen-hold"],
+  "demo": {
+    "default": { "look": "V1", "text": "逐字点亮的字幕，眼睛会自己*跟着走*。说到*关键词*，它会变色跳一下。没读到的字先暗着，整句话一直留在*画面下方*等你读完。", "video": "demo/018_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg", "posterTime": 12.35, "gifMaxMB": 1.5 },
+    "showcase": { "look": "V3", "text": "逐字点亮的字幕，眼睛会自己*跟着走*。说到*关键词*，它会变色跳一下。没读到的字先暗着，整句话一直留在*画面下方*等你读完。", "video": "demo/018_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "poster": "demo/poster.jpg", "posterTime": 12.35, "gifMaxMB": 1.5 }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（Bold 取 wght 700，Black 取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" },
+    { "what": "字体", "name": "站酷庆科黄油体 ZCOOL QingKe HuangYou", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-qingke-huangyou" },
+    { "what": "参考效果", "name": "口播里常见的卡拉 OK 式逐字点亮字幕和关键词变色字幕（只参考公开的通用做法，没有拷别人的代码和素材）", "license": "—", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

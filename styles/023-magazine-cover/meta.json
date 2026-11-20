@@ -1,0 +1,84 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "023",
+  "id": "magazine-cover",
+  "name": "杂志封面标题",
+  "nameEn": "Magazine Cover",
+  "aliases": ["杂志封面", "高级感标题", "宋体大字", "封面大标题", "刊头标题"],
+  "kind": "style",
+  "tags": ["封面", "标题", "高级感", "时尚", "读书"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "杂志封面的版式：宋体大标题，配一行字距拉开的英文、细线、刊头和期号，大量留白；各部分依次淡入，字距从拉开慢慢收拢，关键词最后补一道细线。",
+  "summaryEn": "A magazine-cover layout: a large serif Chinese headline with a widely tracked English line, hairlines, a masthead and an issue number, set in plenty of white space. Each part fades in while its letter spacing slowly tightens, and the keyword gets a fine underline at the end.",
+  "invoke": "用 023 把「慢下来的*生活*」做成杂志封面标题，英文写 THE ART OF SLOWING DOWN",
+  "invokeTemplate": "用 {code} 把「{text}」做成杂志封面标题，造型 {look}，配色 {palette}",
+  "fitFor": ["小红书时尚、读书、生活方式的封面", "高级感 vlog 的开头标题", "系列内容的每期封面", "品牌片、展览、活动的标题页"],
+  "notFor": [
+    { "case": "要冲击力的观点口播开头", "use": "002 大字报" },
+    { "case": "毛笔字、国潮片头", "use": "003 书法标题" },
+    { "case": "一整首诗", "use": "005 竖排诗句" }
+  ],
+  "platforms": [
+    { "name": "小红书封面（时尚、读书、生活方式）", "basis": "inferred", "note": "两轮抖音测量没有量过杂志式封面；没在小红书测" },
+    { "name": "视频号、B 站的 vlog 开头", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080", "1080x1440"],
+  "fps": 30,
+  "durationHint": "入场约 2 秒（细线、刊头、标题、英文、副标题依次出来），停留 2.6 秒，出场 0.6 秒，全程约 5.3 秒（R2 约 4 秒，R3 挂着多停 3 秒）。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "依次淡入、字距收拢" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "淡出" }
+  ],
+  "posterTime": "hold.mid",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏时期号在画面高度 0.76，不进底部 20%；标题撑满版心，会进右侧 15%，叠在有平台按钮的画面上要留意" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "fonts": ["notoserif-black", "notoserif-semibold"],
+  "fontFallback": { "notoserif-black": ["notoserif-semibold"], "notoserif-semibold": ["notoserif-black"] },
+  "paramFonts": { "en": "notoserif-semibold", "kicker": "notoserif-semibold", "sub": "notoserif-semibold", "issue": "notoserif-black", "side": "notoserif-semibold" },
+  "extraGlyphs": "",
+  "typography": { "writingMode": "horizontal", "lineBreak": "word", "maxLines": 2, "maxCharsPerLine": 8, "noOrphan": true, "punctCompress": true, "shrinkParticles": 1, "latinFont": "notoserif-semibold" },
+  "params": [
+    { "key": "text", "type": "text", "label": "大标题（*词* 标关键词）", "default": "慢下来的*生活*", "maxLength": 16, "hint": "最多两行，8 个字以内最好；按词断行，放不下自动缩小" },
+    { "key": "en", "type": "text", "label": "英文一行（照原样排，想要全大写就写大写；留空不写）", "default": "THE ART OF SLOWING DOWN", "maxLength": 40, "allowEmpty": true },
+    { "key": "kicker", "type": "text", "label": "刊头（最上面一行小字；留空不写）", "default": "No.12 · 冬季特刊", "maxLength": 20, "allowEmpty": true },
+    { "key": "sub", "type": "text", "label": "副标题（留空不写）", "default": "在城市里，找回自己的节奏", "maxLength": 20, "allowEmpty": true },
+    { "key": "issue", "type": "text", "label": "期号（底部一行；V3 还会放大成标题背后的描边大数字；留空不写）", "default": "12", "maxLength": 4, "allowEmpty": true },
+    { "key": "side", "type": "text", "label": "竖排小字（V3，右边一列；留空不写）", "default": "城市生活特辑", "maxLength": 10, "allowEmpty": true },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「招牌」「showcase」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "标题字体", "default": "notoserif-black", "options": [{ "value": "notoserif-black", "label": "思源宋体 Black（粗）" }, { "value": "notoserif-semibold", "label": "思源宋体 SemiBold（细，更安静）" }] },
+    { "key": "size", "type": "range", "label": "标题字号（占画面短边；放不下会自动缩小）", "default": 0.19, "min": 0.1, "max": 0.26, "step": 0.005 },
+    { "key": "flair", "type": "range", "label": "招牌强度（描边大期号、竖排小字、字距拉得更开、逐字错落）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "白字（叠在暗色照片上）", "colors": { "fill": "#FFFFFF", "fill2": "#FFFFFF", "inner": "#FFFFFF", "outer": "#000000", "shadow": "#000000", "accent": "#E8C27A", "bg": "#000000", "sub": "#E6DFD3" } },
+    { "id": "C2", "name": "黑字（叠在亮色照片上）", "colors": { "fill": "#141414", "fill2": "#141414", "inner": "#141414", "outer": "#FFFFFF", "shadow": "#000000", "accent": "#B23A2E", "bg": "#FFFFFF", "sub": "#4A4540" } },
+    { "id": "C3", "name": "米色纸面（自带底色）", "colors": { "fill": "#1C1A17", "fill2": "#1C1A17", "inner": "#1C1A17", "outer": "#FFFFFF", "shadow": "#000000", "accent": "#B23A2E", "bg": "#F2ECE2", "sub": "#6B6257" } },
+    { "id": "C4", "name": "墨蓝金（自带底色）", "colors": { "fill": "#F4EBDD", "fill2": "#F4EBDD", "inner": "#F4EBDD", "outer": "#000000", "shadow": "#000000", "accent": "#D9A441", "bg": "#14233A", "sub": "#AEB7C4" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "speed": 1, "holdExtra": 0 },
+    { "id": "R2", "name": "快", "speed": 0.75, "holdExtra": 0 },
+    { "id": "R3", "name": "挂着（停留段多 3 秒）", "speed": 1, "holdExtra": 3 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0 } },
+    { "id": "V3", "name": "特刊", "nameEn": "Special Issue", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1 } }
+  ],
+  "exports": ["mp4", "mov-alpha", "webm-alpha", "png-seq"],
+  "checks": ["mid-word", "stroke-clip", "missing-glyph", "safe-area", "flash-rate", "brand-lookalike"],
+  "demo": {
+    "default": { "look": "V1", "text": "慢下来的*生活*", "video": "demo/023_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "慢下来的*生活*", "palette": "C4", "video": "demo/023_V3_特刊_竖屏.mp4", "gifMaxMB": 1.5, "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源宋体 Noto Serif SC（取 wght 900 和 600）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "图形", "name": "细线、菱形装饰、描边期号、纸面底色全部是本项目自己画的", "license": "MIT", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

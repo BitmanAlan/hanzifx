@@ -1,0 +1,83 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "009",
+  "id": "comment-prompt",
+  "name": "评论区告诉我",
+  "nameEn": "Comment Prompt",
+  "aliases": ["求评论", "评论引导", "评论区见"],
+  "kind": "interaction",
+  "tags": ["互动", "评论", "口播结尾"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "口播结尾求评论：评论图标弹出，对话泡里三个点一跳一跳像在输入，问题一个字一个字打出来，最后出「评论区告诉我」和往下点的箭头",
+  "summaryEn": "An end-of-video ask for comments: a comment icon pops up, three dots bounce in a speech bubble as if someone is typing, the question types out character by character, then \"tell me in the comments\" appears with an arrow pointing down.",
+  "invoke": "用 009 在结尾问一句「…」，引导大家去评论区（日常用默认 V1；要招牌效果说 look=showcase）",
+  "invokeTemplate": "用 {code} 做一个{name}，问题「{text}」，造型 {look}，配色 {palette}",
+  "fitFor": ["口播结尾的提问", "抛一个话题让大家站队", "征集下期选题"],
+  "notFor": [{ "case": "展示一条网友的评论", "use": "010" }, { "case": "二选一投票", "use": "016" }],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "问题 10 个字左右约 3.5 秒；停留时长可以用 hold 指定；实际时长以 timeline.json 为准",
+  "timelineSegments": [
+    { "name": "intro", "label": "图标和对话泡弹出" },
+    { "name": "typing", "label": "正在输入" },
+    { "name": "type", "label": "打出问题" },
+    { "name": "hold", "label": "停留（评论区告诉我）" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": "hold+0.4",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "经验值，未实测；竖屏默认放在画面高度 0.66，在底部文案区上方" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "fonts": ["notosc-bold"],
+  "fontFallback": { "notosc-bold": ["notosc-black"] },
+  "extraGlyphs": "评论区告诉我",
+  "exportDefaults": { "bg": "transparent" },
+  "typography": { "writingMode": "horizontal", "lineBreak": "word", "maxLines": 2, "maxCharsPerLine": null, "noOrphan": true, "punctCompress": true, "shrinkParticles": 1, "latinFont": null },
+  "params": [
+    { "key": "text", "type": "text", "label": "问题", "default": "你遇到过这种情况吗？", "maxLength": 40, "hint": "最多两行，按词断行；*关键词* 会换成强调色" },
+    { "key": "label", "type": "text", "label": "底下的小字", "default": "评论区告诉我", "maxLength": 12 },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌（别名「showcase」「招牌」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-bold", "options": [{ "value": "notosc-bold", "label": "思源黑体 Bold" }] },
+    { "key": "size", "type": "range", "label": "评论图标大小（占画面短边）", "default": 0.13, "min": 0.08, "max": 0.2, "step": 0.005, "hint": "问题的字号跟着它走" },
+    { "key": "typing", "type": "range", "label": "「正在输入」跳多久（秒）", "default": 0.7, "min": 0, "max": 2, "step": 0.05 },
+    { "key": "hold", "type": "number", "label": "停留秒数", "default": null },
+    { "key": "flair", "type": "range", "label": "招牌强度", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "material", "type": "select", "label": "质感", "default": "candy", "options": [{ "value": "candy", "label": "亮面糖果（默认）" }, { "value": "flat", "label": "平面" }],
+      "hint": "亮面糖果：评论图标是糖果圆按钮，对话泡有厚度、白亮边和上沿高光，小字垫糖果胶囊条；平面：原来的扁平图标、对话泡和半透明小字底" },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.1, "max": 0.9, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝自动：竖屏 0.66，横屏 0.7）", "default": null, "min": 0.1, "max": 0.9, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0 } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase", "综艺"], "params": { "flair": 1 } }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "白泡橙", "colors": { "fill": "#1F1D24", "fill2": "#FFE066", "inner": "#FFFFFF", "outer": "#1F1D24", "shadow": "#000000", "accent": "#FF7A3D", "bg": "#FFFFFF", "sub": "#FFFFFF" } },
+    { "id": "C2", "name": "紫泡", "colors": { "fill": "#FFFFFF", "fill2": "#FFD166", "inner": "#FFFFFF", "outer": "#2A1F5C", "shadow": "#000000", "accent": "#FFB020", "bg": "#6C5CE7", "sub": "#FFFFFF" } },
+    { "id": "C3", "name": "深色", "colors": { "fill": "#F4F4F5", "fill2": "#4ADE80", "inner": "#111114", "outer": "#F4F4F5", "shadow": "#000000", "accent": "#4ADE80", "bg": "#1C1C21", "sub": "#FFFFFF" } },
+    { "id": "C4", "name": "便签黄（叠在浅色画面上）", "colors": { "fill": "#2B2416", "fill2": "#FF9E3D", "inner": "#FFFFFF", "outer": "#2B2416", "shadow": "#3A2A00", "accent": "#E86A33", "bg": "#FFE680", "sub": "#2B2416" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "speed": 1, "holdScale": 1 },
+    { "id": "R2", "name": "快", "speed": 0.7, "holdScale": 0.7 },
+    { "id": "R3", "name": "挂着（停留加长，适合口播最后一直挂着）", "speed": 1, "holdScale": 2.5 }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["mid-word", "line-start-punct", "stroke-clip", "missing-glyph", "safe-area", "brand-lookalike"],
+  "platforms": [
+    { "name": "抖音、视频号、小红书口播结尾", "basis": "inferred", "note": "口播结尾求评论很常见，两轮抖音测量没专门量这一类" }
+  ],
+  "demo": {
+    "default": { "look": "V1", "video": "demo/009_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "video": "demo/009_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "poster": "demo/poster-v3.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（固定 wght 700）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "图标", "name": "评论图标、对话泡、箭头都是本项目自己画的", "license": "随代码 MIT", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

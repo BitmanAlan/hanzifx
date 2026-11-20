@@ -1,0 +1,280 @@
+{
+  "date": "2026-11-20T15:07:28.705Z",
+  "env": {
+    "browser": "chrome-headless-shell",
+    "browserVersion": "156.0.8078.4",
+    "playwrightCore": "1.64.0",
+    "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+    "node": "v23.11.0",
+    "platform": "darwin-arm64"
+  },
+  "pass": 44,
+  "total": 44,
+  "totalSec": 295,
+  "items": [
+    {
+      "group": "确定性",
+      "name": "同样参数导出两次，截图逐帧 sha256 一致",
+      "pass": true,
+      "evidence": "101 帧；逐帧摘要 1cd7594c6be446f3 vs 1cd7594c6be446f3"
+    },
+    {
+      "group": "确定性",
+      "name": "两次导出的 MP4 解码后逐帧 md5 一致（ffmpeg framemd5）",
+      "pass": true,
+      "evidence": "101 帧；第 1 帧 c51e59c9511698eb080d03ed34b5258a，最后一帧 ea1291088305678e6d7933167ae4a0eb"
+    },
+    {
+      "group": "确定性",
+      "name": "两次导出的 MP4 文件逐字节一致",
+      "pass": true,
+      "evidence": "sha256 eed6d2a014b06b09… / eed6d2a014b06b09…"
+    },
+    {
+      "group": "纯函数",
+      "name": "4 路并行、打乱帧顺序渲染，跟顺序渲染逐帧一致",
+      "pass": true,
+      "evidence": "乱序摘要 1cd7594c6be446f3，顺序摘要 1cd7594c6be446f3"
+    },
+    {
+      "group": "确定性",
+      "name": "透明底导出两次（第二次乱序），截图逐帧一致",
+      "pass": true,
+      "evidence": "摘要 083a15e83e4879d0 / 083a15e83e4879d0"
+    },
+    {
+      "group": "透明底",
+      "name": "mov 的 ffprobe 显示带 alpha",
+      "pass": true,
+      "evidence": "codec=prores profile=4444 pix_fmt=yuva444p12le alpha_mode=- 1080x1920"
+    },
+    {
+      "group": "透明底",
+      "name": "mov 解码出第 56 帧：角上全透明、字上不透明、边缘有半透明过渡",
+      "pass": true,
+      "evidence": "角上 alpha=0，最大 255，半透明像素 7238 个，不透明区域 [162,389,1012,1038]"
+    },
+    {
+      "group": "透明底",
+      "name": "webm 的 ffprobe 显示带 alpha",
+      "pass": true,
+      "evidence": "codec=vp9 profile=Profile 0 pix_fmt=yuv420p alpha_mode=1 1080x1920"
+    },
+    {
+      "group": "透明底",
+      "name": "webm 解码出第 56 帧：角上全透明、字上不透明、边缘有半透明过渡",
+      "pass": true,
+      "evidence": "角上 alpha=0，最大 255，半透明像素 17158 个，不透明区域 [162,389,1012,1038]"
+    },
+    {
+      "group": "透明底",
+      "name": "PNG 序列第 1 帧（还没出字）也是 RGBA、整帧全透明",
+      "pass": true,
+      "evidence": "通道数 4，最大 alpha 0（CDP 直接截图在这里会丢 alpha，所以透明底走 Playwright 截图）"
+    },
+    {
+      "group": "尺寸",
+      "name": "竖屏 MP4 正好 1080×1920",
+      "pass": true,
+      "evidence": "ffprobe：1080x1920，h264/yuv420p，30/1，101 帧，engine/out/verify/A1-竖屏mp4/variety-outline_1080x1920.mp4"
+    },
+    {
+      "group": "尺寸",
+      "name": "竖屏透明 MOV 正好 1080×1920",
+      "pass": true,
+      "evidence": "ffprobe：1080x1920，prores/yuva444p12le，30/1，101 帧，engine/out/verify/C1-竖屏透明/variety-outline_1080x1920.mov"
+    },
+    {
+      "group": "尺寸",
+      "name": "横屏 MP4 正好 1920×1080",
+      "pass": true,
+      "evidence": "ffprobe：1920x1080，h264/yuv420p，30/1，101 帧，engine/out/verify/D1-横屏mp4/variety-outline_1920x1080.mp4"
+    },
+    {
+      "group": "尺寸",
+      "name": "横屏透明 MOV 正好 1920×1080",
+      "pass": true,
+      "evidence": "ffprobe：1920x1080，prores/yuva444p12le，30/1，101 帧，engine/out/verify/D2-横屏透明/variety-outline_1920x1080.mov"
+    },
+    {
+      "group": "字体",
+      "name": "竖屏：浏览器实际用的字体全是站酷快乐体（CSS.getPlatformFontsForNode）",
+      "pass": true,
+      "evidence": "49 个文字节点：ZCOOL KuaiLe/ZCOOLKuaiLe-Regular 自定义=true 字形 49"
+    },
+    {
+      "group": "字体",
+      "name": "横屏：浏览器实际用的字体全是站酷快乐体（CSS.getPlatformFontsForNode）",
+      "pass": true,
+      "evidence": "49 个文字节点：ZCOOL KuaiLe/ZCOOLKuaiLe-Regular 自定义=true 字形 49"
+    },
+    {
+      "group": "字体",
+      "name": "用到的字全在主字体子集里",
+      "pass": true,
+      "evidence": "用字「也了吧太好笑这」，子集 1220 字节，sha256 d7108d1d3fb46011…"
+    },
+    {
+      "group": "字体",
+      "name": "主字体缺的字（喆堃垚）落到备用字体思源黑体上，并出警告",
+      "pass": true,
+      "evidence": "备用：喆→思源黑体 Black（Noto Sans SC，可变字体取 wght 900），垚→思源黑体 Black（Noto Sans SC，可变字体取 wght 900），堃→思源黑体 Black（Noto Sans SC，可变字体取 wght 900）；浏览器实际用到：ZCOOL KuaiLe×21，Noto Sans SC Thin×21（思源黑体固定字重后 name 表还写着 Thin，按子集文件的 name 表认）"
+    },
+    {
+      "group": "字体",
+      "name": "字体里没有的字会直接报错（不静默换系统字体）",
+      "pass": true,
+      "evidence": "缺字：「😂」在 站酷快乐体（ZCOOL KuaiLe）、思源黑体 Black（Noto Sans SC，可变字体取 wght 900） 里都没有。换个字或换字体（不会回退成系统字体）。"
+    },
+    {
+      "group": "中文检查",
+      "name": "「这也太好笑了吧」9:16：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 jieba+lexicon：这/也/太/好笑/了/吧；断行 「这也太」「好笑了吧」；离边最近 36px；提示：浏览器自带分词认为「也太｜好笑」在词中间（只是提示，可以拿去补词表）；安全区提示：进了右侧按钮区125px（经验值未实测）"
+    },
+    {
+      "group": "中文检查",
+      "name": "「这也太好笑了吧」16:9：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 jieba+lexicon：这/也/太/好笑/了/吧；断行 「这也太好笑了吧」；离边最近 220px"
+    },
+    {
+      "group": "中文检查",
+      "name": "「真的吗？我不信！今天也要元气满满」9:16：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 jieba+lexicon：真的/吗/？/我/不信/！/今天/也/要/元气满满；断行 「真的吗？我不信！」「今天也要元气满满」；离边最近 46px；安全区提示：进了右侧按钮区115px（经验值未实测）"
+    },
+    {
+      "group": "中文检查",
+      "name": "「真的吗？我不信！今天也要元气满满」16:9：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 jieba+lexicon：真的/吗/？/我/不信/！/今天/也/要/元气满满；断行 「真的吗？我不信！」「今天也要元气满满」；离边最近 137px"
+    },
+    {
+      "group": "中文检查",
+      "name": "「家人们谁懂啊」9:16：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 jieba+lexicon：家人们/谁懂啊；断行 「家人们」「谁懂啊」；离边最近 140px；安全区提示：进了右侧按钮区21px（经验值未实测）"
+    },
+    {
+      "group": "中文检查",
+      "name": "「家人们谁懂啊」16:9：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 jieba+lexicon：家人们/谁懂啊；断行 「家人们谁懂啊」；离边最近 291px"
+    },
+    {
+      "group": "中文检查",
+      "name": "「一键三连走起！」9:16：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 jieba+lexicon：一键三连/走/起/！；断行 「一键三连」「走起！」；离边最近 68px；安全区提示：进了右侧按钮区70px（经验值未实测）"
+    },
+    {
+      "group": "中文检查",
+      "name": "「一键三连走起！」16:9：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 jieba+lexicon：一键三连/走/起/！；断行 「一键三连走起！」；离边最近 277px"
+    },
+    {
+      "group": "中文检查",
+      "name": "「这也太|好笑了吧」9:16：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 author：这也太/好笑了吧；断行 「这也太」「好笑了吧」；离边最近 36px；提示：浏览器自带分词认为「也太｜好笑」在词中间（只是提示，可以拿去补词表）；安全区提示：进了右侧按钮区125px（经验值未实测）"
+    },
+    {
+      "group": "中文检查",
+      "name": "「这也太|好笑了吧」16:9：不断词、行首无标点、描边不贴边、不缺字",
+      "pass": true,
+      "evidence": "分词 author：这也太/好笑了吧；断行 「这也太好笑了吧」；离边最近 220px"
+    },
+    {
+      "group": "分词",
+      "name": "jieba-wasm：Node 端和浏览器端 10 句切词完全一致",
+      "pass": true,
+      "evidence": "[object Object]/[object Object]/[object Object]/[object Object]/[object Object]/[object Object] ｜ [object Object]/[object Object] ｜ [object Object]/[object Object]/[object Object]/[object Object] ｜ [object Object]/[object Object]/[object Object]/[object Object] ｜ [object Object]/[object Object] ｜ [object Object]/[object Object]/[object Object] ｜ [object Object]/[object Object]/[object Object] ｜ [object Object]/[object Object]/[object Object]/[object Object] ｜ [object Object]/[object Object]/[object Object]/[object Object] ｜ [object Object]/[object Object]/[object Object]/[object Object]/[object Object]/[object Object]"
+    },
+    {
+      "group": "试玩页",
+      "name": "拖时间轴：鼠标按下的位置",
+      "pass": true,
+      "evidence": "t=0.336，期望≈0.336"
+    },
+    {
+      "group": "试玩页",
+      "name": "拖时间轴：拖到 55%",
+      "pass": true,
+      "evidence": "t=1.847，期望≈1.847；读数「1.85 / 3.36 s · 第 56/101 帧」"
+    },
+    {
+      "group": "试玩页",
+      "name": "拖动后画面跟着变",
+      "pass": true,
+      "evidence": "第一个字 transform：translate(-170.175,-144.622) rotate(5.206) scale(0.963,0.898) → translate(-170.513,-136.894) rotate(6.108) scale(0.848,0.848)"
+    },
+    {
+      "group": "试玩页",
+      "name": "改字：画面上的字换了",
+      "pass": true,
+      "evidence": "字：家人们谁懂啊，断行：家人们 | 谁懂啊"
+    },
+    {
+      "group": "试玩页",
+      "name": "改字后浏览器里加载 jieba，切词跟 Node 端一致",
+      "pass": true,
+      "evidence": "浏览器切词：家人们/谁懂啊（Node 端：家人们/谁懂啊）"
+    },
+    {
+      "group": "试玩页",
+      "name": "换配色 C3：渐变主色变成薄荷青",
+      "pass": true,
+      "evidence": "stop-color=#90F2DE"
+    },
+    {
+      "group": "试玩页",
+      "name": "换种子：每个字的歪斜跟着变",
+      "pass": true,
+      "evidence": "种子 7 → 1235"
+    },
+    {
+      "group": "试玩页",
+      "name": "切横屏：舞台变成 1920×1080",
+      "pass": true,
+      "evidence": "—"
+    },
+    {
+      "group": "试玩页",
+      "name": "缺字会明确报出来（主字体和备用字体都没有）",
+      "pass": true,
+      "evidence": "中文检查分词：jieba + 词表｜笑死/😂✓ 断行在词边上，行首没有标点（「笑死😂」）✗ 缺字：「😂」在主字体和备用字体里都没有，导出会报错，换个字或换字体描边是否被画面边缘切掉，导出时逐帧查（看导出清单 checks.clip）"
+    },
+    {
+      "group": "试玩页",
+      "name": "主字体缺的字改用备用字体，并出警告",
+      "pass": true,
+      "evidence": "字体链 kuaile → notosc-black；中文检查分词：jieba + 词表｜王喆/和/李堃/垚✓ 断行在词边上，行首没有标点（「王喆和李堃垚」）⚠ 用了备用字体：「喆垚堃」主字体没有，改用思源黑体 Black（Noto Sans SC，可变字体取 wght 900），看起来会跟别的字不太一样描边是否被画面边缘切掉，导出"
+    },
+    {
+      "group": "试玩页",
+      "name": "空格播放：时间在走",
+      "pass": true,
+      "evidence": "0.7 秒后 t=0.70"
+    },
+    {
+      "group": "试玩页",
+      "name": "复制导出命令：命令里带上了当前参数",
+      "pass": true,
+      "evidence": "cd engine && npm run export -- --style styles/001-variety-outline --text \"王喆和李堃垚\" --palette C3 --seed 1235 --size 1920x1080 --bg transparent --format mov,webm,png"
+    },
+    {
+      "group": "试玩页",
+      "name": "页面没有报错",
+      "pass": true,
+      "evidence": "—"
+    },
+    {
+      "group": "单元测试",
+      "name": "node --test 全部通过",
+      "pass": true,
+      "evidence": "通过 37，失败 0"
+    }
+  ]
+}

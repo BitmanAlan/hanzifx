@@ -1,0 +1,113 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "020",
+  "id": "strike-rewrite",
+  "name": "划掉改字",
+  "nameEn": "Strike & Rewrite",
+  "aliases": ["划掉重写", "红笔改字", "删除线改字", "改口字", "划线改字", "批改字"],
+  "kind": "style",
+  "tags": ["观点", "反转", "自嘲", "口播", "标题"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "一句话里的某个词被一笔划掉，改过的词写在它上方或紧跟在后面砸进来，适合反转、更正、自嘲。",
+  "summaryEn": "A word in the sentence gets crossed out in one stroke and the corrected word is written above it or slams in right after it. Made for twists, corrections and self-mockery.",
+  "invoke": "用 020 把「我以为是~~努力~~*选择*」做成划掉改字（~~ 包住要划掉的词，紧跟的 *…* 是改成的词）",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": ["观点口播的反转句（我以为是……其实是……）", "自嘲、玩梗的改口（我很懒→有计划地休息）", "知识号的「误区更正」开头"],
+  "notFor": [
+    { "case": "带货报价：原价划掉、到手价数字滚动", "use": "013" },
+    { "case": "整段口播字幕", "use": "004" },
+    { "case": "只要一句大字撑满画面、不划不改", "use": "002" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号观点口播", "basis": "inferred", "note": "没量过；反转句、改口是观点口播的高频写法" },
+    { "name": "小红书封面和口播开头", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "正文逐字出来约 0.6 秒，停 0.5 秒让人读完，每处划线约 0.35 秒、新词逐字砸进来约 0.4 秒（V3 再画圈、出感叹号约 0.5 秒）；改完停留按字数算（至少 1.5 秒、每秒 5 个字），出场 0.4 秒。一处改字默认约 4.5 秒，实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "入场" },
+    { "name": "rewrite", "label": "划掉改字" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": "hold+0.2",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏默认放在画面高度 0.4、水平居中，在字幕区上面" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-black", "kuaile", "mashanzheng", "notoserif-black"],
+  "fontFallback": { "notosc-black": [], "kuaile": ["notosc-black"], "mashanzheng": ["notoserif-black"], "notoserif-black": ["notosc-black"] },
+  "extraGlyphs": "",
+  "typography": {
+    "writingMode": "horizontal", "lineBreak": "word", "maxLines": 5, "maxCharsPerLine": 8, "noOrphan": true, "punctCompress": true, "shrinkParticles": 1, "latinFont": null,
+    "markup": { "rewrite": "~~旧词~~*新词*", "strikeOnly": "~~旧词~~", "keyword": "*关键词*", "cut": "|", "note": "~~ 用半角波浪线；~~ 和 *新词* 之间可以空一格；划掉的词连同新词不会被拆到两行" }
+  },
+  "params": [
+    { "key": "text", "type": "text", "label": "文字（~~划掉~~*改成*）", "default": "我以为是~~努力~~*选择*", "maxLength": 40,
+      "hint": "~~旧词~~*新词*：划掉旧词改成新词；只写 ~~旧词~~ 就只划不改；别的 *…* 照旧是关键词；| 手标切分；\\n 分段。一句里可以改好几处，按顺序一处一处改" },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }],
+      "hint": "V1＝日常默认（别名「日常」「daily」）：一道红线、新词弹出来；V3＝招牌（别名「招牌」「showcase」「批改」）：贴在画面上的一张便签纸，来回两道划线，新词被红笔圈出来、旁边一个感叹号，笔迹停留时轻轻抖动" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": [
+      { "value": "C1", "label": "C1 白字红笔（叠在视频上）" }, { "value": "C2", "label": "C2 试卷红笔（白纸黑字）" }, { "value": "C3", "label": "C3 黑板粉笔" },
+      { "value": "C4", "label": "C4 便签手账" }, { "value": "C5", "label": "C5 蓝笔改稿" }] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": [{ "value": "R1", "label": "R1 标准" }, { "value": "R2", "label": "R2 快" }, { "value": "R3", "label": "R3 留悬念（读完再划）" }] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-black", "options": [
+      { "value": "notosc-black", "label": "思源黑体 Black（默认）" }, { "value": "kuaile", "label": "站酷快乐体（可爱）" },
+      { "value": "mashanzheng", "label": "马善政楷书（手写本）" }, { "value": "notoserif-black", "label": "思源宋体 Black（杂志感）" }],
+      "hint": "整句用同一款字体：新词的「手写感」靠笔迹、歪斜和大小起伏，不换字体" },
+    { "key": "place", "type": "select", "label": "新词放哪", "default": "auto", "options": [
+      { "value": "auto", "label": "自动（新词不比旧词长太多就写在上方，否则跟在后面）" }, { "value": "above", "label": "写在旧词上方" }, { "value": "inline", "label": "跟在旧词后面（这一行会撑开）" }] },
+    { "key": "strike", "type": "select", "label": "怎么划", "default": "line", "options": [
+      { "value": "line", "label": "一道" }, { "value": "double", "label": "来回两道" }, { "value": "scribble", "label": "乱涂掉" }] },
+    { "key": "paper", "type": "select", "label": "纸", "default": "none", "options": [
+      { "value": "none", "label": "不要纸（字带描边，直接叠在画面上）" }, { "value": "card", "label": "便签卡片（透明底也画）" }, { "value": "page", "label": "整屏纸（透明底时不画）" }] },
+    { "key": "tape", "type": "bool", "label": "卡片顶上贴一条胶带", "default": false },
+    { "key": "circle", "type": "bool", "label": "红笔圈出新词", "default": false },
+    { "key": "bang", "type": "bool", "label": "新词旁边画感叹号", "default": false },
+    { "key": "entrance", "type": "select", "label": "正文怎么出来", "default": "rise", "options": [{ "value": "rise", "label": "逐字往上浮出" }, { "value": "pop", "label": "逐字弹出" }] },
+    { "key": "flair", "type": "range", "label": "冲击强度（新词落下时震一下）", "default": 0.35, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "boil", "type": "range", "label": "笔迹抖动（停留时）", "default": 0, "min": 0, "max": 1, "step": 0.05, "hint": "每秒抖 8 次，像手绘动画；0 是不抖" },
+    { "key": "dim", "type": "range", "label": "划掉的字变灰多少", "default": 0.7, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "weight", "type": "range", "label": "笔画粗细", "default": 1, "min": 0.6, "max": 1.6, "step": 0.05 },
+    { "key": "size", "type": "range", "label": "正文字号（占画面短边）", "default": 0.12, "min": 0.06, "max": 0.2, "step": 0.005, "hint": "放不下会自动缩小" },
+    { "key": "hold", "type": "number", "label": "改完停几秒（空着＝按字数）", "default": null, "min": 0.5, "max": 10 },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.2, "max": 0.8, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝竖屏 0.4，其他居中）", "default": null, "min": 0.15, "max": 0.8, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 5 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "白字红笔", "colors": { "fill": "#FFFFFF", "fill2": "#FFD84A", "inner": "#FFFFFF", "outer": "#141414", "shadow": "#000000", "accent": "#FF3B30", "bg": "#1F1F1F", "sub": "#9C9C9C" } },
+    { "id": "C2", "name": "试卷红笔", "colors": { "fill": "#1C1C1E", "fill2": "#FFE45C", "inner": "#FFFFFF", "outer": "#FFFFFF", "shadow": "#CBBFA6", "accent": "#E0262B", "bg": "#FBF7EE", "sub": "#A8A293" } },
+    { "id": "C3", "name": "黑板粉笔", "colors": { "fill": "#F2EFE6", "fill2": "#8FD8FF", "inner": "#183429", "outer": "#0D1C16", "shadow": "#0A1511", "accent": "#FFD54A", "bg": "#2A4B3D", "sub": "#8DA699" } },
+    { "id": "C4", "name": "便签手账", "colors": { "fill": "#262626", "fill2": "#8EE3FF", "inner": "#FFFFFF", "outer": "#FFFFFF", "shadow": "#D4B13E", "accent": "#E8336D", "bg": "#FFE66B", "sub": "#A08F45" } },
+    { "id": "C5", "name": "蓝笔改稿", "colors": { "fill": "#1F2329", "fill2": "#FFE45C", "inner": "#FFFFFF", "outer": "#FFFFFF", "shadow": "#C9D2DE", "accent": "#1F57E0", "bg": "#FFFFFF", "sub": "#A3ACB8" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "charStagger": 0.04, "lineStagger": 0.14, "charDur": 0.3, "read": 0.5, "strike": 0.36, "rwDelay": 0.1, "rwStagger": 0.075, "groupGap": 0.35, "outDur": 0.4 },
+    { "id": "R2", "name": "快", "charStagger": 0.025, "lineStagger": 0.09, "charDur": 0.22, "read": 0.28, "strike": 0.26, "rwDelay": 0.06, "rwStagger": 0.05, "groupGap": 0.22, "outDur": 0.3 },
+    { "id": "R3", "name": "留悬念", "charStagger": 0.055, "lineStagger": 0.2, "charDur": 0.38, "read": 0.9, "strike": 0.5, "rwDelay": 0.16, "rwStagger": 0.1, "groupGap": 0.55, "outDur": 0.45 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"],
+      "params": { "strike": "line", "paper": "none", "tape": false, "circle": false, "bang": false, "entrance": "rise", "flair": 0.35, "boil": 0 } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase", "批改"],
+      "params": { "strike": "double", "paper": "card", "tape": true, "circle": true, "bang": true, "entrance": "pop", "flair": 1, "boil": 1 } }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["mid-word", "line-start-punct", "line-end-punct", "stroke-clip", "missing-glyph", "safe-area", "strike-markup"],
+  "demo": {
+    "default": { "look": "V1", "text": "我以为是~~努力~~*选择*", "video": "demo/020_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg", "gifMaxMB": 1.4 },
+    "showcase": { "look": "V3", "palette": "C2", "size": 0.14, "text": "我不是~~懒~~*在省电*", "video": "demo/020_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "poster": "demo/poster.jpg", "gifMaxMB": 1.4 }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" },
+    { "what": "字体", "name": "马善政楷书 Ma Shan Zheng", "license": "OFL-1.1", "url": "https://github.com/googlefonts/mashanzheng" },
+    { "what": "字体", "name": "思源宋体 Noto Serif SC（取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "图形", "name": "划线、圈、感叹号、便签纸、胶带全部是本项目用代码画的", "license": "MIT", "url": "" },
+    { "what": "参考效果", "name": "短视频和海报里常见的「划掉旧词、写上新词」改字写法（只参考公开的通用效果，没有用任何人的素材）", "license": "—", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

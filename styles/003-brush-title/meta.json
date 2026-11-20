@@ -1,0 +1,613 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "003",
+  "id": "brush-title",
+  "name": "书法标题",
+  "nameEn": "Brush Title",
+  "aliases": [
+    "毛笔字标题",
+    "国潮标题",
+    "书法大字"
+  ],
+  "kind": "style",
+  "tags": [
+    "国潮",
+    "书法",
+    "标题"
+  ],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "毛笔行书大标题：墨从纸上晕开，或者一笔扫出，最后盖一方朱红印章",
+  "summaryEn": "A big calligraphy title in running script: ink bleeds into textured paper or sweeps on in one stroke, and a red seal stamps the corner at the end.",
+  "invoke": "用 003 把「春风得意」做成书法标题（日常用默认 V1；要招牌效果说「招牌」或 look=showcase）",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": [
+    "国潮品牌片头",
+    "文旅宣传",
+    "节气和节日（春节、中秋）",
+    "古风内容开头",
+    "读书和人文类封面"
+  ],
+  "notFor": [
+    {
+      "case": "整首诗、要读的长句",
+      "use": "005"
+    },
+    {
+      "case": "细宋体、大字距的新中式标题",
+      "use": "以后的新中式标题风格"
+    },
+    {
+      "case": "口播字幕",
+      "use": "004"
+    }
+  ],
+  "sizes": [
+    "1080x1920",
+    "1920x1080",
+    "1080x1080"
+  ],
+  "fps": 30,
+  "durationHint": "4 个字、节奏 R1：入场约 1.6 秒，盖章 0.45 秒，停留 2.5 秒，出场 0.6 秒，一共约 5.2 秒；实际时长以导出的 timeline.json 为准",
+  "timelineSegments": [
+    {
+      "name": "intro",
+      "label": "入场（含盖章）"
+    },
+    {
+      "name": "hold",
+      "label": "停留"
+    },
+    {
+      "name": "outro",
+      "label": "出场"
+    }
+  ],
+  "posterTime": "after-intro",
+  "safeArea": {
+    "bottom": 0.2,
+    "right": 0.15,
+    "measured": false,
+    "note": "跟 001 同一组经验值，未实测；只出提示"
+  },
+  "requires": {
+    "wordTimes": false,
+    "beats": false,
+    "tracking": false
+  },
+  "fonts": [
+    "zhimangxing",
+    "mashanzheng",
+    "liujianmaocao"
+  ],
+  "fontFallback": {
+    "zhimangxing": [
+      "notoserif-black"
+    ],
+    "mashanzheng": [
+      "notoserif-black"
+    ],
+    "liujianmaocao": [
+      "notoserif-black"
+    ],
+    "notoserif-black": [
+      "notosc-black"
+    ]
+  },
+  "paramFonts": {
+    "seal": "notoserif-black"
+  },
+  "extraGlyphs": "",
+  "typography": {
+    "writingMode": "horizontal",
+    "lineBreak": "manual",
+    "maxLines": 2,
+    "maxCharsPerLine": 4,
+    "noOrphan": true,
+    "punctCompress": false,
+    "latinFont": null
+  },
+  "params": [
+    {
+      "key": "text",
+      "type": "text",
+      "label": "标题",
+      "default": "春风得意",
+      "maxLength": 12,
+      "hint": "2–6 个字最好看。回车换行；不换行时 4 个字以内排一行，5–8 个字自动排两行（第二行往右错开半个字），用 | 指定从哪里断"
+    },
+    {
+      "key": "look",
+      "type": "select",
+      "label": "造型预设",
+      "default": "V1",
+      "options": [
+        {
+          "value": "V1",
+          "label": "V1 墨韵（日常默认）"
+        },
+        {
+          "value": "V3",
+          "label": "V3 泼墨大笔（招牌）"
+        }
+      ],
+      "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌（别名「招牌」「showcase」）：背后一道大笔刷、墨点飞溅、印章盖得更重、停留时慢慢推近"
+    },
+    {
+      "key": "palette",
+      "type": "select",
+      "label": "配色",
+      "default": "C1",
+      "options": [
+        {
+          "value": "C1",
+          "label": "C1 宣纸墨黑"
+        },
+        {
+          "value": "C2",
+          "label": "C2 夜墨鎏金"
+        },
+        {
+          "value": "C3",
+          "label": "C3 春节红金"
+        },
+        {
+          "value": "C4",
+          "label": "C4 青绿山水"
+        },
+        {
+          "value": "C5",
+          "label": "C5 透明白墨"
+        }
+      ]
+    },
+    {
+      "key": "rhythm",
+      "type": "select",
+      "label": "节奏",
+      "default": "R1",
+      "options": [
+        {
+          "value": "R1",
+          "label": "R1 标准"
+        },
+        {
+          "value": "R2",
+          "label": "R2 慢（文旅）"
+        },
+        {
+          "value": "R3",
+          "label": "R3 一笔连贯（整行一道扫过）"
+        }
+      ]
+    },
+    {
+      "key": "entrance",
+      "type": "select",
+      "label": "入场方式",
+      "default": "bleed",
+      "options": [
+        {
+          "value": "bleed",
+          "label": "墨迹晕开"
+        },
+        {
+          "value": "sweep",
+          "label": "笔刷扫出"
+        }
+      ],
+      "hint": "R3 一笔连贯固定用扫出"
+    },
+    {
+      "key": "font",
+      "type": "select",
+      "label": "字体",
+      "default": "zhimangxing",
+      "options": [
+        {
+          "value": "zhimangxing",
+          "label": "钟齐志莽行书（默认）"
+        },
+        {
+          "value": "mashanzheng",
+          "label": "马善政楷书（好认）"
+        },
+        {
+          "value": "liujianmaocao",
+          "label": "刘建毛草（最狂，只适合常见字）"
+        }
+      ]
+    },
+    {
+      "key": "seal",
+      "type": "text",
+      "label": "印章里的字",
+      "default": "吉祥",
+      "maxLength": 4,
+      "hint": "1–4 个字，留空就不盖章",
+      "allowEmpty": true
+    },
+    {
+      "key": "vertical",
+      "type": "bool",
+      "label": "竖排题字",
+      "default": false,
+      "hint": "竖排不放标点（书法字体没有竖排标点），有标点会去掉并提示"
+    },
+    {
+      "key": "size",
+      "type": "number",
+      "label": "字号上限（占画面短边；空着＝自动：竖屏和方形 0.26，横屏 0.34）",
+      "default": null,
+      "min": 0.12,
+      "max": 0.4,
+      "hint": "实际字号还要按墨迹外框缩到一行最多占画面宽 80%"
+    },
+    {
+      "key": "tracking",
+      "type": "range",
+      "label": "字距（按墨迹，占字号）",
+      "default": -0.02,
+      "min": -0.12,
+      "max": 0.2,
+      "step": 0.005
+    },
+    {
+      "key": "ink",
+      "type": "range",
+      "label": "墨色浓淡",
+      "default": 0.92,
+      "min": 0.5,
+      "max": 1,
+      "step": 0.01
+    },
+    {
+      "key": "paper",
+      "type": "range",
+      "label": "纸纹强度",
+      "default": 0.15,
+      "min": 0,
+      "max": 0.6,
+      "step": 0.01,
+      "hint": "透明底和 C5 不画纸"
+    },
+    {
+      "key": "even",
+      "type": "range",
+      "label": "字形大小找平（最多浮动）",
+      "default": 0.08,
+      "min": 0,
+      "max": 0.15,
+      "step": 0.01,
+      "hint": "行书里「一」很扁、「春」很高，按墨迹面积把字号上下微调"
+    },
+    {
+      "key": "wobble",
+      "type": "range",
+      "label": "上下错落",
+      "default": 0.5,
+      "min": 0,
+      "max": 1.5,
+      "step": 0.05
+    },
+    {
+      "key": "sealSize",
+      "type": "range",
+      "label": "印章大小（占字号）",
+      "default": 0.28,
+      "min": 0.18,
+      "max": 0.42,
+      "step": 0.01
+    },
+    {
+      "key": "swash",
+      "type": "select",
+      "label": "背后大笔刷",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "不要"
+        },
+        {
+          "value": "on",
+          "label": "要"
+        }
+      ]
+    },
+    {
+      "key": "splash",
+      "type": "range",
+      "label": "墨点飞溅",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "push",
+      "type": "range",
+      "label": "整体慢慢推近",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "hint": "1＝10 秒放大 3%"
+    },
+    {
+      "key": "stamp",
+      "type": "range",
+      "label": "盖章力度",
+      "default": 1,
+      "min": 0,
+      "max": 2.5,
+      "step": 0.05,
+      "hint": "落章那一下画面震多少（1＝短边的 0.3%，震 2 帧）"
+    },
+    {
+      "key": "hold",
+      "type": "number",
+      "label": "停留秒数（空着＝按节奏，R1 是 2.5 秒）",
+      "default": null,
+      "min": 0.5,
+      "max": 10
+    },
+    {
+      "key": "y",
+      "type": "range",
+      "label": "垂直位置（空着＝自动：竖屏 0.40，其他 0.45）",
+      "default": null,
+      "min": 0.15,
+      "max": 0.85,
+      "step": 0.01
+    },
+    {
+      "key": "fill",
+      "type": "color",
+      "label": "改墨色（覆盖配色，改了就不用渐变）",
+      "default": "",
+      "overrides": "fill"
+    },
+    {
+      "key": "seed",
+      "type": "int",
+      "label": "种子",
+      "default": 11
+    }
+  ],
+  "palettes": [
+    {
+      "id": "C1",
+      "name": "宣纸墨黑",
+      "colors": {
+        "fill": "#151311",
+        "fill2": "#151311",
+        "inner": "#F3EDE0",
+        "outer": "#151311",
+        "shadow": "#5B4B39",
+        "accent": "#C8231E",
+        "bg": "#F3EDE0",
+        "sub": "#D8C9AC"
+      }
+    },
+    {
+      "id": "C2",
+      "name": "夜墨鎏金",
+      "colors": {
+        "fill": "#F6D88A",
+        "fill2": "#C9963F",
+        "inner": "#F6D88A",
+        "outer": "#C9963F",
+        "shadow": "#000000",
+        "accent": "#B3261E",
+        "bg": "#0E0D0C",
+        "sub": "#2B2620"
+      }
+    },
+    {
+      "id": "C3",
+      "name": "春节红金",
+      "colors": {
+        "fill": "#FBE3A1",
+        "fill2": "#D9A645",
+        "inner": "#9A1511",
+        "outer": "#D9A645",
+        "shadow": "#5E0A08",
+        "accent": "#F2CF7E",
+        "bg": "#B81D18",
+        "sub": "#6E0B08"
+      }
+    },
+    {
+      "id": "C4",
+      "name": "青绿山水",
+      "colors": {
+        "fill": "#1F3A33",
+        "fill2": "#1F3A33",
+        "inner": "#E8EFE6",
+        "outer": "#1F3A33",
+        "shadow": "#6F8A80",
+        "accent": "#C8231E",
+        "bg": "#E8EFE6",
+        "sub": "#BFD3C5"
+      }
+    },
+    {
+      "id": "C5",
+      "name": "透明白墨",
+      "ground": "none",
+      "softShadow": true,
+      "colors": {
+        "fill": "#FFFFFF",
+        "fill2": "#FFFFFF",
+        "inner": "#FFFFFF",
+        "outer": "#FFFFFF",
+        "shadow": "#000000",
+        "accent": "#D2352B",
+        "bg": "#000000",
+        "sub": "#000000"
+      }
+    }
+  ],
+  "rhythms": [
+    {
+      "id": "R1",
+      "name": "标准",
+      "charDur": 0.45,
+      "stagger": 0.22,
+      "sweepLine": null,
+      "sealDelay": 0.2,
+      "sealDur": 0.25,
+      "hold": 2.5,
+      "outDur": 0.6
+    },
+    {
+      "id": "R2",
+      "name": "慢",
+      "charDur": 0.7,
+      "stagger": 0.35,
+      "sweepLine": null,
+      "sealDelay": 0.25,
+      "sealDur": 0.3,
+      "hold": 3,
+      "outDur": 0.8
+    },
+    {
+      "id": "R3",
+      "name": "一笔连贯",
+      "charDur": 0.45,
+      "stagger": 0.22,
+      "sweepLine": 0.9,
+      "sealDelay": 0.2,
+      "sealDur": 0.25,
+      "hold": 2.5,
+      "outDur": 0.6
+    }
+  ],
+  "looks": [
+    {
+      "id": "V1",
+      "name": "墨韵",
+      "aliases": [
+        "日常",
+        "daily"
+      ],
+      "params": {
+        "swash": "none",
+        "splash": 0,
+        "push": 0,
+        "stamp": 1
+      },
+      "role": "default",
+      "nameEn": "Ink Wash"
+    },
+    {
+      "id": "V3",
+      "name": "泼墨大笔",
+      "aliases": [
+        "招牌",
+        "showcase"
+      ],
+      "params": {
+        "swash": "on",
+        "splash": 0.7,
+        "push": 1,
+        "stamp": 1.8
+      },
+      "role": "showcase",
+      "nameEn": "Splash Ink"
+    }
+  ],
+  "exports": [
+    "mp4",
+    "mov-alpha",
+    "webm-alpha",
+    "png-seq"
+  ],
+  "checks": [
+    "missing-glyph",
+    "safe-area",
+    "seal-overlap",
+    "vertical-punct",
+    "flash-rate"
+  ],
+  "demo": {
+    "default": {
+      "look": "V1",
+      "text": "春风得意",
+      "video": "demo/003_V1_墨韵_竖屏.mp4",
+      "gif": "demo/preview.gif",
+      "gifMaxMB": 1.5,
+      "poster": "demo/poster-v1.jpg"
+    },
+    "showcase": {
+      "look": "V3",
+      "palette": "C3",
+      "text": "万事如意",
+      "video": "demo/003_V3_招牌_竖屏.mp4",
+      "gif": "demo/showcase.gif",
+      "gifMaxMB": 1.5,
+      "poster": "demo/poster.jpg"
+    }
+  },
+  "credits": [
+    {
+      "what": "字体",
+      "name": "钟齐志莽行书 Zhi Mang Xing",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/zhimangxing"
+    },
+    {
+      "what": "字体",
+      "name": "马善政楷书 Ma Shan Zheng",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/mashanzheng"
+    },
+    {
+      "what": "字体",
+      "name": "刘建毛草 Liu Jian Mao Cao",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/liujianmaocao"
+    },
+    {
+      "what": "印章字和备用字体",
+      "name": "思源宋体 Noto Serif SC",
+      "license": "OFL-1.1",
+      "url": "https://github.com/notofonts/noto-cjk"
+    },
+    {
+      "what": "备用字体",
+      "name": "思源黑体 Noto Sans SC",
+      "license": "OFL-1.1",
+      "url": "https://github.com/notofonts/noto-cjk"
+    }
+  ],
+  "license": {
+    "code": "MIT",
+    "doc": "CC-BY-NC-4.0",
+    "demo": "CC-BY-4.0"
+  },
+  "measuredDefaults": {
+    "source": "国庆片头实测（2026-11-19，3 条成片）",
+    "lineWidth": "4 个字横排占画面宽 79%–80%",
+    "y_vertical": 0.4
+  },
+  "platforms": [
+    {
+      "name": "抖音节庆片头",
+      "basis": "measured",
+      "note": "第一轮量到 3 条国庆片头成片，金字红底最多"
+    },
+    {
+      "name": "视频号节庆片头",
+      "basis": "inferred",
+      "note": "没测"
+    },
+    {
+      "name": "小红书封面",
+      "basis": "inferred",
+      "note": "没测"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "021",
+  "id": "chat-bubbles",
+  "name": "聊天气泡对话",
+  "nameEn": "Chat Bubbles",
+  "aliases": ["对话气泡", "聊天记录", "聊天截图", "对话框", "微信对话", "剧情对话"],
+  "kind": "style",
+  "tags": ["对话", "剧情", "情感", "搞笑"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "按脚本自动排出一整段对话：左右两边的气泡一条条弹出来，对方打字时先冒「正在输入」的三个点；气泡宽度跟着字数变，按词断行；消息多了整段往上滚。气泡样子自己设计，不照任何聊天软件。",
+  "summaryEn": "A whole chat laid out from a script: bubbles pop in one by one on the left and right, with three typing dots before the other person's messages. Bubbles size to their text and wrap only at word boundaries; long chats scroll up. The bubble design is our own, not copied from any messaging app.",
+  "invoke": "用 021 把这段对话做成聊天气泡：「妈：你今年过年回来吗？」「我：看情况，最近*加班*有点多」……",
+  "invokeTemplate": "用 {code} 把这段对话做成聊天气泡（每行一条，写成「名字：内容」），造型 {look}，配色 {palette}",
+  "fitFor": ["剧情号、情感号把一段对话演出来", "搞笑段子：最后一句是包袱", "口播里转述别人说的话", "知识号用问答的形式讲一个点"],
+  "notFor": [
+    { "case": "只放一条评论，口播里回答它", "use": "010 评论卡" },
+    { "case": "口播结尾求评论", "use": "009 评论区告诉我" },
+    { "case": "整段口播字幕", "use": "004 一词一屏字幕" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号的剧情和情感号", "basis": "inferred", "note": "两轮抖音测量没有专门量过对话气泡" },
+    { "name": "小红书的搞笑和情感视频", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "跟对话长短走：对方的每条先打字 0.6–1.2 秒，每条停 0.7–2.2 秒（字越多停越久），最后一条再停 1.6 秒，出场 0.4 秒。默认 5 条约 11 秒（R2 约 8 秒，R3 约 14 秒）。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "第一条出来" },
+    { "name": "chat", "label": "一条条往下聊" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": "hold.mid",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏时对话区的下边缘在画面高度 0.8，不进底部 20%；右边的气泡会进右侧 15%，叠在有平台按钮的画面上要缩小字号或者留意" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "fonts": ["notosc-bold", "kuaile"],
+  "fontFallback": { "notosc-bold": ["notosc-black"], "kuaile": ["notosc-black"] },
+  "extraGlyphs": "",
+  "typography": { "writingMode": "horizontal", "lineBreak": "word", "maxLines": 0, "maxCharsPerLine": 14, "noOrphan": false, "punctCompress": true, "shrinkParticles": 1, "latinFont": null },
+  "params": [
+    { "key": "text", "type": "text", "label": "对话（每行一条，写成「名字：内容」；名字是「我」的放右边）", "default": "妈：你今年过年回来吗？\n我：看情况，最近*加班*有点多\n妈：你二姨说给你介绍个对象\n我：我突然发现我不加班了\n妈：那就这么说定了", "maxLength": 400, "hint": "名字最多 4 个字。没写「我」的话，第一个人放左边，第二个人放右边；没写名字的行接着上一条的人说；整段都没写名字就左右交替。*词* 标关键词：字换颜色（左边的气泡），下面划一道线" },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「招牌」「showcase」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-bold", "options": [{ "value": "notosc-bold", "label": "思源黑体 Bold" }, { "value": "kuaile", "label": "站酷快乐体（可爱）" }] },
+    { "key": "avatars", "type": "bool", "label": "头像（名字的第一个字）", "default": true },
+    { "key": "names", "type": "select", "label": "左边气泡上面写名字", "default": "auto", "options": [{ "value": "auto", "label": "自动（左边不止一个人时才写）" }, { "value": "always", "label": "总是写" }, { "value": "never", "label": "不写" }] },
+    { "key": "typing", "type": "bool", "label": "对方发消息前先冒「正在输入」的三个点", "default": true },
+    { "key": "punch", "type": "bool", "label": "最后一条当包袱（V3：字放大、落地震一下、炸几道线）", "default": true },
+    { "key": "size", "type": "range", "label": "字号（占画面短边）", "default": 0.05, "min": 0.03, "max": 0.06, "step": 0.001 },
+    { "key": "flair", "type": "range", "label": "招牌强度（漫画描边和硬投影、气泡弹得更狠、包袱）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "暖白配琥珀", "colors": { "fill": "#1E1E1E", "fill2": "#FFB547", "inner": "#1E1E1E", "outer": "#1E1E1E", "shadow": "#000000", "accent": "#FF5A4E", "bg": "#FFFFFF", "sub": "#8A8A8A" } },
+    { "id": "C2", "name": "夜聊（深色）", "colors": { "fill": "#F2F2F2", "fill2": "#8E7CFF", "inner": "#FFFFFF", "outer": "#0E0E12", "shadow": "#000000", "accent": "#FFB547", "bg": "#2A2C33", "sub": "#9A9AA6" } },
+    { "id": "C3", "name": "蜜桃", "colors": { "fill": "#3A2A2A", "fill2": "#FF9466", "inner": "#FFFFFF", "outer": "#3A2A2A", "shadow": "#000000", "accent": "#FF5A4E", "bg": "#FFF4EE", "sub": "#A08A80" } },
+    { "id": "C4", "name": "漫画（白配青）", "colors": { "fill": "#141414", "fill2": "#5BC8D9", "inner": "#141414", "outer": "#141414", "shadow": "#141414", "accent": "#FF5A4E", "bg": "#FFFFFF", "sub": "#707070" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "speed": 1, "holdExtra": 0 },
+    { "id": "R2", "name": "快（聊得急）", "speed": 0.7, "holdExtra": 0 },
+    { "id": "R3", "name": "慢（每条多看一会儿）", "speed": 1.3, "holdExtra": 1 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0 } },
+    { "id": "V3", "name": "漫画包袱", "nameEn": "Comic Punchline", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1 } }
+  ],
+  "exports": ["mp4", "mov-alpha", "webm-alpha", "png-seq"],
+  "checks": ["mid-word", "stroke-clip", "missing-glyph", "safe-area", "flash-rate", "brand-lookalike"],
+  "demo": {
+    "default": { "look": "V1", "text": "妈：你今年过年回来吗？\n我：看情况，最近*加班*有点多\n妈：你二姨说给你介绍个对象\n我：我突然发现我不加班了\n妈：那就这么说定了", "video": "demo/021_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "妈：你今年过年回来吗？\n我：看情况，最近*加班*有点多\n妈：你二姨说给你介绍个对象\n我：我突然发现我不加班了\n妈：那就这么说定了", "video": "demo/021_V3_漫画包袱_竖屏.mp4", "gifMaxMB": 1.5, "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 700）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" },
+    { "what": "图形", "name": "气泡、头像、正在输入的三个点、包袱的炸线全部是本项目自己画的", "license": "MIT", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

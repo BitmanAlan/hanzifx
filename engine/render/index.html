@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>hanzifx render</title>
+<style>
+  /* 导出页：html/body 不设背景，透明底才透得出来 */
+  html, body { margin: 0; padding: 0; overflow: hidden; }
+  #stage { position: absolute; left: 0; top: 0; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script type="module">
+  import { loadStyle, mount } from '../src/host.js';
+  let inst = null;
+  window.hanzifx = {
+    async boot(cfg) {
+      const style = await loadStyle(cfg.style);
+      inst = await mount(document.getElementById('stage'), {
+        style, params: cfg.params, width: cfg.width, height: cfg.height,
+        background: cfg.background, fonts: cfg.fonts, beats: cfg.beats, words: cfg.words, wordsOffsetMs: cfg.wordsOffsetMs, segmentation: cfg.segmentation,
+      });
+      return {
+        params: inst.params, timeline: inst.timeline, layout: inst.layout,
+        charset: inst.charset, font: inst.font, fontChain: inst.fontChain, beats: inst.beats, text: inst.text, segmentation: inst.segmentation, words: inst.words,
+        userAgent: navigator.userAgent, dpr: window.devicePixelRatio,
+        viewport: [window.innerWidth, window.innerHeight],
+      };
+    },
+    seek(t) { inst.seek(t); return true; },
+  };
+  window.hanzifxReady = true;
+</script>
+</body>
+</html>

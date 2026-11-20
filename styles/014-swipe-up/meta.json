@@ -1,0 +1,90 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "014",
+  "id": "swipe-up",
+  "name": "上滑看下一集",
+  "nameEn": "Swipe Up",
+  "aliases": ["上滑提示", "上滑引导", "下一集", "往上滑", "集末引导"],
+  "kind": "interaction",
+  "tags": ["互动", "短剧", "系列", "集末"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "短剧和系列内容的集末提示：一只手从下往上滑，指尖拖着一道拖影，上方三个箭头依次点亮，下面一句「上滑看下一集」逐字往上跳。手、箭头、拖影都是自己画的，透明底叠上就能用。",
+  "summaryEn": "An end-of-episode prompt for short dramas and series: a hand swipes up with a trail, three chevrons light up in turn, and the line below hops character by character. Transparent background.",
+  "invoke": "用 014 在集末做一个上滑看下一集的提示，透明底",
+  "invokeTemplate": "用 {code} 做一个上滑提示，写「{text}」，造型 {look}，配色 {palette}",
+  "fitFor": ["短剧每集的结尾", "系列内容的集末", "合集里提示往下看", "口播结尾引导看下一条"],
+  "notFor": [
+    { "case": "求点赞、收藏", "use": "015 点赞收藏引导" },
+    { "case": "求关注", "use": "008 账号名片卡" }
+  ],
+  "platforms": [
+    { "name": "抖音、快手、视频号的短剧集末", "basis": "inferred", "note": "两轮抖音测量没有专门量过上滑提示" },
+    { "name": "小红书视频合集", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "入场约 0.45 秒，默认滑两次、每次 1 秒，滑完停 1.2 秒，出场 0.3 秒，全程约 4 秒（R2 约 3 秒，R3 挂着多停 3 秒）。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "入场" },
+    { "name": "swipe", "label": "上滑" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": 0.85,
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏默认放在画面高度 0.55、水平居中，整组的下边缘不进底部 20%" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-black", "kuaile"],
+  "fontFallback": { "notosc-black": [], "kuaile": ["notosc-black"] },
+  "extraGlyphs": "上滑看下一集第2",
+  "typography": { "writingMode": "horizontal", "lineBreak": "none", "maxLines": 1, "maxCharsPerLine": 8, "noOrphan": false, "punctCompress": true, "shrinkParticles": 1, "latinFont": null },
+  "params": [
+    { "key": "text", "type": "text", "label": "提示语（*词* 标成关键词）", "default": "上滑看*下一集*", "maxLength": 12, "hint": "一行，8 个字以内最好；放不下会自动缩小" },
+    { "key": "peekText", "type": "text", "label": "招牌版最后弹出的标签（V3；留空就不弹）", "default": "第 2 集", "maxLength": 8, "allowEmpty": true },
+    { "key": "swipes", "type": "int", "label": "滑几次", "default": 2, "min": 1, "max": 4 },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「招牌」「showcase」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-black", "options": [{ "value": "notosc-black", "label": "思源黑体 Black" }, { "value": "kuaile", "label": "站酷快乐体（可爱）" }] },
+    { "key": "hand", "type": "bool", "label": "手（关掉就只剩拖影和箭头）", "default": true },
+    { "key": "chevrons", "type": "bool", "label": "上方的三个箭头", "default": true },
+    { "key": "peek", "type": "bool", "label": "最后弹出下一集标签（V3 默认开）", "default": false },
+    { "key": "size", "type": "range", "label": "手的大小（占画面短边）", "default": 0.16, "min": 0.1, "max": 0.24, "step": 0.01 },
+    { "key": "flair", "type": "range", "label": "招牌强度（拖影掉亮点、箭头飞上去的残影、提示语跳得更高）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "particles", "type": "int", "label": "拖影上掉的亮点数（每滑一次）", "default": 0, "min": 0, "max": 24 },
+    { "key": "material", "type": "select", "label": "质感", "default": "candy", "options": [{ "value": "candy", "label": "亮面糖果（默认）" }, { "value": "flat", "label": "平面" }],
+      "hint": "亮面糖果：提示语的胶囊条、V3 的「第 2 集」标签有厚度、白亮边和镜面高光；平面：扁平画法，胶囊条半透明" },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝竖屏 0.55，其他 0.5）", "default": null, "min": 0.2, "max": 0.8, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "暖橙", "colors": { "fill": "#FFFFFF", "fill2": "#FFFFFF", "inner": "#FFFFFF", "outer": "#1E1E1E", "shadow": "#000000", "accent": "#FF8A3D", "bg": "#141414", "sub": "#FFFFFF" } },
+    { "id": "C2", "name": "冷青", "colors": { "fill": "#FFFFFF", "fill2": "#FFFFFF", "inner": "#FFFFFF", "outer": "#0E1E1D", "shadow": "#000000", "accent": "#39C5BB", "bg": "#0E1E1D", "sub": "#FFFFFF" } },
+    { "id": "C3", "name": "电光紫", "colors": { "fill": "#FFFFFF", "fill2": "#FFFFFF", "inner": "#FFFFFF", "outer": "#1A1030", "shadow": "#000000", "accent": "#9B7BFF", "bg": "#1A1030", "sub": "#FFFFFF" } },
+    { "id": "C4", "name": "深色版（叠在浅色画面上）", "colors": { "fill": "#2A2A2A", "fill2": "#2A2A2A", "inner": "#FFFFFF", "outer": "#2A2A2A", "shadow": "#000000", "accent": "#E4572E", "bg": "#FFFFFF", "sub": "#2A2A2A" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "speed": 1, "holdExtra": 0 },
+    { "id": "R2", "name": "快", "speed": 0.75, "holdExtra": 0 },
+    { "id": "R3", "name": "挂着（停留段多 3 秒）", "speed": 1, "holdExtra": 3 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0, "particles": 0, "peek": false } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1, "particles": 10, "peek": true } }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["mid-word", "stroke-clip", "missing-glyph", "safe-area", "flash-rate", "brand-lookalike"],
+  "demo": {
+    "default": { "look": "V1", "text": "上滑看*下一集*", "video": "demo/014_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "上滑看*下一集*", "video": "demo/014_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" },
+    { "what": "图形", "name": "手、箭头、拖影、标签全部是本项目自己画的（手跟 006、008、015 同一套画法）", "license": "MIT", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

@@ -1,0 +1,91 @@
+# 持续集成：不渲染视频，只跑快的检查（几十秒）；推到 main 时顺带把在线画廊发到 GitHub Pages。
+# 本地跑同样的检查：见 CONTRIBUTING.md 的「交之前自己跑通」。
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: 检查（Node ${{ matrix.node }}）
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: engine/package-lock.json
+      - name: 装依赖
+        run: npm ci
+      - name: 单元测试
+        run: npm test
+      - name: README 索引表是最新的（中文）
+        run: node cli/catalog.mjs --template ../docs/README.template.md --readme ../README.md --check
+      - name: README 索引表是最新的（英文）
+        run: node cli/catalog.mjs --lang en --template ../docs/README.en.template.md --readme ../README.en.md --check
+      - name: 风格字段和样片齐全
+        run: node cli/catalog.mjs --strict > /dev/null
+      - name: NOTICE 是最新的
+        run: node cli/notice.mjs --check
+      - name: 发布自检（本机路径、密钥、内部名字、别人的素材）
+        working-directory: .
+        run: node scripts/release-audit.mjs
+
+  pages:
+    name: 在线画廊
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: engine/package-lock.json
+      - name: 装依赖
+        working-directory: engine
+        run: npm ci
+      # 字体源文件按 registry.json 里钉死的地址下载、核 sha256；registry 不变就用缓存
+      - uses: actions/cache@v4
+        with:
+          path: engine/fonts/src
+          key: fonts-${{ hashFiles('engine/fonts/registry.json') }}
+      - name: 下载字体、做试玩字库
+        working-directory: engine
+        run: npm run fonts
+      - name: 装 ffmpeg（画廊海报缩到 480 宽；没有它就原样拷大图）
+        run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends ffmpeg
+      - name: 构建静态站
+        working-directory: engine
+        run: node cli/site.mjs --out ../_site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

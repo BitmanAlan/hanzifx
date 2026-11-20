@@ -1,0 +1,7 @@
+# 完整字体源文件体积大，由 npm run fonts 按 registry.json 里的地址下载并校验 sha256
+fonts/src/*.ttf
+fonts/src/*.otf
+# 生成物
+fonts/dist/
+out/
+reports/frames/

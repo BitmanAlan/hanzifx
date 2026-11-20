@@ -1,0 +1,88 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "002",
+  "id": "big-poster",
+  "name": "大字报",
+  "nameEn": "Big Poster",
+  "aliases": ["满屏大字", "大字封面"],
+  "kind": "style",
+  "tags": ["封面", "标题", "大字"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "一段话排满画面，每行各自撑满宽度，关键词那行最大，大小反差撑起版面。",
+  "summaryEn": "A whole sentence fills the frame: every line stretches to full width and the keyword line is the biggest, so the size contrast carries the layout.",
+  "invoke": "用 002 把「普通人用AI最大的误区，是把它当*搜索引擎*」做成大字报，配色 C1",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": ["小红书封面", "观点口播开头 1–3 秒", "知识号系列封面"],
+  "notFor": [
+    { "case": "整段口播字幕", "use": "004" },
+    { "case": "跟着音乐一屏一个词地换", "use": "007" }
+  ],
+  "platforms": [
+    { "name": "小红书封面", "basis": "inferred", "note": "两轮抖音测量都没在成片里见到大字报；没在小红书测" },
+    { "name": "抖音口播开头", "basis": "inferred", "note": "能用，但两轮测量里观点口播的开头都是普通字幕" }
+  ],
+  "sizes": ["1080x1920", "1080x1440", "1080x1080", "1920x1080"],
+  "fps": 30,
+  "durationHint": "每行入场约 0.2 秒、行与行错开 0.1 秒，全部落地后再留 0.3 秒（V3 有斜线时 0.6 秒）让画面静下来；停留按字数算，至少 2 秒、每秒 6 个字；出场 0.25 秒（逐字缩没）。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "入场" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": "after-intro",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证（一位博主的标注，加上我们量过的抖音样本统计），没有官方规范；右侧 15% 是经验值，未实测" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "fonts": ["notosc-black", "huangyou"],
+  "fontFallback": { "notosc-black": [], "huangyou": ["notosc-black"] },
+  "extraGlyphs": "",
+  "typography": { "writingMode": "horizontal", "lineBreak": "word", "maxLines": 7, "maxCharsPerLine": 9, "noOrphan": true, "punctCompress": true, "shrinkParticles": 1, "latinFont": null },
+  "params": [
+    { "key": "text", "type": "text", "label": "文字", "default": "普通人用AI最大的误区，是把它当*搜索引擎*", "maxLength": 60, "hint": "用 *关键词* 标出要最大的那几个字；回车可以强制换行；用 | 指定能断开的位置。不换行时自动按词断行，每行各自撑满宽度" },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 爆款封面（招牌）" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「封面」「showcase」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4", "C5"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-black", "options": [{ "value": "notosc-black", "label": "思源黑体 Black" }, { "value": "huangyou", "label": "站酷庆科黄油体" }] },
+    { "key": "transparent", "type": "bool", "label": "透明底（不画底色，字加描边，叠在视频上用）", "default": false },
+    { "key": "scatter", "type": "range", "label": "字的错落（倾斜和大小起伏）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "hardShadow", "type": "bool", "label": "硬投影（套色错版）", "default": false },
+    { "key": "kwBlock", "type": "bool", "label": "关键词反色色块", "default": false },
+    { "key": "texture", "type": "bool", "label": "底纹（网点）", "default": false },
+    { "key": "slashes", "type": "bool", "label": "关键词两侧斜线装饰", "default": false },
+    { "key": "impact", "type": "range", "label": "落地冲击（震屏强度）", "default": 0.3, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "maxLines", "type": "int", "label": "最多几行", "default": 7, "min": 3, "max": 7 },
+    { "key": "maxChars", "type": "int", "label": "一行最多几个字", "default": 9, "min": 4, "max": 10 },
+    { "key": "hold", "type": "number", "label": "停留秒数（空着就按字数算）", "default": null, "min": 0.5, "max": 10 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝自动：避开底部遮挡区后居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "白纸黑红", "colors": { "fill": "#141414", "fill2": "#141414", "inner": "#F7F4EC", "outer": "#F7F4EC", "shadow": "#E8B4A0", "accent": "#E5262A", "bg": "#F7F4EC", "sub": "#5A554D" } },
+    { "id": "C2", "name": "柠檬黄", "colors": { "fill": "#111111", "fill2": "#111111", "inner": "#FFE24A", "outer": "#FFE24A", "shadow": "#C9A800", "accent": "#E5262A", "bg": "#FFE24A", "sub": "#3A3000" } },
+    { "id": "C3", "name": "夜黑亮黄", "colors": { "fill": "#FFFFFF", "fill2": "#FFFFFF", "inner": "#111111", "outer": "#111111", "shadow": "#3A3A3A", "accent": "#FFD400", "bg": "#111111", "sub": "#9A9A9A" } },
+    { "id": "C4", "name": "克莱因蓝", "colors": { "fill": "#FFFFFF", "fill2": "#FFFFFF", "inner": "#1F3FD1", "outer": "#1F3FD1", "shadow": "#0E1F7A", "accent": "#FFD400", "bg": "#1F3FD1", "sub": "#C9D3FF" } },
+    { "id": "C5", "name": "牛皮纸", "colors": { "fill": "#2A1C12", "fill2": "#2A1C12", "inner": "#E9D9B8", "outer": "#E9D9B8", "shadow": "#C8A97A", "accent": "#C8361D", "bg": "#E9D9B8", "sub": "#6B5A45" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "lineDur": 0.18, "lineStagger": 0.1, "charStagger": 0.018, "outDur": 0.25 },
+    { "id": "R2", "name": "快", "lineDur": 0.12, "lineStagger": 0.06, "charStagger": 0.012, "outDur": 0.2 },
+    { "id": "R3", "name": "一次全出", "lineDur": 0.3, "lineStagger": 0, "charStagger": 0.008, "outDur": 0.25 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "scatter": 0, "hardShadow": false, "kwBlock": false, "texture": false, "slashes": false, "impact": 0.3, "maxLines": 7, "maxChars": 9 } },
+    { "id": "V3", "name": "爆款封面", "nameEn": "Viral Cover", "role": "showcase", "aliases": ["封面", "showcase"], "params": { "scatter": 1, "hardShadow": true, "kwBlock": true, "texture": true, "slashes": true, "impact": 1, "maxLines": 5, "maxChars": 8 } }
+  ],
+  "exports": ["mp4", "mov-alpha", "webm-alpha", "png-seq"],
+  "checks": ["mid-word", "line-start-punct", "line-end-punct", "stroke-clip", "missing-glyph", "safe-area"],
+  "demo": {
+    "default": { "look": "V1", "text": "普通人用AI最大的误区，是把它当*搜索引擎*", "video": "demo/002_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "gifWidth": 360, "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "普通人用AI最大的误区，是把它当*搜索引擎*", "video": "demo/002_V3_封面_竖屏.mp4", "gif": "demo/showcase.gif", "gifWidth": 360, "poster": "demo/poster.jpg", "cover3x4": "demo/cover-3x4.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷庆科黄油体 ZCOOL QingKe HuangYou", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-qingke-huangyou" },
+    { "what": "参考效果", "name": "小红书和抖音常见的「大字报」封面与观点口播开头（只参考公开效果，没有用任何人的素材）", "license": "—", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

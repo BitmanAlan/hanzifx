@@ -1,0 +1,689 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "001",
+  "id": "variety-outline",
+  "name": "综艺花字",
+  "nameEn": "Variety Outline",
+  "aliases": [
+    "综艺弹跳花字",
+    "弹跳花字",
+    "描边花字"
+  ],
+  "kind": "style",
+  "tags": [
+    "综艺花字",
+    "强调",
+    "口播"
+  ],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "四层描边加立体厚度的综艺花字：逐字弹出，停留时轻轻晃，最后逐字缩小飞走",
+  "summaryEn": "Variety-show captions with four layers of outline and an extruded 3D edge: characters pop in one by one, sway gently while on screen, then shrink and fly off one by one.",
+  "invoke": "用 001 把「这也太*好笑*了吧」做成综艺花字（日常用默认 V1；要招牌效果说「综艺」或 look=showcase）",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": [
+    "口播里的笑点和吐槽",
+    "综艺式反应字幕",
+    "短视频开头的情绪句"
+  ],
+  "notFor": [
+    {
+      "case": "整段口播字幕",
+      "use": "004"
+    },
+    {
+      "case": "严肃资讯标题",
+      "use": "002"
+    }
+  ],
+  "sizes": [
+    "1080x1920",
+    "1920x1080",
+    "1080x1080"
+  ],
+  "fps": 30,
+  "durationHint": "7 个字、节奏 R1、造型 V0 约 3.4 秒；4 个字以内停留缩到 1.2 秒；实际时长以导出的 timeline.json 为准",
+  "timelineSegments": [
+    {
+      "name": "intro",
+      "label": "入场"
+    },
+    {
+      "name": "hold",
+      "label": "停留"
+    },
+    {
+      "name": "outro",
+      "label": "出场"
+    }
+  ],
+  "posterTime": "after-intro",
+  "safeArea": {
+    "bottom": 0.2,
+    "right": 0.15,
+    "measured": false,
+    "note": "经验值，未实测；检查只出提示不卡发布，等抖音截图量准"
+  },
+  "requires": {
+    "wordTimes": false,
+    "beats": false,
+    "tracking": false
+  },
+  "fonts": [
+    "kuaile",
+    "huangyou"
+  ],
+  "fontFallback": {
+    "kuaile": [
+      "notosc-black"
+    ],
+    "huangyou": [
+      "notosc-black"
+    ]
+  },
+  "extraGlyphs": "",
+  "typography": {
+    "writingMode": "horizontal",
+    "lineBreak": "word",
+    "maxLines": 3,
+    "maxCharsPerLine": null,
+    "noOrphan": true,
+    "punctCompress": true,
+    "shrinkParticles": 1,
+    "latinFont": null
+  },
+  "params": [
+    {
+      "key": "text",
+      "type": "text",
+      "label": "文字",
+      "default": "这也太好笑了吧",
+      "maxLength": 40,
+      "hint": "回车换行；不换行时自动按词断行。用 | 指定能断开的位置，用 *关键词* 标出要突出的字"
+    },
+    {
+      "key": "look",
+      "type": "select",
+      "label": "造型预设",
+      "default": "V1",
+      "options": [
+        {
+          "value": "V4",
+          "label": "V4 轻"
+        },
+        {
+          "value": "V0",
+          "label": "V0 第 0 阶段原样"
+        },
+        {
+          "value": "V1",
+          "label": "V1 跳字（日常默认）"
+        },
+        {
+          "value": "V2",
+          "label": "V2 立体"
+        },
+        {
+          "value": "V3",
+          "label": "V3 综艺夸张（招牌）"
+        }
+      ],
+      "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「综艺」「showcase」）"
+    },
+    {
+      "key": "palette",
+      "type": "select",
+      "label": "配色",
+      "default": "C1",
+      "options": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ]
+    },
+    {
+      "key": "rhythm",
+      "type": "select",
+      "label": "节奏",
+      "default": "R1",
+      "options": [
+        "R1",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "key": "entrance",
+      "type": "select",
+      "label": "入场方式",
+      "default": "pop",
+      "options": [
+        {
+          "value": "pop",
+          "label": "弹出"
+        },
+        {
+          "value": "drop",
+          "label": "掉落"
+        }
+      ]
+    },
+    {
+      "key": "font",
+      "type": "select",
+      "label": "字体",
+      "default": "kuaile",
+      "options": [
+        {
+          "value": "kuaile",
+          "label": "站酷快乐体"
+        },
+        {
+          "value": "huangyou",
+          "label": "站酷庆科黄油体"
+        }
+      ]
+    },
+    {
+      "key": "size",
+      "type": "range",
+      "label": "字号（占画面短边）",
+      "default": 0.17,
+      "min": 0.08,
+      "max": 0.24,
+      "step": 0.005
+    },
+    {
+      "key": "outline",
+      "type": "range",
+      "label": "描边粗细",
+      "default": 1,
+      "min": 0.4,
+      "max": 1.6,
+      "step": 0.05
+    },
+    {
+      "key": "tilt",
+      "type": "range",
+      "label": "整体倾斜（度）",
+      "default": -4,
+      "min": -12,
+      "max": 12,
+      "step": 0.5
+    },
+    {
+      "key": "wave",
+      "type": "range",
+      "label": "停留时晃动",
+      "default": 1,
+      "min": 0,
+      "max": 2,
+      "step": 0.05
+    },
+    {
+      "key": "jitter",
+      "type": "range",
+      "label": "抖动",
+      "default": 1,
+      "min": 0,
+      "max": 2,
+      "step": 0.05
+    },
+    {
+      "key": "deco",
+      "type": "bool",
+      "label": "装饰（感叹线和星星）",
+      "default": true
+    },
+    {
+      "key": "jump",
+      "type": "range",
+      "label": "跳字幅度（大小、角度、高低起伏）",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "emph",
+      "type": "select",
+      "label": "关键词突出（文字里用 *关键词* 标）",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "不突出"
+        },
+        {
+          "value": "accent",
+          "label": "放大＋强调色"
+        }
+      ]
+    },
+    {
+      "key": "emphScale",
+      "type": "range",
+      "label": "关键词放大倍数",
+      "default": 1.3,
+      "min": 1,
+      "max": 1.6,
+      "step": 0.05
+    },
+    {
+      "key": "strokes",
+      "type": "select",
+      "label": "描边",
+      "default": "full",
+      "options": [
+        {
+          "value": "full",
+          "label": "完整四层（细边线＋白＋深色）"
+        },
+        {
+          "value": "single",
+          "label": "一层深色描边"
+        }
+      ]
+    },
+    {
+      "key": "shadow",
+      "type": "select",
+      "label": "阴影",
+      "default": "extrude",
+      "options": [
+        {
+          "value": "extrude",
+          "label": "立体厚度（往右下挤出）"
+        },
+        {
+          "value": "soft",
+          "label": "柔和投影"
+        },
+        {
+          "value": "none",
+          "label": "不要"
+        }
+      ]
+    },
+    {
+      "key": "depth",
+      "type": "range",
+      "label": "立体厚度",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "gloss",
+      "type": "select",
+      "label": "高光",
+      "default": "soft",
+      "options": [
+        {
+          "value": "soft",
+          "label": "柔光"
+        },
+        {
+          "value": "band",
+          "label": "硬边高光＋亮边"
+        },
+        {
+          "value": "none",
+          "label": "不要"
+        }
+      ]
+    },
+    {
+      "key": "burst",
+      "type": "select",
+      "label": "陪衬图形",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "不加"
+        },
+        {
+          "value": "boom",
+          "label": "爆炸框"
+        }
+      ]
+    },
+    {
+      "key": "bounce",
+      "type": "range",
+      "label": "入场弹性",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "hold",
+      "type": "number",
+      "label": "停留秒数（空着＝自动：4 个字以内是节奏停留的 3/4，R1 即 1.2 秒）",
+      "default": null,
+      "min": 0.3,
+      "max": 10
+    },
+    {
+      "key": "x",
+      "type": "range",
+      "label": "水平位置",
+      "default": 0.5,
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.01
+    },
+    {
+      "key": "y",
+      "type": "range",
+      "label": "垂直位置（空着＝自动：竖屏 0.38，其他 0.5）",
+      "default": null,
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.01
+    },
+    {
+      "key": "fill",
+      "type": "color",
+      "label": "主色（覆盖配色）",
+      "default": "",
+      "overrides": "fill"
+    },
+    {
+      "key": "outerColor",
+      "type": "color",
+      "label": "外描边色（覆盖配色）",
+      "default": "",
+      "overrides": "outer"
+    },
+    {
+      "key": "seed",
+      "type": "int",
+      "label": "种子",
+      "default": 7
+    }
+  ],
+  "palettes": [
+    {
+      "id": "C1",
+      "name": "阳光橙",
+      "colors": {
+        "fill": "#FFE347",
+        "fill2": "#FF7410",
+        "inner": "#FFFFFF",
+        "outer": "#2B1460",
+        "shadow": "#160933",
+        "accent": "#FF4F8B",
+        "bg": "#23245A",
+        "sub": "#FFF4A3"
+      }
+    },
+    {
+      "id": "C2",
+      "name": "蜜桃粉",
+      "colors": {
+        "fill": "#FFA3CC",
+        "fill2": "#EF2C7C",
+        "inner": "#FFFFFF",
+        "outer": "#470B33",
+        "shadow": "#27051C",
+        "accent": "#FFD23F",
+        "bg": "#2A1030",
+        "sub": "#FFFFFF"
+      }
+    },
+    {
+      "id": "C3",
+      "name": "薄荷青",
+      "colors": {
+        "fill": "#90F2DE",
+        "fill2": "#0FA698",
+        "inner": "#FFFFFF",
+        "outer": "#0C2E45",
+        "shadow": "#051927",
+        "accent": "#FFE14D",
+        "bg": "#0F2433",
+        "sub": "#FFFFFF"
+      }
+    },
+    {
+      "id": "C4",
+      "name": "烈焰红",
+      "colors": {
+        "fill": "#FFD336",
+        "fill2": "#EC2B1C",
+        "inner": "#FFF3D2",
+        "outer": "#1A0906",
+        "shadow": "#000000",
+        "accent": "#FFD336",
+        "bg": "#140B0A",
+        "sub": "#FFF0A6"
+      }
+    },
+    {
+      "id": "C5",
+      "name": "电光紫",
+      "colors": {
+        "fill": "#D0ACFF",
+        "fill2": "#6C3AF2",
+        "inner": "#FFFFFF",
+        "outer": "#130A33",
+        "shadow": "#070319",
+        "accent": "#4DF0FF",
+        "bg": "#0E0A26",
+        "sub": "#E9FFFF"
+      }
+    }
+  ],
+  "rhythms": [
+    {
+      "id": "R1",
+      "name": "标准",
+      "stagger": 0.065,
+      "freq": 2.3,
+      "damping": 0.42,
+      "hold": 1.6,
+      "outStagger": 0.04,
+      "outDur": 0.32
+    },
+    {
+      "id": "R2",
+      "name": "快闪",
+      "stagger": 0.035,
+      "freq": 3.1,
+      "damping": 0.5,
+      "hold": 0.9,
+      "outStagger": 0.025,
+      "outDur": 0.24
+    },
+    {
+      "id": "R3",
+      "name": "慢悠",
+      "stagger": 0.11,
+      "freq": 1.7,
+      "damping": 0.34,
+      "hold": 2.4,
+      "outStagger": 0.06,
+      "outDur": 0.42
+    }
+  ],
+  "exports": [
+    "mp4",
+    "mov-alpha",
+    "webm-alpha",
+    "png-seq"
+  ],
+  "checks": [
+    "mid-word",
+    "line-start-punct",
+    "line-end-punct",
+    "stroke-clip",
+    "missing-glyph",
+    "safe-area",
+    "flash-rate"
+  ],
+  "demo": {
+    "default": {
+      "look": "V1",
+      "text": "这也太*好笑*了吧",
+      "video": "demo/001_V1_日常_竖屏.mp4",
+      "gif": "demo/preview.gif",
+      "gifMaxMB": 1.5,
+      "poster": "demo/poster-v1.jpg"
+    },
+    "showcase": {
+      "look": "V3",
+      "text": "这也太*好笑*了吧",
+      "video": "demo/001_V3_综艺_竖屏.mp4",
+      "gif": "demo/showcase.gif",
+      "gifMaxMB": 1.5,
+      "poster": "demo/poster.jpg"
+    }
+  },
+  "credits": [
+    {
+      "what": "字体",
+      "name": "站酷快乐体 ZCOOL KuaiLe",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/zcool-kuaile"
+    },
+    {
+      "what": "字体",
+      "name": "站酷庆科黄油体 ZCOOL QingKe HuangYou",
+      "license": "OFL-1.1",
+      "url": "https://github.com/googlefonts/zcool-qingke-huangyou"
+    },
+    {
+      "what": "备用字体",
+      "name": "思源黑体 Noto Sans SC",
+      "license": "OFL-1.1",
+      "url": "https://github.com/notofonts/noto-cjk"
+    },
+    {
+      "what": "参考效果",
+      "name": "国内综艺节目常见的多层描边花字（只参考公开播出的效果，没有用任何节目的素材）",
+      "license": "—",
+      "url": ""
+    }
+  ],
+  "license": {
+    "code": "MIT",
+    "doc": "CC-BY-NC-4.0",
+    "demo": "CC-BY-4.0"
+  },
+  "looks": [
+    {
+      "id": "V4",
+      "name": "轻",
+      "params": {
+        "jump": 0,
+        "emph": "none",
+        "depth": 0,
+        "gloss": "none",
+        "burst": "none",
+        "bounce": 0,
+        "strokes": "single",
+        "shadow": "soft"
+      },
+      "nameEn": "Light"
+    },
+    {
+      "id": "V0",
+      "name": "现在的样子",
+      "params": {
+        "jump": 0,
+        "emph": "none",
+        "depth": 0,
+        "gloss": "soft",
+        "burst": "none",
+        "bounce": 0,
+        "strokes": "full",
+        "shadow": "extrude"
+      },
+      "nameEn": "Classic"
+    },
+    {
+      "id": "V1",
+      "name": "跳字",
+      "params": {
+        "jump": 1,
+        "emph": "accent",
+        "depth": 0,
+        "gloss": "soft",
+        "burst": "none",
+        "bounce": 0,
+        "strokes": "full",
+        "shadow": "extrude"
+      },
+      "aliases": [
+        "日常",
+        "daily"
+      ],
+      "role": "default",
+      "nameEn": "Bounce"
+    },
+    {
+      "id": "V2",
+      "name": "立体",
+      "params": {
+        "jump": 0,
+        "emph": "none",
+        "depth": 1,
+        "gloss": "band",
+        "burst": "none",
+        "bounce": 0,
+        "strokes": "full",
+        "shadow": "extrude"
+      },
+      "nameEn": "Extrude"
+    },
+    {
+      "id": "V3",
+      "name": "综艺夸张",
+      "params": {
+        "jump": 1,
+        "emph": "accent",
+        "depth": 1,
+        "gloss": "band",
+        "burst": "boom",
+        "bounce": 0.4,
+        "strokes": "full",
+        "shadow": "extrude"
+      },
+      "aliases": [
+        "综艺",
+        "showcase"
+      ],
+      "role": "showcase",
+      "nameEn": "Variety Max"
+    }
+  ],
+  "measuredDefaults": {
+    "source": "抖音实测（2026-11-19，6 条样本）",
+    "y_vertical": 0.38,
+    "hold_short": "4 个字以内 1.2 秒（R1）"
+  },
+  "platforms": [
+    {
+      "name": "抖音",
+      "basis": "measured",
+      "note": "第一轮量到 6 条、120 处大字，综艺切片和 vlog 里都有"
+    },
+    {
+      "name": "B 站",
+      "basis": "inferred",
+      "note": "综艺切片在 B 站也常见，没测"
+    },
+    {
+      "name": "视频号",
+      "basis": "inferred",
+      "note": "没测"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "007",
+  "id": "type-flash",
+  "name": "文字快闪",
+  "nameEn": "Type Flash",
+  "aliases": ["快闪", "卡点文字", "年终总结快闪"],
+  "kind": "style",
+  "tags": ["快闪", "卡点", "年终总结"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "一拍一屏的大字快闪：每一屏一个词，跟着拍子硬切，字砸进画面；默认不超 WCAG 闪烁上限",
+  "summaryEn": "Fast type-flash on the beat: one word per screen, hard cuts on the beat and words slamming into frame. Stays under the WCAG flash limit by default.",
+  "invoke": "用 007 把「2026｜我的｜年度｜关键词｜是｜坚持」做成文字快闪，120 拍每分钟（日常用默认 V1；要招牌效果说「招牌」或 look=showcase）",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": ["年终总结", "活动和年会开场", "品牌宣传片开头", "课程开场", "产品发布倒计时"],
+  "notFor": [
+    { "case": "跟着口播走的字幕", "use": "004" },
+    { "case": "一屏一整段、停住让人读", "use": "002" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "6 屏、120 拍每分钟、一拍一屏：开头一屏 0.5 秒，之后每屏 0.5 秒，最后一屏停 1.2 秒，一共约 4.2 秒；实际时长以导出的 timeline.json 为准",
+  "timelineSegments": [
+    { "name": "intro", "label": "第一屏" },
+    { "name": "flash", "label": "快闪" },
+    { "name": "hold", "label": "最后一屏" }
+  ],
+  "posterTime": "hold+0.3",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "跟 001 同一组经验值，未实测；只出提示" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "fonts": ["notosc-black", "notoserif-black"],
+  "fontFallback": { "notoserif-black": ["notosc-black"] },
+  "extraGlyphs": "",
+  "typography": { "writingMode": "horizontal", "lineBreak": "manual", "maxLines": 2, "maxCharsPerLine": 4, "noOrphan": false, "punctCompress": true, "latinFont": null },
+  "params": [
+    { "key": "text", "type": "text", "label": "文字", "default": "2026｜我的｜年度｜关键词｜是｜坚持", "maxLength": 160,
+      "hint": "用「｜」或回车分屏，每屏 1–4 个字最好；不写分隔符就按词自动分。每屏开头可以加记号：! 反色屏、^ 特大字、~ 倾斜；「大字/小字」排成上大下小两行；*关键词* 换强调色" },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常" }, { "value": "V3", "label": "V3 招牌" }],
+      "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌（别名「招牌」「showcase」）：重拍溅出小星星、字下面一道强调色短杠、滑入带残影、偶尔插一屏「大词加一圈小词」" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": [{ "value": "C1", "label": "C1 黑白" }, { "value": "C2", "label": "C2 红底" }, { "value": "C3", "label": "C3 柠檬" }, { "value": "C4", "label": "C4 霓虹夜" }, { "value": "C5", "label": "C5 年终金" }] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": [{ "value": "R1", "label": "R1 标准（120 拍、一拍一屏）" }, { "value": "R2", "label": "R2 冲（128 拍、半拍一屏）" }, { "value": "R3", "label": "R3 稳（100 拍、两拍一屏）" }] },
+    { "key": "bpm", "type": "number", "label": "拍速（每分钟几拍；空着＝按节奏）", "default": null, "min": 60, "max": 180 },
+    { "key": "firstBeat", "type": "number", "label": "第一拍在第几秒", "default": 0, "min": 0, "max": 10, "hint": "音乐的第一拍。第二屏从开头 0.5 秒以后的第一个拍点开始；给了外部拍点（--beats）就用外部拍点" },
+    { "key": "division", "type": "select", "label": "每屏几拍（空着＝按节奏）", "default": "", "allowEmpty": true, "options": [{ "value": "", "label": "按节奏" }, { "value": "half", "label": "半拍一屏" }, { "value": "beat", "label": "一拍一屏" }, { "value": "double", "label": "两拍一屏" }] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-black", "options": [{ "value": "notosc-black", "label": "思源黑体 Black（默认）" }, { "value": "notoserif-black", "label": "思源宋体 Black（大气，品牌片、年会）" }] },
+    { "key": "size", "type": "range", "label": "字号上限（占画面短边）", "default": 0.45, "min": 0.2, "max": 0.6, "step": 0.01, "hint": "实际字号＝一行最多占画面宽 80%，字越少越大" },
+    { "key": "variety", "type": "range", "label": "变化屏比例", "default": 0.2, "min": 0, "max": 0.4, "step": 0.01, "hint": "反色、倾斜、特大字（和 V3 的大词加一圈小词）按种子穿插，第一屏和最后一屏不变" },
+    { "key": "entrance", "type": "select", "label": "每屏入场", "default": "mix", "options": [{ "value": "mix", "label": "砸入和滑入按种子挑" }, { "value": "slam", "label": "都砸入（115% → 100%）" }, { "value": "slide", "label": "都滑入（左右 6%）" }] },
+    { "key": "shake", "type": "range", "label": "重拍震屏", "default": 1, "min": 0, "max": 2.5, "step": 0.05, "hint": "每小节第一拍震 2 帧；1＝短边的 0.4%" },
+    { "key": "sparks", "type": "range", "label": "重拍小星星", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "underline", "type": "bool", "label": "字下强调短杠", "default": false },
+    { "key": "ghost", "type": "bool", "label": "滑入残影", "default": false },
+    { "key": "cloud", "type": "bool", "label": "插「大词加一圈小词」屏", "default": false, "hint": "周围的小词取自其他屏；只在一共 4 屏以上时插" },
+    { "key": "flip", "type": "select", "label": "翻底色", "default": "auto", "options": [{ "value": "auto", "label": "按配色（安全版每秒最多 2 次）" }, { "value": "off", "label": "不翻" }] },
+    { "key": "flashMode", "type": "select", "label": "闪烁模式", "default": "safe", "options": [{ "value": "safe", "label": "安全（默认，超标不导出）" }, { "value": "strong", "label": "强闪烁（每屏都翻底色；超标只警告，有光敏风险）" }] },
+    { "key": "endHold", "type": "number", "label": "最后一屏停几秒", "default": 1.2, "min": 0.3, "max": 6 },
+    { "key": "fill", "type": "color", "label": "改字色（覆盖配色）", "default": "", "overrides": "fill" },
+    { "key": "seed", "type": "int", "label": "种子", "default": 5 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "黑白", "alternate": "bg", "colors": { "bg": "#0B0B0B", "sub": "#F5F5F5", "fill": "#F5F5F5", "fill2": "#0B0B0B", "accent": "#FF2D2D", "inner": "#8A8A8A", "outer": "#FF2D2D", "shadow": "#000000" } },
+    { "id": "C2", "name": "红底", "alternate": "text", "colors": { "bg": "#E5262A", "sub": "#E5262A", "fill": "#FFFFFF", "fill2": "#0B0B0B", "accent": "#FFD400", "inner": "#FFB3B3", "outer": "#FFD400", "shadow": "#7A0B0D" } },
+    { "id": "C3", "name": "柠檬", "alternate": "bg", "colors": { "bg": "#FFD400", "sub": "#0B0B0B", "fill": "#0B0B0B", "fill2": "#FFD400", "accent": "#FF2D2D", "inner": "#8A6F00", "outer": "#FF2D2D", "shadow": "#000000" } },
+    { "id": "C4", "name": "霓虹夜", "alternate": "accent", "colors": { "bg": "#160A33", "sub": "#160A33", "fill": "#FFFFFF", "fill2": "#FFFFFF", "accent": "#00E5FF", "inner": "#8C7BC2", "outer": "#FF2E88", "shadow": "#05010F" } },
+    { "id": "C5", "name": "年终金", "alternate": "none", "colors": { "bg": "#0E0E0E", "sub": "#0E0E0E", "fill": "#F2D28B", "fill2": "#F2D28B", "accent": "#FFFFFF", "inner": "#7A6A45", "outer": "#F2D28B", "shadow": "#000000" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "bpm": 120, "division": "beat" },
+    { "id": "R2", "name": "冲", "bpm": 128, "division": "half" },
+    { "id": "R3", "name": "稳", "bpm": 100, "division": "double" }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "variety": 0.2, "sparks": 0, "underline": false, "ghost": false, "cloud": false, "shake": 1 } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "variety": 0.3, "sparks": 0.8, "underline": true, "ghost": true, "cloud": true, "shake": 1.6 } }
+  ],
+  "exports": ["mp4", "mov-alpha", "webm-alpha", "png-seq"],
+  "checks": ["missing-glyph", "safe-area", "flash-rate", "read-rate", "beat-drift"],
+  "demo": {
+    "default": { "look": "V1", "text": "2026｜我的｜年度｜关键词｜是｜坚持", "video": "demo/007_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "palette": "C5", "text": "2026｜加班｜升职｜*上岸*｜旅行｜搬家｜认识你｜!值得", "video": "demo/007_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" }
+  },
+  "platforms": [
+    { "name": "抖音年会快闪、年终总结", "basis": "measured", "note": "第一轮量到 2 条年会快闪成片，卡片中位停 0.57 秒" }
+  ],
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "思源宋体 Noto Serif SC", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" },
+  "measuredDefaults": { "source": "年会快闪实测（2026-11-19，2 条成片）", "cardHold": "每张卡中位停 0.57 秒，约等于 100–120 拍每分钟的一拍", "charHeight": "字高中位占短边 22.9%" }
+}

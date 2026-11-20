@@ -1,0 +1,40 @@
+{
+  "说明": "公开的文件清单。发布自检 scripts/release-audit.mjs 只扫这些文件。",
+  "include": [
+    "README.md",
+    "README.en.md",
+    "LICENSE",
+    "LICENSES/",
+    "NOTICE.md",
+    "CONTRIBUTING.md",
+    "CLA.md",
+    "SECURITY.md",
+    "CODE_OF_CONDUCT.md",
+    "CHANGELOG.md",
+    "AGENTS.md",
+    ".claude-plugin/",
+    ".github/",
+    "engine/",
+    "styles/",
+    "skills/",
+    "scripts/",
+    "docs/"
+  ],
+  "exclude": [
+    "engine/node_modules/",
+    "engine/out/",
+    "engine/fonts/src/",
+    "engine/fonts/dist/",
+    "styles/*/demo/*.mp4",
+    "styles/*/demo/*.mov",
+    "styles/*/demo/*.webm"
+  ],
+  "auditSkip": [
+    "scripts/release-audit.mjs"
+  ],
+  "说明_auditSkip": "自检脚本自己的源码里写着它要查的那些路径和格式，扫它会误报，所以跳过；它照样公开",
+  "publicContacts": [
+    "alan@sightvc.com"
+  ],
+  "说明_publicContacts": "有意公开的联系邮箱（LICENSE 里的商业授权联系方式），自检不报"
+}

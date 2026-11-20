@@ -1,0 +1,97 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "013",
+  "id": "price-tag",
+  "name": "价格标签",
+  "nameEn": "Price Tag",
+  "aliases": ["划线价", "到手价", "价格对比", "直降"],
+  "kind": "interaction",
+  "tags": ["互动", "带货", "探店", "测评"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "带货、探店、测评用的价格标签：原价先出来、被一道斜线划掉，到手价砸进来、数字从原价一路滚到最终价，价格下面弹出「省 ××」；透明底叠上就能用。",
+  "summaryEn": "A price tag for shopping and review videos: the original price appears and gets struck through, the deal price slams in and rolls down to the final number, and a \"save ¥…\" badge pops up. Transparent background.",
+  "invoke": "用 013 做一个价格标签：原价 299，到手价 99，透明底",
+  "invokeTemplate": "用 {code} 做一个价格标签：原价 {original}，{text} {price}，造型 {look}，配色 {palette}",
+  "fitFor": ["带货口播报价格", "探店报人均、套餐价", "测评里的价格对比", "直播切片里的优惠价"],
+  "notFor": [
+    { "case": "限时倒计时（距结束 00:59:59）", "use": "011（以后做成它的一种模式，还没做）" },
+    { "case": "两个东西比谁好", "use": "016" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号带货和探店", "basis": "inferred", "note": "两轮抖音测量没有专门量过价格标签；带货和探店口播里报价格是高频动作" },
+    { "name": "小红书测评", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "原价出来、划掉约 0.6 秒，到手价滚 0.9 秒（R2 快 0.6 秒，R3 稳 1.3 秒），弹出省多少，停 1.6 秒后出场 0.35 秒；默认一共约 3.9 秒。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "原价出来、划掉" },
+    { "name": "roll", "label": "到手价滚动" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": "hold+0.3",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏默认放在画面高度 0.64、水平居中，在人脸下面、字幕上面" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-black", "huangyou"],
+  "fontFallback": { "notosc-black": [], "huangyou": ["notosc-black"] },
+  "extraGlyphs": "0123456789.¥元",
+  "typography": { "writingMode": "horizontal", "lineBreak": "none", "maxLines": 1, "maxCharsPerLine": 6, "noOrphan": false, "punctCompress": false, "latinFont": null, "numbers": "tabular" },
+  "params": [
+    { "key": "text", "type": "text", "label": "价格前面的小标签", "default": "到手价", "maxLength": 6, "allowEmpty": true, "hint": "「到手价」「券后价」「直播价」「人均」都行，4 个字以内最好；留空就不要小标签" },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }],
+      "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌（别名「招牌」「showcase」）：价格放在一张吊牌上，落地时震一下、溅出小星星、价格上扫过一道高光" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": [{ "value": "C1", "label": "C1 大促红黄" }, { "value": "C2", "label": "C2 黑金" }, { "value": "C3", "label": "C3 清爽红白（浅色画面）" }, { "value": "C4", "label": "C4 粉" }] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": [{ "value": "R1", "label": "R1 标准（滚 0.9 秒）" }, { "value": "R2", "label": "R2 快（滚 0.6 秒）" }, { "value": "R3", "label": "R3 稳（滚 1.3 秒）" }] },
+    { "key": "price", "type": "number", "label": "到手价", "default": 99, "min": 0, "max": 9999999, "hint": "写几位小数就显示几位（最多 2 位），比如 99.9" },
+    { "key": "original", "type": "number", "label": "原价（空着就不划线）", "default": 299, "min": 0, "max": 9999999 },
+    { "key": "strike", "type": "bool", "label": "划掉原价", "default": true, "hint": "原价不比到手价高时不画，检查里会提示" },
+    { "key": "save", "type": "bool", "label": "价格下面弹出「省多少」", "default": true },
+    { "key": "currency", "type": "select", "label": "货币写法", "default": "¥", "options": [{ "value": "¥", "label": "¥ 写在前面" }, { "value": "元", "label": "元 写在后面" }, { "value": "none", "label": "只写数字" }] },
+    { "key": "decimals", "type": "int", "label": "小数位（空着＝按写的数）", "default": null, "min": 0, "max": 2 },
+    { "key": "roll", "type": "select", "label": "数字怎么滚", "default": "down", "options": [{ "value": "down", "label": "从原价往下滚到到手价" }, { "value": "up", "label": "从 0 往上滚" }, { "value": "none", "label": "不滚，直接出最终价" }] },
+    { "key": "rollTime", "type": "number", "label": "滚几秒（空着＝按节奏）", "default": null, "min": 0.3, "max": 3 },
+    { "key": "originalLabel", "type": "text", "label": "原价前面的字", "default": "原价", "maxLength": 4, "allowEmpty": true, "hint": "「原价」「日常价」「门市价」；留空就只写数" },
+    { "key": "saveLabel", "type": "text", "label": "省多少前面的字", "default": "省", "maxLength": 4, "hint": "「省」「立减」「直降」" },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-black", "options": [{ "value": "notosc-black", "label": "思源黑体 Black（默认）" }, { "value": "huangyou", "label": "站酷庆科黄油体（促销感）" }] },
+    { "key": "size", "type": "range", "label": "价格字号（占画面短边）", "default": 0.26, "min": 0.12, "max": 0.5, "step": 0.01, "hint": "价格太长会自动缩小，最宽占画面宽 90%" },
+    { "key": "card", "type": "bool", "label": "吊牌底（V3）", "default": false, "hint": "价格放在一张挂着的吊牌上，叠在花哨画面上更清楚" },
+    { "key": "flair", "type": "range", "label": "招牌强度（落地震动、高光）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "particles", "type": "int", "label": "落地小星星数", "default": 0, "min": 0, "max": 24 },
+    { "key": "material", "type": "select", "label": "质感", "default": "candy", "options": [{ "value": "candy", "label": "亮面糖果（默认）" }, { "value": "flat", "label": "平面" }],
+      "hint": "亮面糖果：胶囊、省多少标签、吊牌都有厚度、白亮边和镜面高光，叠在花哨画面上更跳；平面：扁平画法" },
+    { "key": "hold", "type": "number", "label": "停几秒", "default": 1.6, "min": 0.3, "max": 8 },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝竖屏 0.64，其他 0.55）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 3 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "大促红黄", "colors": { "fill": "#FFE14A", "outer": "#E3141C", "shadow": "#5C0005", "inner": "#FFFFFF", "accent": "#FF2D2D", "fill2": "#FFFFFF", "sub": "#FFF4B8", "bg": "#C9000E" } },
+    { "id": "C2", "name": "黑金", "colors": { "fill": "#F6D57E", "outer": "#141414", "shadow": "#000000", "inner": "#EDEDED", "accent": "#F6D57E", "fill2": "#141414", "sub": "#FFF1C2", "bg": "#1C1C1C" } },
+    { "id": "C3", "name": "清爽红白", "colors": { "fill": "#FF2D2D", "outer": "#FFFFFF", "shadow": "#D9D9D9", "inner": "#4A4A4A", "accent": "#FF2D2D", "fill2": "#FFFFFF", "sub": "#FFC300", "bg": "#FFFFFF" } },
+    { "id": "C4", "name": "粉", "colors": { "fill": "#FFFFFF", "outer": "#FF3D8B", "shadow": "#8A0F45", "inner": "#FFFFFF", "accent": "#FF3D8B", "fill2": "#FFFFFF", "sub": "#FFE3F0", "bg": "#FF3D8B" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "roll": 0.9 },
+    { "id": "R2", "name": "快", "roll": 0.6 },
+    { "id": "R3", "name": "稳", "roll": 1.3 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0, "particles": 0, "card": false } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1, "particles": 12, "card": true } }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["missing-glyph", "safe-area", "flash-rate", "brand-lookalike", "price-order", "fit"],
+  "demo": {
+    "default": { "look": "V1", "text": "到手价", "video": "demo/013_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "gifMaxMB": 1.5, "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "到手价", "video": "demo/013_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "gifMaxMB": 1.5, "poster": "demo/poster.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷庆科黄油体 ZCOOL QingKe HuangYou", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-qingke-huangyou" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

@@ -1,0 +1,33 @@
+name: 导出或检查出错 / Export or check fails
+description: 命令报错、画面不对、逐帧对不上 / A command errors, wrong frames, or determinism mismatch
+title: "[出错] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: command
+    attributes:
+      label: 跑的命令 / Command
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: 报错或输出 / Error or output
+      description: 逐帧对不上的话，把 determinism 打印的差异那一行原样贴进来 / For determinism mismatches, paste the diff line as printed
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: doctor 的输出 / Output of doctor
+      description: "在 engine/ 下跑 npm run doctor / Run npm run doctor in engine/"
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: 系统 / OS
+      placeholder: macOS 26 / Windows 11 / Ubuntu 24.04

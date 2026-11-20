@@ -1,0 +1,427 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "010",
+  "id": "comment-card",
+  "name": "评论卡",
+  "nameEn": "Comment Card",
+  "aliases": [
+    "回复评论",
+    "网友提问卡",
+    "评论置顶卡"
+  ],
+  "kind": "interaction",
+  "tags": [
+    "互动",
+    "评论",
+    "答疑口播"
+  ],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "口播答疑时叠在画面上的一张评论卡：头像、昵称、评论内容按词断行，被点名的那几个字用荧光笔划一道；版式自己设计，不仿任何平台的评论区",
+  "summaryEn": "A comment card to overlay while answering viewer questions: avatar, name and the comment text, broken only at word boundaries, with the words being answered swiped with a highlighter. An original layout that doesn't copy any platform's comment section.",
+  "invoke": "用 010 做一张评论卡，内容「…」，把要回答的那几个字用 *…* 标出来，透明底（日常用默认 V1；要招牌效果说 look=showcase）",
+  "invokeTemplate": "用 {code} 把「{text}」做成{name}，造型 {look}，配色 {palette}",
+  "fitFor": [
+    "口播答疑、回复网友提问",
+    "把一条评论当成选题引子",
+    "直播切片里的弹幕提问"
+  ],
+  "notFor": [
+    {
+      "case": "求大家去评论区留言",
+      "use": "009"
+    },
+    {
+      "case": "头像加关注按钮的账号名片",
+      "use": "008"
+    }
+  ],
+  "sizes": [
+    "1080x1920",
+    "1920x1080",
+    "1080x1080"
+  ],
+  "fps": 30,
+  "durationHint": "停留时间按评论字数自动算（1.2 秒＋每字 0.12 秒，1.8 到 8 秒之间），可以用 hold 参数指定；实际时长以 timeline.json 为准",
+  "timelineSegments": [
+    {
+      "name": "intro",
+      "label": "卡片浮起"
+    },
+    {
+      "name": "hold",
+      "label": "停留（划重点）"
+    },
+    {
+      "name": "outro",
+      "label": "出场"
+    }
+  ],
+  "posterTime": "hold+0.6",
+  "safeArea": {
+    "bottom": 0.2,
+    "right": 0.15,
+    "measured": false,
+    "note": "经验值，未实测；竖屏默认放在画面高度 0.3，在人头上方"
+  },
+  "requires": {
+    "wordTimes": false,
+    "beats": false,
+    "tracking": false
+  },
+  "fonts": [
+    "notosc-bold"
+  ],
+  "fontFallback": {
+    "notosc-bold": [
+      "notosc-black"
+    ]
+  },
+  "extraGlyphs": "网友提问“",
+  "exportDefaults": {
+    "bg": "transparent"
+  },
+  "typography": {
+    "writingMode": "horizontal",
+    "lineBreak": "word",
+    "maxLines": 5,
+    "maxCharsPerLine": null,
+    "noOrphan": true,
+    "punctCompress": true,
+    "shrinkParticles": 1,
+    "latinFont": null
+  },
+  "params": [
+    {
+      "key": "text",
+      "type": "text",
+      "label": "评论内容",
+      "default": "博主讲得太清楚了！想问一下，普通人到底该怎么挑*大模型*？能不能出一期详细的？",
+      "maxLength": 140,
+      "hint": "*关键词* 会用荧光笔划出来；用 | 指定能断开的地方；回车分段"
+    },
+    {
+      "key": "name",
+      "type": "text",
+      "label": "昵称",
+      "default": "路过的网友",
+      "maxLength": 16,
+      "hint": "默认用编的昵称，不放真实账号；头像用昵称的第一个字"
+    },
+    {
+      "key": "label",
+      "type": "text",
+      "label": "小标签",
+      "default": "网友提问",
+      "maxLength": 8,
+      "hint": "留空就不显示"
+    },
+    {
+      "key": "likes",
+      "type": "text",
+      "label": "点赞数（可选）",
+      "default": "",
+      "maxLength": 10,
+      "hint": "留空就不显示，默认不编造数字"
+    },
+    {
+      "key": "look",
+      "type": "select",
+      "label": "造型预设",
+      "default": "V1",
+      "options": [
+        {
+          "value": "V1",
+          "label": "V1 日常"
+        },
+        {
+          "value": "V3",
+          "label": "V3 招牌"
+        }
+      ],
+      "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌（别名「showcase」「招牌」）"
+    },
+    {
+      "key": "palette",
+      "type": "select",
+      "label": "配色",
+      "default": "C1",
+      "options": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ]
+    },
+    {
+      "key": "rhythm",
+      "type": "select",
+      "label": "节奏",
+      "default": "R1",
+      "options": [
+        "R1",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "key": "font",
+      "type": "select",
+      "label": "字体",
+      "default": "notosc-bold",
+      "options": [
+        {
+          "value": "notosc-bold",
+          "label": "思源黑体 Bold"
+        }
+      ]
+    },
+    {
+      "key": "size",
+      "type": "range",
+      "label": "评论字号（占卡片宽）",
+      "default": 0.062,
+      "min": 0.045,
+      "max": 0.09,
+      "step": 0.002
+    },
+    {
+      "key": "maxLines",
+      "type": "range",
+      "label": "评论最多几行",
+      "default": 5,
+      "min": 2,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "key": "width",
+      "type": "range",
+      "label": "卡片宽（占画面宽，空着＝自动：竖屏 0.84，横屏 0.5）",
+      "default": null,
+      "min": 0.4,
+      "max": 0.92,
+      "step": 0.01
+    },
+    {
+      "key": "hold",
+      "type": "number",
+      "label": "停留秒数（空着＝按字数算）",
+      "default": null
+    },
+    {
+      "key": "flair",
+      "type": "range",
+      "label": "招牌强度",
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "material",
+      "type": "select",
+      "label": "质感",
+      "default": "candy",
+      "options": [
+        { "value": "candy", "label": "亮面糖果（默认）" },
+        { "value": "flat", "label": "平面" }
+      ],
+      "hint": "亮面糖果：卡片有厚度、白亮边和上沿高光，头像是糖果圆按钮；平面：原来的扁平卡片"
+    },
+    {
+      "key": "x",
+      "type": "range",
+      "label": "水平位置（空着＝居中）",
+      "default": null,
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.01
+    },
+    {
+      "key": "y",
+      "type": "range",
+      "label": "垂直位置（空着＝自动：竖屏 0.3，横屏 0.32）",
+      "default": null,
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.01
+    },
+    {
+      "key": "seed",
+      "type": "int",
+      "label": "种子",
+      "default": 7
+    }
+  ],
+  "looks": [
+    {
+      "id": "V1",
+      "name": "日常",
+      "nameEn": "Everyday",
+      "role": "default",
+      "aliases": [
+        "日常",
+        "daily"
+      ],
+      "params": {
+        "flair": 0
+      }
+    },
+    {
+      "id": "V3",
+      "name": "招牌",
+      "nameEn": "Signature",
+      "role": "showcase",
+      "aliases": [
+        "招牌",
+        "showcase",
+        "综艺"
+      ],
+      "params": {
+        "flair": 1
+      }
+    }
+  ],
+  "palettes": [
+    {
+      "id": "C1",
+      "name": "白卡珊瑚",
+      "colors": {
+        "fill": "#1F1D24",
+        "fill2": "#FFE066",
+        "inner": "#FFFFFF",
+        "outer": "#1F1D24",
+        "shadow": "#000000",
+        "accent": "#F2665E",
+        "bg": "#FFFFFF",
+        "sub": "#6B6875"
+      }
+    },
+    {
+      "id": "C2",
+      "name": "深色卡",
+      "colors": {
+        "fill": "#F4F2F7",
+        "fill2": "#7A5CFF",
+        "inner": "#FFFFFF",
+        "outer": "#FFFFFF",
+        "shadow": "#000000",
+        "accent": "#9B85FF",
+        "bg": "#1E1C26",
+        "sub": "#A9A5B5"
+      }
+    },
+    {
+      "id": "C3",
+      "name": "便签黄",
+      "colors": {
+        "fill": "#2B2416",
+        "fill2": "#FF9E3D",
+        "inner": "#FFFFFF",
+        "outer": "#2B2416",
+        "shadow": "#3A2A00",
+        "accent": "#E07A1F",
+        "bg": "#FFF2B3",
+        "sub": "#7A6A45"
+      }
+    },
+    {
+      "id": "C4",
+      "name": "薄荷",
+      "colors": {
+        "fill": "#163330",
+        "fill2": "#B6F2D8",
+        "inner": "#FFFFFF",
+        "outer": "#163330",
+        "shadow": "#000000",
+        "accent": "#16A085",
+        "bg": "#F3FFFB",
+        "sub": "#5A7A73"
+      }
+    }
+  ],
+  "rhythms": [
+    {
+      "id": "R1",
+      "name": "标准",
+      "speed": 1,
+      "holdScale": 1
+    },
+    {
+      "id": "R2",
+      "name": "快",
+      "speed": 0.7,
+      "holdScale": 0.75
+    },
+    {
+      "id": "R3",
+      "name": "慢读（停留加长，适合长评论）",
+      "speed": 1.15,
+      "holdScale": 1.5
+    }
+  ],
+  "exports": [
+    "mov-alpha",
+    "webm-alpha",
+    "png-seq",
+    "mp4"
+  ],
+  "checks": [
+    "mid-word",
+    "line-start-punct",
+    "line-end-punct",
+    "stroke-clip",
+    "missing-glyph",
+    "safe-area",
+    "brand-lookalike"
+  ],
+  "platforms": [
+    {
+      "name": "抖音、视频号答疑口播",
+      "basis": "inferred",
+      "note": "回复评论类口播常见，两轮抖音测量没专门量这一类"
+    },
+    {
+      "name": "B 站知识区",
+      "basis": "inferred",
+      "note": "没测"
+    }
+  ],
+  "demo": {
+    "default": {
+      "look": "V1",
+      "video": "demo/010_V1_日常_竖屏.mp4",
+      "gif": "demo/preview.gif",
+      "gifMaxMB": 1.5,
+      "poster": "demo/poster-v1.jpg"
+    },
+    "showcase": {
+      "look": "V3",
+      "video": "demo/010_V3_招牌_竖屏.mp4",
+      "gif": "demo/showcase.gif",
+      "gifMaxMB": 1.5,
+      "poster": "demo/poster-v3.jpg"
+    }
+  },
+  "credits": [
+    {
+      "what": "字体",
+      "name": "思源黑体 Noto Sans SC（固定 wght 700）",
+      "license": "OFL-1.1",
+      "url": "https://github.com/notofonts/noto-cjk"
+    },
+    {
+      "what": "版式",
+      "name": "卡片版式、头像、小爱心都是本项目自己画的，不照任何平台评论区的样子做",
+      "license": "随代码 MIT",
+      "url": ""
+    }
+  ],
+  "license": {
+    "code": "MIT",
+    "doc": "CC-BY-NC-4.0",
+    "demo": "CC-BY-4.0"
+  }
+}

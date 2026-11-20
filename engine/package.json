@@ -1,0 +1,29 @@
+{
+  "name": "@hanzifx/engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "hanzifx 渲染底座：风格=纯函数 f(文字, 参数, t)，同一份代码浏览器试玩 / 导出 MP4 / 导出透明底",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "doctor": "node cli/doctor.mjs",
+    "fonts": "node cli/fonts.mjs",
+    "dev": "node cli/serve.mjs",
+    "export": "node cli/export.mjs",
+    "check": "node cli/check.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:e2e": "node test/e2e/player.mjs reports/player",
+    "verify": "node cli/verify.mjs",
+    "seg-eval": "node cli/seg-eval.mjs",
+    "determinism": "node cli/determinism.mjs",
+    "digest": "node cli/digest.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "1.64.0",
+    "subset-font": "2.9.0",
+    "jieba-wasm": "2.4.0"
+  }
+}

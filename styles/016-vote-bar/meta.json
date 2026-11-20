@@ -1,0 +1,93 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "016",
+  "id": "vote-bar",
+  "name": "二选一投票条",
+  "nameEn": "Vote Bar",
+  "aliases": ["二选一", "投票条", "你选哪个", "PK 条", "对决条"],
+  "kind": "interaction",
+  "tags": ["互动", "投票", "测评", "观点"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "「你选哪个」：A、B 两个选项的百分比条同时长，数字跟着滚，加起来正好 100%；滚完赢的一边放大、头上出一顶皇冠。可以是上下两条，也可以是一根对决条；透明底叠上就能用。",
+  "summaryEn": "Which one would you pick? Two options' percentage bars grow side by side while the numbers roll up to exactly 100% in total, then the winner grows and gets a crown. Two stacked bars or one head-to-head bar. Transparent background.",
+  "invoke": "用 016 做一个二选一投票条：甜粽子 63%，咸粽子 37%，透明底",
+  "invokeTemplate": "用 {code} 做一个二选一投票条：{optionA} {percent}%，{optionB}，问题「{text}」，造型 {look}，配色 {palette}",
+  "fitFor": ["观点类口播「你站哪边」", "测评里两款产品的投票结果", "评论区投票的结果公布", "直播切片里的 PK"],
+  "notFor": [
+    { "case": "三个以上的选项", "use": "还没做" },
+    { "case": "价格对比", "use": "013" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号观点和测评", "basis": "inferred", "note": "两轮抖音测量没有专门量过投票条；观点类口播常见「你选哪个」" },
+    { "name": "B 站测评和直播切片", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "入场 0.4 秒，百分比长 1.2 秒（R2 快 0.8 秒，R3 稳 1.8 秒），赢家放大，停 1.8 秒后出场 0.35 秒；默认一共约 4 秒。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "入场" },
+    { "name": "grow", "label": "百分比长出来" },
+    { "name": "hold", "label": "停留（赢家放大）" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": "hold+0.2",
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏默认放在画面高度 0.6、水平居中" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-black", "kuaile"],
+  "fontFallback": { "notosc-black": [], "kuaile": ["notosc-black"] },
+  "extraGlyphs": "0123456789.%ABVS",
+  "typography": { "writingMode": "horizontal", "lineBreak": "none", "maxLines": 1, "maxCharsPerLine": 8, "noOrphan": false, "punctCompress": false, "latinFont": null, "numbers": "tabular" },
+  "params": [
+    { "key": "text", "type": "text", "label": "问题（留空就不要）", "default": "你选哪个？", "maxLength": 16, "allowEmpty": true, "hint": "一行，10 个字以内最好" },
+    { "key": "optionA", "type": "text", "label": "选项 A", "default": "甜粽子", "maxLength": 10, "hint": "6 个字以内最好，太长会缩小" },
+    { "key": "optionB", "type": "text", "label": "选项 B", "default": "咸粽子", "maxLength": 10 },
+    { "key": "percent", "type": "number", "label": "A 的百分比（B＝100 减它）", "default": 63, "min": 0, "max": 100, "hint": "按显示的精度取整后再算 B，两边加起来一定是 100%" },
+    { "key": "decimals", "type": "int", "label": "百分比小数位", "default": 0, "min": 0, "max": 1 },
+    { "key": "layout", "type": "select", "label": "版式", "default": "stack", "options": [{ "value": "stack", "label": "上下两条（从 0 长）" }, { "value": "split", "label": "一根对决条（从五五开往两边顶，中间 VS）" }] },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }],
+      "hint": "V1＝日常默认（别名「日常」「daily」）：上下两条；V3＝招牌（别名「招牌」「showcase」）：对决条，中间 VS 跟着分界点走，赢家落地时震一下、溅出小星星、扫过一道高光" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": [{ "value": "C1", "label": "C1 红蓝对决" }, { "value": "C2", "label": "C2 橙紫" }, { "value": "C3", "label": "C3 清爽（浅色画面）" }, { "value": "C4", "label": "C4 糖果" }] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": [{ "value": "R1", "label": "R1 标准（长 1.2 秒）" }, { "value": "R2", "label": "R2 快（长 0.8 秒）" }, { "value": "R3", "label": "R3 稳（长 1.8 秒）" }] },
+    { "key": "growTime", "type": "number", "label": "长几秒（空着＝按节奏）", "default": null, "min": 0.4, "max": 4 },
+    { "key": "winner", "type": "bool", "label": "标出赢家（放大、皇冠，输的变暗）", "default": true, "hint": "五五开时不标" },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-black", "options": [{ "value": "notosc-black", "label": "思源黑体 Black（默认）" }, { "value": "kuaile", "label": "站酷快乐体（可爱）" }] },
+    { "key": "size", "type": "range", "label": "条的宽度（占画面宽）", "default": 0.8, "min": 0.4, "max": 0.95, "step": 0.01, "hint": "横屏和方形另有上限：不超过短边的 1.1 倍" },
+    { "key": "flair", "type": "range", "label": "招牌强度（落地震动、高光）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "particles", "type": "int", "label": "赢家小星星数", "default": 0, "min": 0, "max": 24 },
+    { "key": "material", "type": "select", "label": "质感", "default": "candy", "options": [{ "value": "candy", "label": "亮面糖果（默认）" }, { "value": "flat", "label": "平面" }],
+      "hint": "亮面糖果：条有厚度、奶白的槽、镜面高光，A、B、VS 是糖果按钮，叠在花哨画面上更跳；平面：扁平画法" },
+    { "key": "hold", "type": "number", "label": "停几秒", "default": 1.8, "min": 0.3, "max": 8 },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝竖屏 0.6，其他 0.55）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 4 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "红蓝对决", "colors": { "fill": "#FF3B5C", "fill2": "#2F7BFF", "inner": "#FFFFFF", "outer": "#111111", "shadow": "#000000", "accent": "#FFD23F", "bg": "#000000", "sub": "#FFFFFF" } },
+    { "id": "C2", "name": "橙紫", "colors": { "fill": "#FF8A1F", "fill2": "#8B5CF6", "inner": "#FFFFFF", "outer": "#1A1026", "shadow": "#000000", "accent": "#FFE066", "bg": "#1A1026", "sub": "#FFFFFF" } },
+    { "id": "C3", "name": "清爽", "colors": { "fill": "#FF4D4F", "fill2": "#1677FF", "inner": "#FFFFFF", "outer": "#1F1F1F", "shadow": "#8C8C8C", "accent": "#FFC53D", "bg": "#FFFFFF", "sub": "#FFFFFF" } },
+    { "id": "C4", "name": "糖果", "colors": { "fill": "#FF6FB5", "fill2": "#29C7B8", "inner": "#FFFFFF", "outer": "#3B1B33", "shadow": "#3B1B33", "accent": "#FFE45E", "bg": "#3B1B33", "sub": "#FFFFFF" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "grow": 1.2 },
+    { "id": "R2", "name": "快", "grow": 0.8 },
+    { "id": "R3", "name": "稳", "grow": 1.8 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "layout": "stack", "flair": 0, "particles": 0 } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "layout": "split", "flair": 1, "particles": 12 } }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["missing-glyph", "safe-area", "flash-rate", "brand-lookalike", "sum-100", "label-fit"],
+  "demo": {
+    "default": { "look": "V1", "text": "你选哪个？", "video": "demo/016_V1_日常_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "你选哪个？", "video": "demo/016_V3_招牌_竖屏.mp4", "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" }
+  },
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 900）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

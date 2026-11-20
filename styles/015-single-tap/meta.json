@@ -1,0 +1,91 @@
+{
+  "schema": "hanzifx.style/1",
+  "code": "015",
+  "id": "single-tap",
+  "name": "点赞收藏引导",
+  "nameEn": "Single Tap",
+  "aliases": ["单个点赞", "点赞动画", "双击爱心", "收藏引导", "转发引导", "先收藏慢慢看"],
+  "kind": "interaction",
+  "tags": ["互动", "点赞", "收藏", "转发", "片尾"],
+  "status": "prototype",
+  "version": "0.1.0",
+  "tier": "open",
+  "summary": "只求一个动作的互动引导：手按下点赞、双击屏幕冒爱心、点亮收藏星转一圈，或者转发箭头往右弹；旁边一句「点个赞吧」「先收藏，慢慢看」。图标自己画，透明底叠上就能用。",
+  "summaryEn": "A prompt for one action: tap Like, double-tap for hearts, light up Save with a spin, or bounce the Share arrow, with a short line beside it. Icons drawn from scratch, transparent background.",
+  "invoke": "用 015 做一个点赞引导，旁边写「点个赞吧」，透明底",
+  "invokeTemplate": "用 {code} 做一个点赞或收藏引导，旁边写「{text}」，造型 {look}，配色 {palette}",
+  "fitFor": ["口播结尾求点赞", "干货、教程、清单类求收藏", "实用信息求转发", "短剧、口播里「双击屏幕」的提示"],
+  "notFor": [
+    { "case": "点赞、投币、收藏一起来", "use": "006 三连引导" },
+    { "case": "头像加关注按钮的名片", "use": "008 账号名片卡" }
+  ],
+  "platforms": [
+    { "name": "抖音、视频号口播结尾", "basis": "inferred", "note": "两轮抖音测量没有专门量过单个点赞引导；公开的运营文章里提到，视频里直接喊点赞，观众会顺手点" },
+    { "name": "小红书干货笔记的视频（先收藏）", "basis": "inferred", "note": "没测" }
+  ],
+  "sizes": ["1080x1920", "1920x1080", "1080x1080"],
+  "fps": 30,
+  "durationHint": "入场 0.3 秒，手按下或双击在 0.5–0.8 秒，点亮以后停到第 2.4 秒左右，出场 0.3 秒，全程约 2.8 秒（R3 挂着多停 3 秒）。实际时长看导出的 timeline.json",
+  "timelineSegments": [
+    { "name": "intro", "label": "入场" },
+    { "name": "tap", "label": "按下、点亮" },
+    { "name": "hold", "label": "停留" },
+    { "name": "outro", "label": "出场" }
+  ],
+  "posterTime": 1.3,
+  "safeArea": { "bottom": 0.2, "right": 0.15, "measured": false, "note": "底部 20% 有旁证，没有官方规范；右侧 15% 是经验值，未实测。竖屏默认放在画面高度 0.62（双击模式 0.48）、水平居中" },
+  "requires": { "wordTimes": false, "beats": false, "tracking": false },
+  "exportDefaults": { "bg": "transparent" },
+  "fonts": ["notosc-bold", "kuaile"],
+  "fontFallback": { "notosc-bold": ["notosc-black"], "kuaile": ["notosc-black"] },
+  "extraGlyphs": "点个赞吧双击屏幕先收藏，慢慢看转给需要的人+1",
+  "typography": { "writingMode": "horizontal", "lineBreak": "none", "maxLines": 1, "maxCharsPerLine": 8, "noOrphan": false, "punctCompress": true, "shrinkParticles": 1, "latinFont": null },
+  "params": [
+    { "key": "text", "type": "text", "label": "旁边那句话（空着就按模式自动配）", "default": "", "maxLength": 10, "hint": "空着：点赞配「点个赞吧」，双击配「双击屏幕」，收藏配「先收藏，慢慢看」，转发配「转给需要的人」。一行，8 个字以内最好" },
+    { "key": "kind", "type": "select", "label": "求哪个动作", "default": "like", "options": [{ "value": "like", "label": "点赞（按下大拇指）" }, { "value": "double", "label": "双击屏幕（冒爱心）" }, { "value": "save", "label": "收藏（星星点亮转一圈）" }, { "value": "share", "label": "转发（箭头往右弹）" }] },
+    { "key": "look", "type": "select", "label": "造型预设", "default": "V1", "options": [{ "value": "V1", "label": "V1 日常（默认）" }, { "value": "V3", "label": "V3 招牌" }], "hint": "V1＝日常默认（别名「日常」「daily」）；V3＝招牌重型（别名「招牌」「showcase」）" },
+    { "key": "palette", "type": "select", "label": "配色", "default": "C1", "options": ["C1", "C2", "C3", "C4"] },
+    { "key": "rhythm", "type": "select", "label": "节奏", "default": "R1", "options": ["R1", "R2", "R3"] },
+    { "key": "font", "type": "select", "label": "字体", "default": "notosc-bold", "options": [{ "value": "notosc-bold", "label": "思源黑体 Bold" }, { "value": "kuaile", "label": "站酷快乐体（可爱）" }] },
+    { "key": "hand", "type": "bool", "label": "手指（有手才像在教你点）", "default": true },
+    { "key": "plusOne", "type": "bool", "label": "点亮时飘「+1」（点赞、收藏）", "default": true },
+    { "key": "size", "type": "range", "label": "按钮直径（占画面短边）", "default": 0.2, "min": 0.1, "max": 0.32, "step": 0.01 },
+    { "key": "flair", "type": "range", "label": "招牌强度（放射光、光晕、更多粒子）", "default": 0, "min": 0, "max": 1, "step": 0.05 },
+    { "key": "particles", "type": "int", "label": "粒子数", "default": 10, "min": 0, "max": 30 },
+    { "key": "material", "type": "select", "label": "质感", "default": "candy", "options": [{ "value": "candy", "label": "亮面糖果（默认）" }, { "value": "flat", "label": "平面" }],
+      "hint": "亮面糖果：按钮是灰色糖果按钮，按下去会陷，点亮时主色盖上来；胶囊条有厚度和白亮边，双击的爱心带高光；平面：扁平画法" },
+    { "key": "x", "type": "range", "label": "水平位置（空着＝居中）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "y", "type": "range", "label": "垂直位置（空着＝点赞收藏转发竖屏 0.62、其他 0.66；双击模式 0.48）", "default": null, "min": 0.15, "max": 0.85, "step": 0.01 },
+    { "key": "seed", "type": "int", "label": "种子", "default": 7 }
+  ],
+  "palettes": [
+    { "id": "C1", "name": "暖粉", "colors": { "fill": "#FFFFFF", "fill2": "#FFB300", "inner": "#FFFFFF", "outer": "#2A1530", "shadow": "#000000", "accent": "#F55A6E", "bg": "#1B1020", "sub": "#FFFFFF" } },
+    { "id": "C2", "name": "极简白", "colors": { "fill": "#FFFFFF", "fill2": "#FFFFFF", "inner": "#FFFFFF", "outer": "#141414", "shadow": "#000000", "accent": "#FFFFFF", "bg": "#000000", "sub": "#FFFFFF" } },
+    { "id": "C3", "name": "红黄", "colors": { "fill": "#FFFFFF", "fill2": "#FFB300", "inner": "#FFE08A", "outer": "#3A0A08", "shadow": "#000000", "accent": "#FF5A4E", "bg": "#2A0806", "sub": "#FFFFFF" } },
+    { "id": "C4", "name": "深色版（叠在浅色画面上）", "colors": { "fill": "#2A2A2A", "fill2": "#F5A623", "inner": "#2A2A2A", "outer": "#FFFFFF", "shadow": "#000000", "accent": "#E8473C", "bg": "#FFFFFF", "sub": "#2A2A2A" } }
+  ],
+  "rhythms": [
+    { "id": "R1", "name": "标准", "speed": 1, "holdExtra": 0 },
+    { "id": "R2", "name": "快", "speed": 0.7, "holdExtra": 0 },
+    { "id": "R3", "name": "挂着（停留段多 3 秒，适合口播中间一直挂着）", "speed": 1, "holdExtra": 3 }
+  ],
+  "looks": [
+    { "id": "V1", "name": "日常", "nameEn": "Everyday", "role": "default", "aliases": ["日常", "daily"], "params": { "flair": 0, "particles": 10 } },
+    { "id": "V3", "name": "招牌", "nameEn": "Signature", "role": "showcase", "aliases": ["招牌", "showcase"], "params": { "flair": 1, "particles": 18 } }
+  ],
+  "exports": ["mov-alpha", "webm-alpha", "png-seq", "mp4"],
+  "checks": ["mid-word", "stroke-clip", "missing-glyph", "safe-area", "flash-rate", "brand-lookalike"],
+  "demo": {
+    "default": { "look": "V1", "text": "", "video": "demo/015_V1_点赞_竖屏.mp4", "gif": "demo/preview.gif", "poster": "demo/poster-v1.jpg" },
+    "showcase": { "look": "V3", "text": "", "video": "demo/015_V3_双击_竖屏.mp4", "kind": "double", "gif": "demo/showcase.gif", "poster": "demo/poster.jpg" }
+  },
+  "extraDemos": [
+    { "look": "V3", "text": "", "kind": "save", "video": "demo/015_V3_收藏_竖屏.mp4", "poster": "demo/poster-save.jpg" }
+  ],
+  "credits": [
+    { "what": "字体", "name": "思源黑体 Noto Sans SC（取 wght 700）", "license": "OFL-1.1", "url": "https://github.com/notofonts/noto-cjk" },
+    { "what": "字体", "name": "站酷快乐体 ZCOOL KuaiLe", "license": "OFL-1.1", "url": "https://github.com/googlefonts/zcool-kuaile" },
+    { "what": "图形", "name": "大拇指、爱心、星星、转发箭头、手全部是本项目自己画的（跟 006 同一套画法）", "license": "MIT", "url": "" }
+  ],
+  "license": { "code": "MIT", "doc": "CC-BY-NC-4.0", "demo": "CC-BY-4.0" }
+}

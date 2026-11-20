@@ -1,0 +1,42 @@
+name: 请求一个风格 / Request a style
+description: 想要一种还没有的字效或互动元素 / A text effect or interactive element we don't have yet
+title: "[风格请求] "
+labels: ["style-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        先看一眼 README 里的风格列表，确认还没有类似的。我们只照「做法」做，不照抄某个博主的招牌设计，也不仿平台的图标和界面。
+        Please check the style list in the README first. We reproduce techniques, not a creator's signature look or a platform's UI.
+  - type: textarea
+    id: reference
+    attributes:
+      label: 参考 / Reference
+      description: 贴截图，或者视频链接加上第几秒 / A screenshot, or a video link with the timestamp
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: 用在哪类视频上 / What kind of video
+      placeholder: 比如：知识口播的开头标题、带货视频的价格、vlog 的地点字幕 / e.g. opening title of an explainer
+    validations:
+      required: true
+  - type: dropdown
+    id: orientation
+    attributes:
+      label: 画面方向 / Orientation
+      multiple: true
+      options: ["竖屏 9:16 / Vertical", "横屏 16:9 / Horizontal", "方形 1:1 / Square"]
+  - type: textarea
+    id: musthave
+    attributes:
+      label: 一定要有的特征 / Must-have traits
+      description: 少了哪一点就不是你要的那个效果 / What would make it not the effect you want if missing
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认 / Confirm
+      options:
+        - label: 我知道最后会按这个库的规矩重新设计，不会一模一样照抄参考 / I understand it will be redesigned, not copied
+          required: true
