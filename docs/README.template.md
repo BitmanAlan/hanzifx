@@ -43,7 +43,7 @@
 
 把这句话发给你的 agent：
 
-> 帮我装好 hanzifx（https://github.com/BitmanAlan/hanzifx），然后用 005 把「床前明月光，疑是地上霜。举头望明月，低头思故乡。」做成竖排诗句，署名「唐·李白」。
+> 帮我装好 hanzifx（<https://github.com/BitmanAlan/hanzifx>），然后用 005 把「床前明月光，疑是地上霜。举头望明月，低头思故乡。」做成竖排诗句，署名「唐·李白」。
 
 agent 会克隆仓库，运行 `bash scripts/install_skill.sh` 装依赖、下载字体、跑自检、链接 skill，再检查、导出一条竖屏 mp4。
 
@@ -127,7 +127,7 @@ agent 会照每个风格写的「适合」「不适合（换哪个）」挑一�
   - 004 一词一屏字幕：想卡准时间，要给逐字时间。SRT 字幕、whisper 的结果都能转成逐字时间，工具是 `styles/004-word-pop-captions/tools/to-words.mjs`；不给就按语速估。
   - 007 文字快闪：要卡音乐节拍，就用 `--beats` 传入拍点（秒）。
   - 其他风格只要一句文字。
-- **试玩**：`cd engine && npm run dev`，打开 http://127.0.0.1:5180/engine/player/，可以拖时间轴、改字、换配色和造型，再复制导出命令。
+- **试玩**：`cd engine && npm run dev`，打开 <http://127.0.0.1:5180/engine/player/>，可以拖时间轴、改字、换配色和造型，再复制导出命令。
 
 ---
 
