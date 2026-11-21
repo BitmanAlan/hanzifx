@@ -28,7 +28,7 @@ const I18N = {
     secStyle: '字效', secInter: '互动元素',
     secStyleNote: '整屏的字：标题、字幕、海报', secInterNote: '叠在画面上的小部件：引导、投票、价格、倒计时',
     search: '搜编号或名字：13、价格',
-    copy: '复制调用句', copied: '已复制', daily: '日常', signature: '招牌',
+    copy: '复制调用句', copied: '已复制', daily: '日常', signature: '招牌', loadingFont: '加载字体…',
     editHint: '改字，马上看效果', empty: '没有找到，换个词试试',
     failed: '这张卡没跑起来：', kindLabel: { style: '字效', interaction: '互动' },
     foot: '代码 MIT · 文档 CC-BY-NC-4.0 · 样片 CC-BY-4.0 · 字体都是 OFL。画廊里的字体只带常用字，生僻字会显示成系统字体，导出不受影响。',
@@ -43,7 +43,7 @@ const I18N = {
     secStyle: 'Text effects', secInter: 'Interactive overlays',
     secStyleNote: 'Full-screen type: titles, captions, posters', secInterNote: 'Small widgets over your footage: prompts, polls, prices, countdowns',
     search: 'Search: 13, price, vote',
-    copy: 'Copy prompt', copied: 'Copied', daily: 'Everyday', signature: 'Signature',
+    copy: 'Copy prompt', copied: 'Copied', daily: 'Everyday', signature: 'Signature', loadingFont: 'Loading font…',
     editHint: 'Edit the text', empty: 'Nothing found. Try another word.',
     failed: 'This card failed to run: ', kindLabel: { style: 'Text FX', interaction: 'Interactive' },
     foot: 'Code MIT · Docs CC-BY-NC-4.0 · Demos CC-BY-4.0 · All fonts OFL. Gallery fonts cover common characters only; rare ones fall back to a system font here (exports are unaffected).',
@@ -149,7 +149,8 @@ function makeCard(c) {
   const card = { c, inter: c.kind === 'interaction', look: c.looks.showcase ? 'showcase' : 'default', text: null, inst: null, style: null, visible: false, mounting: false, t0: 0, frame: -1, gen: 0, loop: null, crop: null };
   const poster = el('img', { class: 'poster', alt: '', loading: 'lazy', decoding: 'async' });
   const stage = el('div', { class: 'stage' });
-  const frame = el('div', { class: 'frame' }, poster, stage, el('span', { class: 'num', text: c.code }), el('span', { class: `kind ${c.kind}` }));
+  const busy = el('span', { class: 'busy', 'aria-live': 'polite' }); // 改字要下载新字体时显示「加载字体…」
+  const frame = el('div', { class: 'frame' }, poster, stage, el('span', { class: 'num', text: c.code }), el('span', { class: `kind ${c.kind}` }), busy);
   const name = el('span', { class: 'name' }); const sub = el('span', { class: 'sub' });
   const sum = el('p', { class: 'sum' });
   const edit = el('textarea', { class: 'edit', rows: '1', spellcheck: 'false' });
@@ -157,14 +158,14 @@ function makeCard(c) {
   const copy = el('button', { class: 'copy', type: 'button', html: `${COPY_ICON}<span class="label"></span>` });
   const info = el('div', { class: 'info' }, el('h3', {}, name, sub), sum, edit, el('div', { class: 'row' }, looks, copy));
   card.el = el('article', { class: `card${card.inter ? ' inter' : ''}`, 'data-code': c.code }, frame, info);
-  Object.assign(card, { poster, stage, frameEl: frame, nameEl: name, subEl: sub, sumEl: sum, edit, looksEl: looks, copyEl: copy });
+  Object.assign(card, { busyEl: busy, poster, stage, frameEl: frame, nameEl: name, subEl: sub, sumEl: sum, edit, looksEl: looks, copyEl: copy });
   setPoster(card);
   frame.addEventListener('click', () => { edit.focus(); edit.select(); }); // 点画面＝改字
   let timer = 0;
   edit.addEventListener('input', () => {
     autoGrow(edit);
     clearTimeout(timer);
-    timer = setTimeout(() => { card.text = edit.value.replace(/\r/g, ''); remount(card); }, 350);
+    timer = setTimeout(() => { card.text = edit.value.replace(/\r/g, ''); remount(card, { urgent: true }); }, 350);
   });
   copy.addEventListener('click', async () => {
     const label = copy.querySelector('.label');
@@ -176,6 +177,7 @@ function makeCard(c) {
 
 function renderCardText(card) {
   const { c } = card; const t = tr();
+  card.busyEl.textContent = t.loadingFont;
   const zh = state.lang === 'zh';
   card.nameEl.textContent = zh ? c.name : c.nameEn || c.name;
   card.subEl.textContent = zh ? c.nameEn : c.name;
@@ -187,7 +189,7 @@ function renderCardText(card) {
   card.copyEl.setAttribute('aria-label', t.copy);
   card.copyEl.title = t.copy;
   const roles = [['default', t.daily], ['showcase', t.signature]].filter(([r]) => c.looks[r]);
-  card.looksEl.replaceChildren(...roles.map(([r, label]) => el('button', { type: 'button', class: card.look === r ? 'on' : '', text: label, onclick: () => { if (card.look === r) return; card.look = r; renderCardText(card); setPoster(card); remount(card); } })));
+  card.looksEl.replaceChildren(...roles.map(([r, label]) => el('button', { type: 'button', class: card.look === r ? 'on' : '', text: label, onclick: () => { if (card.look === r) return; card.look = r; renderCardText(card); setPoster(card); remount(card, { urgent: true }); } })));
 }
 
 function setPoster(card) {
@@ -313,10 +315,23 @@ function placeStage(card) {
   card.stage.style.transform = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${k.toFixed(5)})`;
 }
 
-// 挂载排队：一次只挂一张，免得首屏十几张同时解析字体、建 SVG 卡住
-let queue = Promise.resolve();
+// 挂载排队：一次只挂一张，免得首屏十几张同时解析字体、建 SVG 卡住。
+// 两档：用户改字、换造型（urgent）排在最前面，卡片滚进视野的后台挂载排后面——不然改一个字要等页面下面一串卡挂完才轮到。
+const jobs = [];
+let pumping = false;
+async function pump() {
+  if (pumping) return;
+  pumping = true;
+  while (jobs.length) {
+    const j = jobs.shift();
+    try { await doMount(j.card, j.gen); } catch { /* doMount 自己把错误画在卡上 */ }
+  }
+  pumping = false;
+}
+// 已经下载过的字体文件（地址）：重挂要的字体不在这里面，卡上就先显示「加载字体…」
+const fontUrlsLoaded = new Set();
 
-// 宣传片循环动图（2 MB 多）：等首屏的卡挂好、浏览器空下来再下载，不跟首屏抢带宽；窄屏（这一块藏着）和减少动效时不下载
+// 宣传片循环动图（2 MB 多）：等首屏看得见的卡挂好、浏览器空下来再下载，不跟首屏抢带宽；窄屏（这一块藏着）和减少动效时不下载
 function startHero() {
   const box = $('promo'), img = $('promoImg');
   if (!img || img.src || reduceMotion || getComputedStyle(box).display === 'none') return;
@@ -329,14 +344,17 @@ window.addEventListener('load', () => {
   const wait = () => {
     const pending = cards.some((c) => c.visible && !c.inst);
     if (pending && performance.now() - t0 < 5000) { setTimeout(wait, 200); return; }
-    queue.then(() => (window.requestIdleCallback || ((f) => setTimeout(f, 800)))(startHero, { timeout: 2500 }));
+    // 只等首屏看得见的卡，不等页面下面那些卡的后台挂载（以前等整条队列，线上要 10 秒才开始下载）
+    (window.requestIdleCallback || ((f) => setTimeout(f, 300)))(startHero, { timeout: 1500 });
   };
   setTimeout(wait, 300);
 });
-function remount(card) {
-  const gen = ++card.gen;
-  queue = queue.then(() => doMount(card, gen)).catch(() => {});
-  return queue;
+function remount(card, { urgent = false } = {}) {
+  const gen = ++card.gen; // 同一张卡排着的旧任务轮到时按 gen 跳过，只挂最新的
+  const job = { card, gen, urgent };
+  if (urgent) { const i = jobs.findIndex((j) => !j.urgent); jobs.splice(i < 0 ? jobs.length : i, 0, job); }
+  else jobs.push(job);
+  pump();
 }
 async function doMount(card, gen) {
   if (gen !== card.gen) return; // 排队期间又改了字，只挂最新的
@@ -349,7 +367,13 @@ async function doMount(card, gen) {
     const prev = card.inst;
     // 互动元素是透明底的叠加件：卡片里用透明底挂载，背景由卡片自己的 CSS 画，取景超出舞台也不会有接缝
     const background = card.inter ? 'transparent' : 'studio';
-    const inst = await mount(card.stage, { style: card.style, params, width: W, height: H, background, fonts: fontsFor(card.style.meta, params) });
+    const fonts = fontsFor(card.style.meta, params);
+    const newFonts = Object.values(fonts).some((f) => !fontUrlsLoaded.has(f.url));
+    if (newFonts && prev) card.frameEl.classList.add('loading'); // 重挂要下载新字体：旧画面留着，盖一个「加载字体…」
+    let inst;
+    try { inst = await mount(card.stage, { style: card.style, params, width: W, height: H, background, fonts }); }
+    finally { card.frameEl.classList.remove('loading'); }
+    for (const f of Object.values(fonts)) fontUrlsLoaded.add(f.url);
     if (gen !== card.gen) { inst.destroy(); return; }
     if (prev && prev !== inst) try { prev.destroy(); } catch { /* mount 已经清掉了旧的 DOM */ }
     card.inst = inst;

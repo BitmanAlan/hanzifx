@@ -69,6 +69,8 @@ h1 { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 6vw, 
 .frame .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .25s; }
 .frame.live .poster { opacity: 0; pointer-events: none; }
 .stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; transform: scale(0.2); }
+.busy { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); padding: 4px 12px; border-radius: 999px; background: rgba(10, 10, 16, .78); color: #fff; font-size: 13px; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .2s; z-index: 2; }
+.frame.loading .busy { opacity: 1; }
 .num { position: absolute; left: 8px; top: 8px; font-family: var(--mono); font-weight: 700; font-size: 30px; line-height: 1; color: #fff; background: rgba(10, 10, 16, .62); padding: 5px 8px 4px; border-radius: 8px; pointer-events: none; }
 .kind { position: absolute; right: 10px; top: 10px; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: rgba(0,0,0,.45); color: #e9e9f2; pointer-events: none; }
 .kind.interaction { background: rgba(255, 59, 92, .8); }
